@@ -1,14 +1,27 @@
 package principal;
 
-import adt.Binary_tree;
+import adt.*;
+import juego.Dragon;
+import juego.Oleada;
+
+import java.util.Arrays;
 
 public class Principal {
     public static void main(String[] args){
         System.out.println("Hola 2");
-        Binary_tree B1=new Binary_tree();
-        B1.insert(1);
-        B1.insert(2);
-        B1.insert(0);
-        B1.display(B1.root);
+        Cola C=new Cola();
+        C.enqueue(2);
+        C.enqueue(3);
+        C.dequeue();
+        C.enqueue(4);
+        C.display();
+
+        Oleada O=new Oleada(6);
+        //O.display();
+
+        Dragon[] D=O.toArray();
+        System.out.println(Arrays.toString(D));
     }
 }
+
+

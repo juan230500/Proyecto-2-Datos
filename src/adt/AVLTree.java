@@ -1,19 +1,7 @@
 package adt;
 
 //https://www.geeksforgeeks.org/avl-tree-set-2-deletion/
-class Node
-{
-    int key, height;
-    Node left, right;
-
-    Node(int d)
-    {
-        key = d;
-        height = 1;
-    }
-}
-
-class AVLTree
+public class AVLTree
 {
     Node root;
 

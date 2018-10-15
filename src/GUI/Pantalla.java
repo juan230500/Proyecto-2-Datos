@@ -1,8 +1,6 @@
 package GUI;
 
-import adt.B_tree;
-
-import java.util.*;
+import adt.BTree;
 
 /**
  * 
@@ -23,22 +21,7 @@ public class Pantalla {
     /**
      * 
      */
-    private B_tree ArbolB_edad;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private BTree ArbolB_edad;
 
     /**
      * 

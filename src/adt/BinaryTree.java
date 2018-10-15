@@ -1,18 +1,18 @@
 package adt;
 //Código recuperado de https://algorithms.tutorialhorizon.com/binary-search-tree-complete-implementation/
-public class Binary_tree {
-    public Node_BST root;
+public class BinaryTree {
+    public Node root;
 
-    public Binary_tree(){
+    public BinaryTree(){
         this.root = null;
     }
 
     public boolean find(int id){
-        Node_BST current = root;
+        Node current = root;
         while(current!=null){
-            if(current.data==id){
+            if(current.key==id){
                 return true;
-            }else if(current.data>id){
+            }else if(current.key>id){
                 current = current.left;
             }else{
                 current = current.right;
@@ -20,13 +20,14 @@ public class Binary_tree {
         }
         return false;
     }
+
     public boolean delete(int id){
-        Node_BST parent = root;
-        Node_BST current = root;
+        Node parent = root;
+        Node current = root;
         boolean isLeftChild = false;
-        while(current.data!=id){
+        while(current.key!=id){
             parent = current;
-            if(current.data>id){
+            if(current.key>id){
                 isLeftChild = true;
                 current = current.left;
             }else{
@@ -70,7 +71,7 @@ public class Binary_tree {
         }else if(current.left!=null && current.right!=null){
 
             //now we have found the minimum element in the right sub tree
-            Node_BST successor	 = getSuccessor(current);
+            Node successor	 = getSuccessor(current);
             if(current==root){
                 root = successor;
             }else if(isLeftChild){
@@ -82,10 +83,10 @@ public class Binary_tree {
         }
         return true;
     }
-    public Node_BST getSuccessor(Node_BST deleleNodeBST){
-        Node_BST successsor =null;
-        Node_BST successsorParent =null;
-        Node_BST current = deleleNodeBST.right;
+    public Node getSuccessor(Node deleleNodeBST){
+        Node successsor =null;
+        Node successsorParent =null;
+        Node current = deleleNodeBST.right;
         while(current!=null){
             successsorParent = successsor;
             successsor = current;
@@ -101,16 +102,16 @@ public class Binary_tree {
         return successsor;
     }
     public void insert(int id){
-        Node_BST newNodeBST = new Node_BST(id);
+        Node newNodeBST = new Node(id);
         if(root==null){
             root = newNodeBST;
             return;
         }
-        Node_BST current = root;
-        Node_BST parent = null;
+        Node current = root;
+        Node parent = null;
         while(true){
             parent = current;
-            if(id<current.data){
+            if(id<current.key){
                 current = current.left;
                 if(current==null){
                     parent.left = newNodeBST;
@@ -125,23 +126,12 @@ public class Binary_tree {
             }
         }
     }
-    public void display(Node_BST root){
+    public void display(Node root){
         if(root!=null){
             display(root.left);
-            System.out.print(" " + root.data);
+            System.out.print(" " + root.key);
             display(root.right);
         }
     }
 
-}
-
-class Node_BST {
-    int data;
-    Node_BST left;
-    Node_BST right;
-    public Node_BST(int data){
-        this.data = data;
-        left = null;
-        right = null;
-    }
 }

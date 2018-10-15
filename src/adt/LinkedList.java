@@ -1,36 +1,16 @@
 package adt;
 
-class Node_Linked {
-    private Object data;
-    private Node_Linked next;
-
-
-    public Node_Linked(){
-        this.next=null;
-    }
-
-    public Object getData(){
-        return this.data;
-    }
-
-    public void setData(Object data){
-        this.data=data;
-    }
-
-
-    public Node_Linked getNext(){
-        return this.next;
-    }
-
-    public void setNext(Node_Linked nodeLinked){
-        this.next= nodeLinked;
-    }
-
-}
-
 public class LinkedList{
     private Node_Linked head;
     private int size;
+
+    public Node_Linked getHead() {
+        return head;
+    }
+
+    public int getSize() {
+        return size;
+    }
 
     public LinkedList(){
         this.head= null;
@@ -47,8 +27,7 @@ public class LinkedList{
 
 
     public void insertFirst(Object data){
-        Node_Linked newNodeLinked = new Node_Linked();
-        newNodeLinked.setData(data);
+        Node_Linked newNodeLinked = new Node_Linked(data);
         newNodeLinked.setNext(this.head);
         this.head= newNodeLinked;
         this.size++;
@@ -57,7 +36,6 @@ public class LinkedList{
 
     public Node_Linked deleteFirst(){
         if(this.head != null){
-            Node_Linked temp= this.head;
             this.head= this.head.getNext();
             this.size--;
         }
@@ -111,8 +89,7 @@ public class LinkedList{
 
     public void insertLast(Object data){
         if (this.head==null) {
-            Node_Linked nuevo = new Node_Linked();
-            nuevo.setData(data);
+            Node_Linked nuevo = new Node_Linked(data);
             this.head = nuevo;
 
         }
@@ -123,8 +100,7 @@ public class LinkedList{
                 current_last = head;
                 head = head.getNext();
             }
-            Node_Linked nuevo = new Node_Linked();
-            nuevo.setData(data);
+            Node_Linked nuevo = new Node_Linked(data);
             current_last.setNext(nuevo);
         }
         this.size++;
