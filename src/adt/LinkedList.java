@@ -35,11 +35,12 @@ public class LinkedList{
 
 
     public Node_Linked deleteFirst(){
+        Node_Linked tmp=this.head;
         if(this.head != null){
             this.head= this.head.getNext();
             this.size--;
         }
-        return null;
+        return tmp;
     }
 
     public void displayList(){

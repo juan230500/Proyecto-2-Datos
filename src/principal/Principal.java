@@ -20,7 +20,11 @@ public class Principal {
         //O.display();
 
         Dragon[] D=O.toArray();
+        System.out.println("");
         System.out.println(Arrays.toString(D));
+        O.display();
+        O.delete(D[5]);
+        O.display();
     }
 }
 
