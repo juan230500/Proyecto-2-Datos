@@ -1,5 +1,7 @@
 package juego;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * 
  */
@@ -9,6 +11,8 @@ public class Dragon {
      * Default constructor
      */
     public Dragon() {
+        //para probar AVL
+        this.edad= ThreadLocalRandom.current().nextInt(0, 100);
     }
 
     /**
@@ -44,13 +48,44 @@ public class Dragon {
     /**
      * 
      */
-    private Dragon hijos;
+    private Dragon hijoDer;
+
+    private Dragon hijoIz;
+
+    public int getRecarga() {
+        return recarga;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
 
 
+    public Dragon getPadre() {
+        return padre;
+    }
 
+    public Dragon getHijoDer() {
+        return hijoDer;
+    }
 
+    public Dragon getHijoIz() {
+        return hijoIz;
+    }
 
+    public void setPadre(Dragon padre) {
+        this.padre = padre;
+    }
 
+    public void setHijoDer(Dragon hijoDernuevo) {
+        hijoDernuevo.setPadre(this);
+        this.hijoDer = hijoDernuevo;
+    }
+
+    public void setHijoIz(Dragon hijoIznuevo) {
+        hijoIznuevo.setPadre(this);
+        this.hijoIz = hijoIznuevo;
+    }
 
     /**
      * 
