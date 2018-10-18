@@ -5,29 +5,39 @@ import juego.Dragon;
 //https://www.geeksforgeeks.org/avl-tree-set-2-deletion/
 public class AVLTree
 {
-    public Node getRoot() {
-        return root;
-    }
 
-    public Node root;
+    private Node root;
 
-    // A utility function to get height of the tree
-    int height(Node N)
+    /**
+     * Devuelve la altura de cierto nodo
+     * @param N nodo a consultar altura
+     * @return la altura comoun entero
+     */
+    private int height(Node N)
     {
         if (N == null)
             return 0;
         return N.height;
     }
 
-    // A utility function to get maximum of two integers
-    int max(int a, int b)
+    /**
+     * Devuelve el máximo entre dós números
+     * @param a primer numero
+     * @param b segundo numero
+     * @return el mayor de ambos
+     */
+    private int max(int a, int b)
     {
         return (a > b) ? a : b;
     }
 
-    // A utility function to right rotate subtree rooted with y
-    // See the diagram given above.
-    Node rightRotate(Node y)
+
+    /**
+     * Una rotación simple a la derecha
+     * @param y el nodo donde comienza la rotación
+     * @return Lanueva raíz despues de rotar
+     */
+    private Node rightRotate(Node y)
     {
         Node x = y.left;
         Node T2 = x.right;
@@ -44,9 +54,13 @@ public class AVLTree
         return x;
     }
 
-    // A utility function to left rotate subtree rooted with x
-    // See the diagram given above.
-    Node leftRotate(Node x)
+
+    /**
+     * Una rotación simple a la izquierda
+     * @param x el nodo donde comienza la rotación
+     * @return Lanueva raíz despues de rotar
+     */
+    private Node leftRotate(Node x)
     {
         Node y = x.right;
         Node T2 = y.left;
@@ -63,19 +77,35 @@ public class AVLTree
         return y;
     }
 
-    // Get Balance factor of node N
-    int getBalance(Node N)
+    /**
+     * Devuelve el factor de balnceo de cierto nodo
+     * @param N nodo a consultar
+     * @return el balance como la diferencia de las alturas izquierda y derecha
+     */
+    private int getBalance(Node N)
     {
         if (N == null)
             return 0;
         return height(N.left) - height(N.right);
     }
 
+    /**
+     * Sobrecarga para facilitar método recursivo
+     * @param key dragon a insertar
+     */
     public void insert(Dragon key) {
         this.root=insert(this.root, key);
     }
 
-    public Node insert(Node node, Dragon key)
+    /**
+     * Método recursivo de inserción, al inicio busca la posicion correcta para insertar
+     * como en un ABB pero luego retrocede de forma recursiva para actualizar las alturas
+     * y portanto verificar los factores de balanceo y de no cumplirse realiza las rotaciones necesarias
+     * @param node el nodo actual
+     * @param key el dragon a insertar
+     * @return un nodo modificado para comunicarse entre recursiones
+     */
+    private Node insert(Node node, Dragon key)
     {
         /* 1. Perform the normal BST rotation */
         if (node == null){
@@ -125,136 +155,30 @@ public class AVLTree
         return node;
     }
 
-    /* Given a non-empty binary search tree, return the
-    node with minimum key value found in that tree.
-    Note that the entire tree does not need to be
-    searched. */
-    Node minValueNode(Node node)
-    {
-        Node current = node;
 
-        /* loop down to find the leftmost leaf */
-        while (current.left != null)
-            current = current.left;
+    //***Delete y minValue no se usa porque simplemente se insertan solo los dragones a ordenar sin el eliminado
 
-        return current;
-    }
-
-    public void delete(Dragon key){
-        this.root=delete(this.root, key);
-    }
-
-    public Node delete(Node root, Dragon key)
-    {
-        // STEP 1: PERFORM STANDARD BST DELETE
-        if (root == null)
-            return root;
-
-        // If the key to be deleted is smaller than
-        // the root's key, then it lies in left subtree
-        if (key.getEdad() < root.key.getEdad())
-            root.left = delete(root.left, key);
-
-            // If the key to be deleted is greater than the
-            // root's key, then it lies in right subtree
-        else if (key.getEdad() > root.key.getEdad())
-            root.right = delete(root.right, key);
-
-            // if key is same as root's key, then this is the node
-            // to be deleted
-        else
-        {
-
-            // node with only one child or no child
-            if ((root.left == null) || (root.right == null))
-            {
-                Node temp = null;
-                if (temp == root.left)
-                    temp = root.right;
-                else
-                    temp = root.left;
-
-                // No child case
-                if (temp == null)
-                {
-                    temp = root;
-                    root = null;
-                }
-                else // One child case
-                    root = temp; // Copy the contents of
-                // the non-empty child
-            }
-            else
-            {
-
-                // node with two children: Get the inorder
-                // successor (smallest in the right subtree)
-                Node temp = minValueNode(root.right);
-
-                // Copy the inorder successor's data to this node
-                root.key = temp.key;
-
-                // Delete the inorder successor
-                root.right = delete(root.right, temp.key);
-            }
-        }
-
-        // If the tree had only one node then return
-        if (root == null)
-            return root;
-
-        // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
-        root.height = max(height(root.left), height(root.right)) + 1;
-
-        // STEP 3: GET THE BALANCE FACTOR OF THIS NODE (to check whether
-        // this node became unbalanced)
-        int balance = getBalance(root);
-
-        // If this node becomes unbalanced, then there are 4 cases
-        // Left Left Case
-        if (balance > 1 && getBalance(root.left) >= 0)
-            return rightRotate(root);
-
-        // Left Right Case
-        if (balance > 1 && getBalance(root.left) < 0)
-        {
-            root.left = leftRotate(root.left);
-            return rightRotate(root);
-        }
-
-        // Right Right Case
-        if (balance < -1 && getBalance(root.right) <= 0)
-            return leftRotate(root);
-
-        // Right Left Case
-        if (balance < -1 && getBalance(root.right) > 0)
-        {
-            root.right = rightRotate(root.right);
-            return leftRotate(root);
-        }
-
-        return root;
-    }
-
-    // A utility function to print preorder traversal of
-    // the tree. The function also prints height of every
-    // node
+    /**
+     * Sobrecarga para facilitar el uso del preorden recursivo
+     */
     public void preOrder() {
         System.out.print("AVL en preorden: ");
-        preOrder(this.root,0);
+        preOrder(this.root,this.root);
         System.out.println();
     }
 
-    // A utility function to print preorder traversal of
-    // the tree. The function also prints height of every
-    // node
-    public void preOrder(Node node, int nivel)
+    /**
+     * Imprime el arbol en recorriendolo en preorden y mostrando las edades de sus nodos
+     * que son el criterio de ordenamiento del AVL
+     * En parentesis coloca la edad del padre del nodo para orientarse mejor
+     */
+    private void preOrder(Node node, Node padre)
     {
         if (node != null)
         {
-            System.out.print(node.key.getEdad() + "("+nivel+")"+ " ");
-            preOrder(node.left,nivel+1);
-            preOrder(node.right,nivel+1);
+            System.out.print(node.key.getEdad() +"("+padre.key.getEdad()+")"+" ");
+            preOrder(node.left,node);
+            preOrder(node.right,node);
         }
     }
 }

@@ -11,8 +11,11 @@ public class Dragon {
      * Default constructor
      */
     public Dragon() {
-        //para probar AVL
+        //para probar lógica
         this.edad= ThreadLocalRandom.current().nextInt(0, 100);
+        this.recarga=ThreadLocalRandom.current().nextInt(1, 100);
+        //Probar eliminación
+        this.resistencia=ThreadLocalRandom.current().nextInt(1,3);
     }
 
     /**
@@ -61,19 +64,23 @@ public class Dragon {
     }
 
 
-    public Dragon getPadre() {
+    Dragon getPadre() {
         return padre;
     }
 
-    public Dragon getHijoDer() {
+    Dragon getHijoDer() {
         return hijoDer;
     }
 
-    public Dragon getHijoIz() {
+    Dragon getHijoIz() {
         return hijoIz;
     }
 
-    public void setPadre(Dragon padre) {
+    int getResistencia() {
+        return resistencia;
+    }
+
+    void setPadre(Dragon padre) {
         this.padre = padre;
     }
 
@@ -82,9 +89,18 @@ public class Dragon {
         this.hijoDer = hijoDernuevo;
     }
 
-    public void setHijoIz(Dragon hijoIznuevo) {
+    void setHijoIz(Dragon hijoIznuevo) {
         hijoIznuevo.setPadre(this);
         this.hijoIz = hijoIznuevo;
+    }
+
+    /**
+     * Baja la resistencia y devuelve un booleano acerca de si se debe eliminar o no
+     * @return true si murió, false sino
+     */
+    boolean RecibirDano(){
+        this.resistencia--;
+        return this.resistencia==0;
     }
 
     /**

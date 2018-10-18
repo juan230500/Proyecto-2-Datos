@@ -65,7 +65,7 @@ public class SortArray {
     }
 
     //http://www.java2novice.com/java-sorting-algorithms/quick-sort/
-    public void quickSort(int lowerIndex, int higherIndex) {
+    private void quickSort(int lowerIndex, int higherIndex) {
 
         int i = lowerIndex;
         int j = higherIndex;
@@ -73,7 +73,7 @@ public class SortArray {
         Dragon pivot = arr[lowerIndex+(higherIndex-lowerIndex)/2];
         // Divide into two arrays
         while (i <= j) {
-            /**
+            /*
              * In each iteration, we will identify a number from left side which
              * is greater then the pivot value, and also we will identify a number
              * from right side which is less then the pivot value. Once the search
