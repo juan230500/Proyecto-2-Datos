@@ -5,7 +5,11 @@ import juego.Dragon;
 //https://www.geeksforgeeks.org/avl-tree-set-2-deletion/
 public class AVLTree
 {
-    Node root;
+    public Node getRoot() {
+        return root;
+    }
+
+    public Node root;
 
     // A utility function to get height of the tree
     int height(Node N)
@@ -67,11 +71,16 @@ public class AVLTree
         return height(N.left) - height(N.right);
     }
 
-    Node insert(Node node, Dragon key)
+    public void insert(Dragon key) {
+        this.root=insert(this.root, key);
+    }
+
+    public Node insert(Node node, Dragon key)
     {
         /* 1. Perform the normal BST rotation */
-        if (node == null)
+        if (node == null){
             return (new Node(key));
+        }
 
         if (key.getEdad() < node.key.getEdad())
             node.left = insert(node.left, key);
@@ -131,7 +140,11 @@ public class AVLTree
         return current;
     }
 
-    Node deleteNode(Node root, Dragon key)
+    public void delete(Dragon key){
+        this.root=delete(this.root, key);
+    }
+
+    public Node delete(Node root, Dragon key)
     {
         // STEP 1: PERFORM STANDARD BST DELETE
         if (root == null)
@@ -140,12 +153,12 @@ public class AVLTree
         // If the key to be deleted is smaller than
         // the root's key, then it lies in left subtree
         if (key.getEdad() < root.key.getEdad())
-            root.left = deleteNode(root.left, key);
+            root.left = delete(root.left, key);
 
             // If the key to be deleted is greater than the
             // root's key, then it lies in right subtree
         else if (key.getEdad() > root.key.getEdad())
-            root.right = deleteNode(root.right, key);
+            root.right = delete(root.right, key);
 
             // if key is same as root's key, then this is the node
             // to be deleted
@@ -182,7 +195,7 @@ public class AVLTree
                 root.key = temp.key;
 
                 // Delete the inorder successor
-                root.right = deleteNode(root.right, temp.key);
+                root.right = delete(root.right, temp.key);
             }
         }
 
@@ -226,13 +239,22 @@ public class AVLTree
     // A utility function to print preorder traversal of
     // the tree. The function also prints height of every
     // node
-    void preOrder(Node node)
+    public void preOrder() {
+        System.out.print("AVL en preorden: ");
+        preOrder(this.root,0);
+        System.out.println();
+    }
+
+    // A utility function to print preorder traversal of
+    // the tree. The function also prints height of every
+    // node
+    public void preOrder(Node node, int nivel)
     {
         if (node != null)
         {
-            System.out.print(node.key + " ");
-            preOrder(node.left);
-            preOrder(node.right);
+            System.out.print(node.key.getEdad() + "("+nivel+")"+ " ");
+            preOrder(node.left,nivel+1);
+            preOrder(node.right,nivel+1);
         }
     }
 }

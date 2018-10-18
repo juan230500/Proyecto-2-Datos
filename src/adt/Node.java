@@ -7,7 +7,7 @@ public class Node {
     int height;
     Node left, right;
 
-    Node(Dragon d)
+    public Node(Dragon d)
     {
         key = d;
         height = 1;

@@ -1,5 +1,7 @@
 package juego;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * 
  */
@@ -9,6 +11,8 @@ public class Dragon {
      * Default constructor
      */
     public Dragon() {
+        //para probar AVL
+        this.edad= ThreadLocalRandom.current().nextInt(0, 100);
     }
 
     /**

@@ -1,35 +1,23 @@
 package adt;
 
-public class SortArray {
-    private int[] arr;
+import juego.Dragon;
 
-    public SortArray(int[] arr) {
+import java.util.Arrays;
+
+public class SortArray {
+    private Dragon[] arr;
+
+    public SortArray(Dragon[] arr) {
         this.arr = arr;
     }
 
-    //https://www.geeksforgeeks.org/insertion-sort/
-    void InsertionSort()
-    {
-        int n = arr.length;
-        for (int i=1; i<n; ++i)
-        {
-            int key = arr[i];
-            int j = i-1;
-
-            /* Move elements of arr[0..i-1], that are
-               greater than key, to one position ahead
-               of their current position */
-            while (j>=0 && arr[j] > key)
-            {
-                arr[j+1] = arr[j];
-                j = j-1;
-            }
-            arr[j+1] = key;
-        }
+    @Override
+    public String toString() {
+        return Arrays.toString(arr);
     }
 
     //https://www.geeksforgeeks.org/selection-sort/
-    void SelectionSort(int arr[])
+    public void SelectionSort()
     {
         int n = arr.length;
 
@@ -39,15 +27,41 @@ public class SortArray {
             // Find the minimum element in unsorted array
             int min_idx = i;
             for (int j = i+1; j < n; j++)
-                if (arr[j] < arr[min_idx])
+                if (arr[j].getEdad() < arr[min_idx].getEdad())
                     min_idx = j;
 
             // Swap the found minimum element with the first
             // element
-            int temp = arr[min_idx];
+            Dragon temp = arr[min_idx];
             arr[min_idx] = arr[i];
             arr[i] = temp;
         }
+    }
+
+    //https://www.geeksforgeeks.org/insertion-sort/
+    public void InsertionSort()
+    {
+        int n = arr.length;
+        for (int i=1; i<n; ++i)
+        {
+            Dragon key = arr[i];
+            int j = i-1;
+
+            /* Move elements of arr[0..i-1], that are
+               greater than key, to one position ahead
+               of their current position */
+            while (j>=0 && arr[j].getRecarga() > key.getRecarga())
+            {
+                arr[j+1] = arr[j];
+                j = j-1;
+            }
+            arr[j+1] = key;
+        }
+    }
+
+
+    public void quickSort() {
+        quickSort(0,arr.length-1 );
     }
 
     //http://www.java2novice.com/java-sorting-algorithms/quick-sort/
@@ -56,7 +70,7 @@ public class SortArray {
         int i = lowerIndex;
         int j = higherIndex;
         // calculate pivot number, I am taking pivot as middle index number
-        int pivot = arr[lowerIndex+(higherIndex-lowerIndex)/2];
+        Dragon pivot = arr[lowerIndex+(higherIndex-lowerIndex)/2];
         // Divide into two arrays
         while (i <= j) {
             /**
@@ -65,10 +79,10 @@ public class SortArray {
              * from right side which is less then the pivot value. Once the search
              * is done, then we exchange both numbers.
              */
-            while (arr[i] < pivot) {
+            while (arr[i].getEdad() < pivot.getEdad()) {
                 i++;
             }
-            while (arr[j] > pivot) {
+            while (arr[j].getEdad() > pivot.getEdad()) {
                 j--;
             }
             if (i <= j) {
@@ -86,7 +100,7 @@ public class SortArray {
     }
 
     private void Swap(int i, int j) {
-        int temp = arr[i];
+        Dragon temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
