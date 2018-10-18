@@ -1,18 +1,40 @@
 package GUI;
 
 import adt.B_tree;
-
+import java.awt.*;
+import javax.swing.*;
 import java.util.*;
 
 /**
  * 
  */
-public class Pantalla {
+public class Pantalla extends JFrame {
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Pantalla frame = new Pantalla();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     /**
      * Default constructor
      */
     public Pantalla() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 1100, 600);
+        setResizable(false);
+        Fondo fondo = new Fondo();
+        add(fondo);
     }
 
     /**
