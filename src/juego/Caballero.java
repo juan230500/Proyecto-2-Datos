@@ -72,11 +72,11 @@ public class Caballero extends JPanel implements KeyListener {
         System.out.print(grifo.getX() + "\t");
         System.out.println(grifo.getY());
     }
+
     /**
      * Verifica cuando se tocan las flechas y cuando se tocan dos de estas al mismo tiempo
      * @param e
      */
-
     public void keyPressed(KeyEvent e) {
         if (grifo.getX() + 5 < 380 && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -4 && grifo.getY() + 5 < 380) {
 
