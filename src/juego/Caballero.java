@@ -53,7 +53,7 @@ public class Caballero extends JPanel implements KeyListener {
                 grifo.setLocation(grifo.getX()-5, grifo.getY());
             }
             else if (e.getKeyChar() == 'd') {
-                grifo.setLocation(grifo.getX()+5, grifo.getY() + 5);
+                grifo.setLocation(grifo.getX()+5, grifo.getY());
             }
         }else {
             if(grifo.getX() + 5 >= 380) {
