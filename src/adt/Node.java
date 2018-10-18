@@ -1,10 +1,13 @@
 package adt;
 
+import juego.Dragon;
+
 public class Node {
-    int key, height;
+    Dragon key;
+    int height;
     Node left, right;
 
-    Node(int d)
+    Node(Dragon d)
     {
         key = d;
         height = 1;

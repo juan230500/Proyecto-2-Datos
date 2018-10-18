@@ -74,14 +74,12 @@ public class Dragon {
     }
 
     public void setHijoDer(Dragon hijoDernuevo) {
-        if(hijoDernuevo!=null)
-            hijoDernuevo.setPadre(this);
+        hijoDernuevo.setPadre(this);
         this.hijoDer = hijoDernuevo;
     }
 
     public void setHijoIz(Dragon hijoIznuevo) {
-        if(hijoIznuevo!=null)
-            hijoIznuevo.setPadre(this);
+        hijoIznuevo.setPadre(this);
         this.hijoIz = hijoIznuevo;
     }
 

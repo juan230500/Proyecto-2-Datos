@@ -1,5 +1,7 @@
 package adt;
 
+import juego.Dragon;
+
 //https://www.geeksforgeeks.org/avl-tree-set-2-deletion/
 public class AVLTree
 {
@@ -65,15 +67,15 @@ public class AVLTree
         return height(N.left) - height(N.right);
     }
 
-    Node insert(Node node, int key)
+    Node insert(Node node, Dragon key)
     {
         /* 1. Perform the normal BST rotation */
         if (node == null)
             return (new Node(key));
 
-        if (key < node.key)
+        if (key.getEdad() < node.key.getEdad())
             node.left = insert(node.left, key);
-        else if (key > node.key)
+        else if (key.getEdad() > node.key.getEdad())
             node.right = insert(node.right, key);
         else // Equal keys not allowed
             return node;
@@ -89,22 +91,22 @@ public class AVLTree
 
         // If this node becomes unbalanced, then
         // there are 4 cases Left Left Case
-        if (balance > 1 && key < node.left.key)
+        if (balance > 1 && key.getEdad() < node.left.key.getEdad())
             return rightRotate(node);
 
         // Right Right Case
-        if (balance < -1 && key > node.right.key)
+        if (balance < -1 && key.getEdad() > node.right.key.getEdad())
             return leftRotate(node);
 
         // Left Right Case
-        if (balance > 1 && key > node.left.key)
+        if (balance > 1 && key.getEdad() > node.left.key.getEdad())
         {
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
 
         // Right Left Case
-        if (balance < -1 && key < node.right.key)
+        if (balance < -1 && key.getEdad() < node.right.key.getEdad())
         {
             node.right = rightRotate(node.right);
             return leftRotate(node);
@@ -129,7 +131,7 @@ public class AVLTree
         return current;
     }
 
-    Node deleteNode(Node root, int key)
+    Node deleteNode(Node root, Dragon key)
     {
         // STEP 1: PERFORM STANDARD BST DELETE
         if (root == null)
@@ -137,12 +139,12 @@ public class AVLTree
 
         // If the key to be deleted is smaller than
         // the root's key, then it lies in left subtree
-        if (key < root.key)
+        if (key.getEdad() < root.key.getEdad())
             root.left = deleteNode(root.left, key);
 
             // If the key to be deleted is greater than the
             // root's key, then it lies in right subtree
-        else if (key > root.key)
+        else if (key.getEdad() > root.key.getEdad())
             root.right = deleteNode(root.right, key);
 
             // if key is same as root's key, then this is the node
