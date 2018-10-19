@@ -8,18 +8,19 @@ import java.awt.event.MouseListener;
 import java.util.concurrent.TimeUnit;
 import java.lang.*;
 
-public class Fondo extends JPanel implements MouseListener {
+public class Fondo extends JPanel{
 
     private boolean juego = true;
     private int var_x = 0;
 
     public Fondo() {
-        setBounds(0, 0, 1100, 600);
+        setBounds(0, 0, 800, 600);
         setBackground(Color.cyan);
-        setMaximumSize(new Dimension(1100, 600));
+        setMaximumSize(new Dimension(800, 600));
+        
 
         }
-
+/*
     public void paintComponent(Graphics g) {
 
         super.paintComponents(g);
@@ -53,5 +54,6 @@ public class Fondo extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+*/
 }
 

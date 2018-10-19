@@ -27,7 +27,13 @@ public class Pantalla extends JFrame {
         setBounds(100, 100, 1100, 600);
         setResizable(false);
         Fondo fondo = new Fondo();
+        InfoLayout i_lay = new InfoLayout();
+        InfoDragon i_dra = new InfoDragon();
+        InfoTree i_tree = new InfoTree();
         add(fondo);
+        add(i_lay);
+        add(i_dra);
+        add(i_tree);
     }
 
     /**
