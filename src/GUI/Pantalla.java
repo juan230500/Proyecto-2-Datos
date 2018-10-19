@@ -23,6 +23,7 @@ public class Pantalla extends JFrame {
      * Default constructor
      */
     public Pantalla() {
+        setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1100, 600);
         setResizable(false);
@@ -30,10 +31,12 @@ public class Pantalla extends JFrame {
         InfoLayout i_lay = new InfoLayout();
         InfoDragon i_dra = new InfoDragon();
         InfoTree i_tree = new InfoTree();
+        JPanel pan = new JPanel();
         add(fondo);
         add(i_lay);
         add(i_dra);
         add(i_tree);
+        add(pan);
     }
 
     /**
