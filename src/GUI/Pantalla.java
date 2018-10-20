@@ -1,6 +1,6 @@
 package GUI;
 
-import adt.B_tree;
+import adt.BTree;
 
 import javax.swing.*;
 import java.awt.*;
