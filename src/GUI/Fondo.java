@@ -2,61 +2,54 @@ package GUI;
 
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.concurrent.TimeUnit;
 import java.lang.*;
 
-public class Fondo extends JPanel implements KeyListener{
+public class Fondo extends JPanel{
 
     private boolean juego = true;
-    private int c = 0;
     private JLabel label = new JLabel();
+    private JLabel label2 = new JLabel();
 
     public Fondo() {
         setLayout(null);
         setBounds(0, 0, 800, 600);
-        setBackground(Color.cyan);
         setMaximumSize(new Dimension(800, 600));
-        addKeyListener(this);
-        setFocusable(true);
+
         //ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/fondo.png");
-        label.setText("PRUEBA");
-        label.setBounds(0, 0-100,1200, 800);
+
+        label.setText("FONDO DE PRUEBA");
+        label.setFont(new Font("Comic Sans MS", Font.PLAIN, 40));
+        //label.setIcon(imagen);
+        label.setBounds(0, -100,1200, 800);
+
+        label2.setText("FONDO DE PRUEBA");
+        label2.setFont(new Font("Comic Sans MS", Font.PLAIN, 40));
+        //label2.setIcon(imagen);
+        label2.setBounds(1200,-100,1200,800);
+
         add(label);
+        add(label2);
+
+        Hilo_F hilo = new Hilo_F(this);
+
     }
     public void comenzar_juego(){
 
-        while(true){
-            label.setLocation(getX()+1 , 0);
+        while(juego){
+            if (label.getX() <= -1200){
+                label.setLocation(label2.getX()+1200,label2.getY());
+            }
+            if (label2.getX() <= -1200){
+                label2.setLocation(label.getX()+1200,label.getY());
+            }
+            label.setLocation(label.getX() - 5, label.getY());
+            label2.setLocation(label2.getX() - 5, label2.getY());
             try {
-                Thread.sleep(100);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
-        }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyChar() == 'a') {
-            label.setLocation(label.getX() - 5, label.getY());
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }
-
