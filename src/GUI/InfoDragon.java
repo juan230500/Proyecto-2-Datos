@@ -9,7 +9,7 @@ public class InfoDragon extends JPanel {
 
     public InfoDragon() {
         setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "Información del Dragón", TitledBorder.CENTER, TitledBorder.TOP, null, Color.white));
-        setBounds(800, 100, 300, 200);
+        setBounds(1366-400, 150, 400, 250);
         setBackground(Color.darkGray);
 
     }

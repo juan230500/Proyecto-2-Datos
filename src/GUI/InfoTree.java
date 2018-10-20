@@ -9,6 +9,6 @@ public class InfoTree extends JPanel {
     public InfoTree() {
         setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "Información del Árbol", TitledBorder.CENTER, TitledBorder.TOP, null, Color.white));
         setBackground(Color.darkGray);
-        setBounds(800, 300, 300, 300);
+        setBounds(1366-400, 400, 400, 768-400);
     }
 }

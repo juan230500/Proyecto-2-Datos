@@ -9,7 +9,7 @@ public class InfoLayout extends JPanel {
 
     public InfoLayout(){
         setBorder(new TitledBorder(new LineBorder(new Color(255, 255, 255)), "Información del Acomodo", TitledBorder.CENTER, TitledBorder.TOP, null, Color.white));
-        setBounds(799, 0, 300, 100);
+        setBounds(1366-400, 0, 400, 150);
         setBackground(Color.darkGray);
     }
 }

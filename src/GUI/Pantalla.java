@@ -25,7 +25,7 @@ public class Pantalla extends JFrame {
     public Pantalla() {
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1100, 600);
+        setBounds(0, 0, 1366, 768);
         setResizable(false);
         Fondo fondo = new Fondo();
         InfoLayout i_lay = new InfoLayout();

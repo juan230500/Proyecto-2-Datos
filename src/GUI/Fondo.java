@@ -13,7 +13,7 @@ public class Fondo extends JPanel{
 
     public Fondo() {
         setLayout(null);
-        setBounds(0, 0, 800, 600);
+        setBounds(0, 0, 1366-400, 768);
         setMaximumSize(new Dimension(800, 600));
 
         //ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/fondo.png");
