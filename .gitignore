@@ -1,5 +1,9 @@
 **/.idea
+**/.classpath
+**/out
+**/bin
 *.iml
+*.project
 
 
 # Compiled class file
