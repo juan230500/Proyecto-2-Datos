@@ -20,12 +20,6 @@ public class Caballero {
      */
     private LinkedList dragonesQuePasaron;
 
-
-
-
-
-
-
     /**
      * 
      */

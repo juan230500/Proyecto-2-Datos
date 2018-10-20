@@ -7,6 +7,8 @@ public class Oleada {
     private int CantidadDragones;
     private int Formacion;
     private int edadt;
+    private Dragon[] DragonesDibujar;
+    private Node rootAVL;
 
     /**
      * Constructor de las oleadas que toma la cantidad deseada y se apoya en genDragones
@@ -33,22 +35,35 @@ public class Oleada {
         }
     }
 
+    public int getFormacion() {
+        return Formacion;
+    }
+
     /**
      * Se activa cuando un dragón es impactado y recurre a uno de sus métodos
      * para reducir su resistencia y si muere se aplica una eliminación y se realinea la oleada
      * @param Herido
      */
-    public void HerirDragon(Dragon Herido){
+    public int HerirDragon(Dragon Herido){
         if (Herido==null){
-            return;
+            return -1;
         }
         boolean Realinear=Herido.RecibirDano();
         if (Realinear){
             //Se elimina el dragón y se le asigna otro padre o otros hijos
             delete(Herido);
             this.CantidadDragones--;
-            Realinear();
+            return Realinear();
         }
+        return 5;
+    }
+
+    public Dragon[] getDragonesDibujar() {
+        return DragonesDibujar;
+    }
+
+    public Node getRootAVL() {
+        return rootAVL;
     }
 
     /**
@@ -57,7 +72,7 @@ public class Oleada {
      * por ahora imprime la alineacion de dragones resultante
      * pero no cambia nada de los dragones ya que no es necesario
      */
-    public void Realinear(){
+    public int Realinear(){
         this.Formacion++;
 
         int criterio=Formacion%5;
@@ -68,11 +83,14 @@ public class Oleada {
             //No es necesario hacer delete en AVL porque simplemente ese dragón no se inserta en el nuevo AVL
             tree.preOrder();
             //display de AVL
+            rootAVL=tree.getRoot();
+            return 4;
         }
         //Familias
         else if(criterio==3){
             //Display de familias
             displayFamilias();
+            return 3;
         }
         else {
             SortArray ArrayOrdenar=new SortArray(this.toArray());
@@ -94,6 +112,8 @@ public class Oleada {
                 ArrayOrdenar.SelectionSort();
                 System.out.println("DESPUÉS DE SELECTION: "+ArrayOrdenar.toString());
             }
+            DragonesDibujar=ArrayOrdenar.getArr();
+            return 0;
             //Display del array (lineal)
         }
     }
@@ -125,11 +145,21 @@ public class Oleada {
     public void display(Dragon node, int nivel) {
         if (node != null) {
             display(node.getHijoIz(),nivel+1);
-            System.out.println(node
-                    +" Edad: "+node.getEdad()
-                    +" Recarga "+node.getRecarga()
-                    +" Resistencia "+node.getResistencia()
-                    +" Hijo de "+node.getPadre());
+            if (node.getPadre()==null){
+                System.out.println(node
+                        +" Edad: "+node.getEdad()
+                        +" Recarga "+node.getRecarga()
+                        +" Resistencia "+node.getResistencia()
+                        +" Hijo de "+node.getPadre());
+            }
+            else{
+                System.out.println(node
+                        +" Edad: "+node.getEdad()
+                        +" Recarga "+node.getRecarga()
+                        +" Resistencia "+node.getResistencia()
+                        +" Hijo de "+node.getPadre().getEdad());
+            }
+
             display(node.getHijoDer(),nivel+1);
         }
     }

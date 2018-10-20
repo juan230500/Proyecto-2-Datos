@@ -1,6 +1,5 @@
 package GUI;
 
-import adt.LinkedList;
 import adt.Oleada;
 import juego.Dragon;
 
@@ -89,7 +88,7 @@ class Pane extends JPanel implements ActionListener {
     private int margen;
     private Oleada OleadaDibujar;
     private boolean[] Bloqueos;
-    private int Formacion;
+    private int criterio;
 
     public Pane(){
         setBounds(0,0,800,600);
@@ -98,7 +97,7 @@ class Pane extends JPanel implements ActionListener {
         repaint();
 
         next = new JButton("Next");
-        next.setBounds(125,125,100,30);
+        next.setBounds(10,10,100,30);
         next.addActionListener(this);
         add(next);
 
@@ -115,13 +114,22 @@ class Pane extends JPanel implements ActionListener {
         Object source = e.getSource();
         if (source == next){
             Graphics g = this.getGraphics();
-            if (Formacion<3){
-                Formacion++;
-                drawing(g);
+            criterio=OleadaDibujar.HerirDragon(OleadaDibujar.getRoot());
+            OleadaDibujar.display();
+            if (criterio==5){
+
             }
-            else {
-                Formacion=0;
-                drawing2(g);
+            else if (criterio==4){
+                DrawABB(g);
+            }
+            else if (criterio==3){
+                DrawABB(g);
+            }
+            else if(criterio>=0) {
+                DrawArray(g);
+            }
+            else{
+
             }
         }
     }
@@ -130,7 +138,7 @@ class Pane extends JPanel implements ActionListener {
 
     }
 
-    public void drawing2(Graphics g){
+    public void DrawABB(Graphics g){
         g.setColor(Color.WHITE);
         g.fillRect(0,0,800,600);
 
@@ -138,28 +146,63 @@ class Pane extends JPanel implements ActionListener {
 
         Dragon cabeza=OleadaDibujar.getRoot();
 
-        int margenlocal=margen;
+        int yi=275;
+        int xi=margen*120;
 
-        g.drawRect(100+ margenlocal *120,200,100,25);
+        g.drawRect(xi,yi,100,25);
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 10));
+        g.setFont(new Font("Calibri", Font.PLAIN, 12));
 
-        g.drawString(""+cabeza,110+margenlocal *120,210);
+        g.drawString(""+cabeza.getEdad(),xi,yi+20);
+
+        dibujarArbol(g,cabeza,2,xi,yi);
 
     }
 
-    public void dibujarHijos(Graphics g){
-
+    public void dibujarArbol(Graphics g,Dragon root,int nivel,int x,int y){
+        if (root!=null){
+            dibujarArbol(g,root.getHijoDer(),1+nivel,x+200, y-(600)/(int)Math.pow(2,nivel));
+            dibujarHijos(g,root,nivel,x,y);
+            dibujarArbol(g,root.getHijoIz(),1+nivel,x+200, y+(600)/(int)Math.pow(2,nivel));
+        }
     }
 
-    public void drawing(Graphics g){
+    public void dibujarHijos(Graphics g,Dragon root,int nivel,int x,int y){
+        int xi=x+200;
+        int yi=y-(600)/(int)Math.pow(2,nivel);
+
+        g.drawRect(xi,yi,100,25);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+        if (root.getHijoDer()==null){
+            g.drawString(""+root.getHijoDer(),xi,yi+20);
+        }
+        else{
+            g.drawString(""+root.getHijoDer().getEdad(),xi,yi+20);
+        }
+
+
+        yi=y+(600)/(int)Math.pow(2,nivel);
+
+        g.drawRect(xi,yi,100,25);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+
+        if (root.getHijoIz()==null){
+            g.drawString(""+root.getHijoIz(),xi,yi+20);
+        }
+        else{
+            g.drawString(""+root.getHijoIz().getEdad(),xi,yi+20);
+        }
+    }
+
+    public void DrawArray(Graphics g){
         g.setColor(Color.WHITE);
         g.fillRect(0,0,800,600);
 
         g.setColor(Color.BLACK);
 
-        OleadaDibujar.HerirDragon(OleadaDibujar.getRoot());
-        Dragon[] D=OleadaDibujar.toArray();
+        Dragon[] D= OleadaDibujar.getDragonesDibujar();
         int largo=D.length;
         int margenlocal=margen;
         int pos=0;
@@ -171,7 +214,7 @@ class Pane extends JPanel implements ActionListener {
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 10));
 
-            g.drawString(""+D[pos],110+ margenlocal *120,22+fila*50);
+            g.drawString(""+D[pos].getEdad(),110+ margenlocal *120,22+fila*50);
 
             if (Bloqueos[pos]){
                 fila+=2;

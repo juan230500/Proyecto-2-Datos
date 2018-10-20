@@ -104,4 +104,8 @@ public class SortArray {
         arr[i] = arr[j];
         arr[j] = temp;
     }
+
+    public Dragon[] getArr() {
+        return arr;
+    }
 }

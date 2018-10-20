@@ -181,4 +181,8 @@ public class AVLTree
             preOrder(node.right,node);
         }
     }
+
+    public Node getRoot() {
+        return root;
+    }
 }
