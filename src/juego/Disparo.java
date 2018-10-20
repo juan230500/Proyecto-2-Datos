@@ -9,46 +9,59 @@ import java.util.*;
  * @version 20.10.2018
  */
 public class Disparo {
-    private float Velocidad=5;
+    private float Velocidad = 5;
     private int PosX;
     private int PosY;
-    private JLabel bola =new JLabel("o");
+    private JLabel bola = new JLabel("o");
+    private boolean en_aire;
 
     /**
      * Default constructor
      */
     public Disparo(int posX, int posY) {
-        this.PosX=posX;
-        this.PosY=posY;
+        this.PosX = posX;
+        this.PosY = posY;
+        this.en_aire = false;
 
     }
 
     /**
-     *Getter
+     * Getter
+     *
      * @return bola
      */
-    public JLabel getBola(){
+    public JLabel getBola() {
         return this.bola;
     }
 
     /**
-     *Detecta si una bala colisiona con un dragon
+     * Detecta si una bala colisiona con un dragon
+     *
      * @param dragon
      * @return boolean
      */
-    public boolean DetectarColision(JLabel dragon) throws InterruptedException {
-        while(this.PosX<=500){
-            if(this.PosY>= dragon.getY() && this.PosY<= dragon.getY()+dragon.getHeight() && this.PosX>= dragon.getX()){
+    public boolean DetectarColision(JLabel dragon) {
+        while (this.PosX <= 500) {
+            if (this.PosY >= dragon.getY() && this.PosY <= dragon.getY() + dragon.getHeight() && this.PosX >= dragon.getX()) {
                 this.PosX = 501;
+                en_aire = false;
                 return true;
             }
-            else{
-                this.PosX+= this.Velocidad;
-                bola.setLocation(this.PosX,this.PosY);
-                Thread.sleep(7);
-            }
         }
+        en_aire = true;
         return false;
     }
 
+    public void moverDisparo() {
+        while (PosX <= 500) {
+            this.PosX += this.Velocidad;
+            bola.setLocation(this.PosX, this.PosY);
+            try {
+                Thread.sleep(7);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }
