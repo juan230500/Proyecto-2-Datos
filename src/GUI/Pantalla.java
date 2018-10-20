@@ -144,7 +144,7 @@ class Pane extends JPanel implements ActionListener {
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 10));
 
-        g.drawString(""+cabeza,110+ margenlocal *120,200);
+        g.drawString(""+cabeza,110+margenlocal *120,210);
 
     }
 

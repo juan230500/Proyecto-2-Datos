@@ -39,6 +39,9 @@ public class Oleada {
      * @param Herido
      */
     public void HerirDragon(Dragon Herido){
+        if (Herido==null){
+            return;
+        }
         boolean Realinear=Herido.RecibirDano();
         if (Realinear){
             //Se elimina el dragón y se le asigna otro padre o otros hijos
