@@ -28,8 +28,7 @@ public class Oleada {
      */
     private void genDragones(int Cantidad){
         while (Cantidad>0){
-            edadt++;
-            add(new Dragon(edadt));
+            add(new Dragon());
             Cantidad--;
         }
     }
@@ -135,8 +134,7 @@ public class Oleada {
 
     Dragon addRecursive(Dragon current, Dragon value) {
         if (current == null) {
-            edadt++;
-            return new Dragon(edadt);
+            return value;
         }
         if (value.getEdad() < current.getEdad()) {
             current.setHijoIz(addRecursive(current.getHijoIz(), value));
@@ -200,6 +198,7 @@ public class Oleada {
         if (Herido.getHijoDer()==null){
             if (padre==null){
                 this.root=Herido.getHijoIz();
+                this.root.setPadre(null);
             }
             else if (isHijoIz){
                 padre.setHijoIz(Herido.getHijoIz());
@@ -212,6 +211,7 @@ public class Oleada {
         if (Herido.getHijoIz()==null){
             if (padre==null){
                 this.root=Herido.getHijoDer();
+                this.root.setPadre(null);
             }
             else if (isHijoIz){
                 padre.setHijoIz(Herido.getHijoDer());
@@ -267,6 +267,9 @@ public class Oleada {
      */
     public Dragon[] toArray(){
         Dragon[] ArrayDragones=new Dragon[this.CantidadDragones];
+        if (this.root == null) {
+            return ArrayDragones;
+        }
         extractValues(this.root,ArrayDragones,0);
         return ArrayDragones;
     }

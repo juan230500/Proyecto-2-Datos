@@ -11,9 +11,20 @@ public class Dragon {
      * Default constructor
      */
 
-    public Dragon(int edadt) {
+    public Dragon() {
         //para probar lógica
-        this.edad= edadt=ThreadLocalRandom.current().nextInt(1, 1000);
+        this.edad= ThreadLocalRandom.current().nextInt(1, 1000);
+        this.recarga=ThreadLocalRandom.current().nextInt(1, 100);
+        //Probar eliminación
+        this.resistencia=ThreadLocalRandom.current().nextInt(1,3);
+    }
+
+    /**
+     * Default constructor
+     */
+
+    public Dragon(int edadt) {
+        this.edad= edadt;
         this.recarga=ThreadLocalRandom.current().nextInt(1, 100);
         //Probar eliminación
         this.resistencia=ThreadLocalRandom.current().nextInt(1,3);

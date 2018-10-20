@@ -89,6 +89,7 @@ class Pane extends JPanel implements ActionListener {
     private int margen;
     private Oleada OleadaDibujar;
     private boolean[] Bloqueos;
+    private int Formacion;
 
     public Pane(){
         setBounds(0,0,800,600);
@@ -107,17 +108,47 @@ class Pane extends JPanel implements ActionListener {
         Bloqueos[2]=true;
         Bloqueos[5]=true;
 
+        OleadaDibujar.display();
     }
 
     public void actionPerformed (ActionEvent e){
         Object source = e.getSource();
         if (source == next){
             Graphics g = this.getGraphics();
-            drawing(g);
+            if (Formacion<3){
+                Formacion++;
+                drawing(g);
+            }
+            else {
+                Formacion=0;
+                drawing2(g);
+            }
         }
     }
 
     public void paintComponent(Graphics g){
+
+    }
+
+    public void drawing2(Graphics g){
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,800,600);
+
+        g.setColor(Color.BLACK);
+
+        Dragon cabeza=OleadaDibujar.getRoot();
+
+        int margenlocal=margen;
+
+        g.drawRect(100+ margenlocal *120,200,100,25);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 10));
+
+        g.drawString(""+cabeza,110+ margenlocal *120,200);
+
+    }
+
+    public void dibujarHijos(Graphics g){
 
     }
 
@@ -156,6 +187,7 @@ class Pane extends JPanel implements ActionListener {
                 margenlocal++;
             }
         }
+        OleadaDibujar.display();
         //this.margen++;
     }
 
