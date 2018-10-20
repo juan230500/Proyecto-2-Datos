@@ -1,6 +1,8 @@
 package GUI;
 
-import adt.BTree;
+import adt.LinkedList;
+import adt.Oleada;
+import juego.Dragon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,8 +26,6 @@ public class Pantalla {
     }
 
     private String Imagen;
-
-    private B_tree ArbolB_edad;
 
     public void Avanzar() {
         // TODO implement here
@@ -86,7 +86,9 @@ class MarcoCliente extends JFrame{
 class Pane extends JPanel implements ActionListener {
 
     private JButton next;
-    private int col;
+    private int margen;
+    private Oleada OleadaDibujar;
+    private boolean[] Bloqueos;
 
     public Pane(){
         setBounds(0,0,800,600);
@@ -99,7 +101,11 @@ class Pane extends JPanel implements ActionListener {
         next.addActionListener(this);
         add(next);
 
-        this.col=0;
+        this.margen =0;
+        this.OleadaDibujar=new Oleada(25);
+        this.Bloqueos=new boolean[25];
+        Bloqueos[2]=true;
+        Bloqueos[5]=true;
 
     }
 
@@ -107,7 +113,7 @@ class Pane extends JPanel implements ActionListener {
         Object source = e.getSource();
         if (source == next){
             Graphics g = this.getGraphics();
-            drawing(g,col);
+            drawing(g);
         }
     }
 
@@ -115,16 +121,42 @@ class Pane extends JPanel implements ActionListener {
 
     }
 
-    public void drawing(Graphics g,int col){
-        int aco=100;
-        for (int i=0;i<15;i++){
-            g.drawRect(100+col*100,10+i*35,100,25);
+    public void drawing(Graphics g){
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,800,600);
 
-            g.drawString("Hola"+aco,120+col*100,22+i*35);
+        g.setColor(Color.BLACK);
 
-            aco+=aco*.2;
+        OleadaDibujar.HerirDragon(OleadaDibujar.getRoot());
+        Dragon[] D=OleadaDibujar.toArray();
+        int largo=D.length;
+        int margenlocal=margen;
+        int pos=0;
+        int fila=0;
+
+        while (pos<largo){
+
+            g.drawRect(100+ margenlocal *120,10+fila*50,100,25);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 10));
+
+            g.drawString(""+D[pos],110+ margenlocal *120,22+fila*50);
+
+            if (Bloqueos[pos]){
+                fila+=2;
+            }
+            else{
+                fila++;
+            }
+
+            pos++;
+
+            if (fila>9){
+                fila=0;
+                margenlocal++;
+            }
         }
-        this.col++;
+        //this.margen++;
     }
 
 }

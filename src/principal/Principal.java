@@ -23,7 +23,6 @@ public class Principal {
         O.HerirDragon(D[2]);
         O.HerirDragon(D[3]);
         O.HerirDragon(D[3]);
-
     }
 }
 

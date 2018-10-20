@@ -225,12 +225,23 @@ public class Oleada {
             Dragon minv = Herido.getHijoDer();
             while (minv.getHijoIz() != null)
             {
-                minv = root.getHijoIz();
+                minv = minv.getHijoIz();
             }
-            minv.setHijoDer(this.root.getHijoDer());
-            minv.setHijoIz(this.root.getHijoIz());
-            this.root=minv;
             delete(minv);
+            minv.setHijoDer(Herido.getHijoDer());
+            minv.setHijoIz(Herido.getHijoIz());
+
+            if (padre==null){
+                minv.setPadre(null);
+                this.root=minv;
+            }
+            else if (isHijoIz){
+                padre.setHijoIz(minv);
+            }
+            else{
+                padre.setHijoDer(minv);
+            }
+
         }
     }
 
@@ -305,6 +316,10 @@ public class Oleada {
 
     public int getCantidadDragones() {
         return CantidadDragones;
+    }
+
+    public Dragon getRoot() {
+        return root;
     }
 }
 
