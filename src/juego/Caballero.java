@@ -77,13 +77,19 @@ public class Caballero extends JPanel implements KeyListener {
     }
 
     /**
-     * Verifica cuando se tocan las flechas y cuando se tocan dos de estas al mismo tiempo, verifica que no exista colision y si la hay "resetea" al caballero
+     * Verifica cuando se tocan las flechas y cuando se tocan dos de estas al mismo tiempo, verifica que no exista colision y si la hay "resetea" al caballero y detecta cuando se ataca
      * @param e
      */
     public void keyPressed(KeyEvent e) {
         if (this.choque== false) {
             if (grifo.getX() + 5 < 380 && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -4 && grifo.getY() + 5 < 380) {
-
+                if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
+                    try {
+                        atacar();
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 if (e.getExtendedKeyCode() == KeyEvent.VK_UP && e.getExtendedKeyCode() == KeyEvent.VK_LEFT) {
                     grifo.setLocation(grifo.getX() - 5, grifo.getY() - 5);
                 }
@@ -132,10 +138,13 @@ public class Caballero extends JPanel implements KeyListener {
     private LinkedList dragonesQuePasaron;
 
     /**
-     * 
+     * Crea un objeto Disparo, verifica si este colisiono con un dragon y si lo hizo disminuye la vida de dicho dragon
      */
-    public void atacar() {
-        // TODO implement here
+    public void atacar() throws InterruptedException {
+        Disparo d= new Disparo(this.grifo.getX()+this.grifo.getWidth(),this.grifo.getY()+(this.grifo.getHeight()/2));
+        if(d.DetectarColision(dragonX)){
+            dragonX.setResistencia(dragonX.getResistencia-1);
+        }
     }
 
     /**
