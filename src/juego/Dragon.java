@@ -1,5 +1,7 @@
 package juego;
 
+import adt.LinkedList;
+
 /**
  * 
  */
@@ -11,7 +13,7 @@ public class Dragon {
     private int resistencia;
     private String clase;
     private Dragon padre;
-    private Dragon hijos;
+    private LinkedList hijos = new LinkedList();
 
     /**
      * Default constructor
@@ -79,7 +81,11 @@ public class Dragon {
 
 
     public Dragon getPadre() {
-        return padre;
+        try {
+            return padre;
+        } catch (NullPointerException exception){
+            return null;
+        }
     }
 
 
@@ -88,13 +94,13 @@ public class Dragon {
     }
 
 
-    public Dragon getHijos() {
+    public LinkedList getHijos() {
         return hijos;
     }
 
 
-    public void setHijos(Dragon hijos) {
-        this.hijos = hijos;
+    public void setHijo(Dragon hijo) {
+        this.hijos.insertFirst(hijo);
     }
 
 

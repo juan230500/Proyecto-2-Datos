@@ -2,15 +2,69 @@ package juego;
 
 import adt.LinkedList;
 
+import java.util.Random;
+
 public class Dragones {
 
     private LinkedList lista_dragones = new LinkedList();
+    private LinkedList edades = new LinkedList();
 
     public Dragones(int cantidad){
 
+        int c = 1;
+
         while (cantidad > 0){
             Dragon dragon = new Dragon();
+            dragon.setNombre("Dragon"+ c);
+
+            asignarPadres(c,dragon);
+            asignarRecarga(dragon);
+            asignarResistencia(dragon);
+            asignarEdad(dragon);
+
             cantidad --;
+            c++;
+
+            lista_dragones.insertLast(dragon);
         }
+    }
+
+    private void asignarPadres(int c, Dragon dragon){
+        if (c == 1){
+            dragon.setPadre(null);
+
+        }else{
+            Random random = new Random();
+            Dragon aleatorio = (Dragon) lista_dragones.recorrer(random.nextInt(lista_dragones.getSize()));
+            if (aleatorio.getHijos().getSize() < 2) {
+                dragon.setPadre(aleatorio);
+                aleatorio.setHijo(dragon);
+            } else{
+                asignarPadres(c,dragon);
+            }
+        }
+
+    }
+
+    private void asignarRecarga(Dragon dragon){
+        Random random = new Random();
+        dragon.setRecarga(random.nextInt(100)+1);
+    }
+
+    private void asignarResistencia(Dragon dragon) {
+        Random random = new Random();
+        dragon.setResistencia(random.nextInt(3) + 1);
+    }
+
+    private void asignarEdad(Dragon dragon){
+        Random random = new Random();
+        int edad = (random.nextInt(1000)+1);
+        if (edades.find(edad) == null){
+            dragon.setEdad(edad);
+        }
+    }
+
+    public LinkedList getLista_dragones() {
+        return lista_dragones;
     }
 }
