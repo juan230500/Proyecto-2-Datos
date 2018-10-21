@@ -17,7 +17,7 @@ public class Hilos implements Runnable {
                 Marco.moverlabel1();
                 System.out.println("muevo el dragon1");
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -28,7 +28,7 @@ public class Hilos implements Runnable {
                 Marco.moverlabel2();
                 System.out.println("muevo el dragon2");
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
