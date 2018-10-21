@@ -31,7 +31,7 @@ public class Hilo_F implements Runnable {
             }
         } else {
             while(true) {
-                Disparo1.moverDisparo();
+               // Disparo1.moverDisparo();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

@@ -21,10 +21,12 @@ public class Fondo extends JPanel implements KeyListener {
     private JLabel etiqueta2 =new JLabel();
     private int x1=1000;
     private int x2=1000;
+    private int largo = 1366-400;
+    private int alto = 768;
 
     public Fondo() {
         setLayout(null);
-        setBounds(0, 0, 1366-400, 768);
+        setBounds(0, 0, largo, alto);
         setMaximumSize(new Dimension(800, 600));
 
         //ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/fondo.png");
@@ -108,7 +110,7 @@ public class Fondo extends JPanel implements KeyListener {
         System.out.println("ohh");
         //JLabel grifo = caballero.getLabel();
         if (caballero.isChoque()== false) {
-            if (grifo.getX() + 5 < 380 && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -4 && grifo.getY() + 5 < 380) {
+            if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
                 if (e.getKeyChar() == 'w' && e.getKeyChar() == 'd') {
                     grifo.setLocation(grifo.getX() + 5, grifo.getY() - 5);
                 }
@@ -130,19 +132,20 @@ public class Fondo extends JPanel implements KeyListener {
                     grifo.setLocation(grifo.getX() + 5, grifo.getY());
                 }
             } else {
-                if (grifo.getX() + 5 >= 380) {
-                    grifo.setLocation(374, grifo.getY());
-                } else if (grifo.getX() - 5 <= -4) {
-                    grifo.setLocation(2, grifo.getY());
-                } else if (grifo.getY() + 5 >= 380) {
-                    grifo.setLocation(grifo.getX(), 374);
-                } else if (grifo.getY() - 5 <= -4) {
-                    grifo.setLocation(grifo.getX(), 6);
+                if (grifo.getX()+80 + 5 >= largo) {
+                    grifo.setLocation(largo-86, grifo.getY());
+                } else if (grifo.getX() - 5 <= -5) {
+                    grifo.setLocation(1, grifo.getY());
+                } else if ( grifo.getY()+50 + 5  >= alto) {
+                    grifo.setLocation(grifo.getX(), alto-56);
+                } else if (grifo.getY() - 5 <= -5) {
+                    grifo.setLocation(grifo.getX(), 1);
                 }
             }
             System.out.print(grifo.getX() + "\t");
             System.out.println(grifo.getY());
-            caballero.colisionEnem(new JLabel());
+            caballero.colisionEnem(etiqueta);
+            caballero.colisionEnem(etiqueta2);
         }
         else{
             caballero.setChoque(false);
@@ -157,9 +160,9 @@ public class Fondo extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         //JLabel grifo = caballero.getLabel();
         if (caballero.isChoque()== false) {
-            if (grifo.getX() + 5 < 380 && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -4 && grifo.getY() + 5 < 380) {
+            if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
                 if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
-                    caballero.atacar(lbl);
+                    caballero.atacar(etiqueta2);
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
                     //caballero.getDisparo().setLocation(20,20);
@@ -185,19 +188,20 @@ public class Fondo extends JPanel implements KeyListener {
                     grifo.setLocation(grifo.getX() + 5, grifo.getY());
                 }
             } else {
-                if (grifo.getX() + 5 >= 380) {
-                    grifo.setLocation(374, grifo.getY());
-                } else if (grifo.getX() - 5 <= -4) {
-                    grifo.setLocation(2, grifo.getY());
-                } else if (grifo.getY() + 5 >= 380) {
-                    grifo.setLocation(grifo.getX(), 374);
-                } else if (grifo.getY() - 5 <= -4) {
-                    grifo.setLocation(grifo.getX(), 6);
+                if (grifo.getX()+80 + 5 >= largo) {
+                    grifo.setLocation(largo-86, grifo.getY());
+                } else if (grifo.getX() - 5 <= -5) {
+                    grifo.setLocation(1, grifo.getY());
+                } else if ( grifo.getY()+50 + 5  >= alto) {
+                    grifo.setLocation(grifo.getX(), alto-56);
+                } else if (grifo.getY() - 5 <= -5) {
+                    grifo.setLocation(grifo.getX(), 1);
                 }
             }
             System.out.print(grifo.getX() + "\t");
             System.out.println(grifo.getY());
-            caballero.colisionEnem(new JLabel());
+            caballero.colisionEnem(etiqueta);
+            caballero.colisionEnem(etiqueta2);
         }
         else{
             caballero.setChoque(false);

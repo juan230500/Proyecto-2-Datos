@@ -170,7 +170,8 @@ public class Caballero {
         Disparo d = new Disparo(this.grifo.getX()+this.grifo.getWidth(),this.grifo.getY()+(this.grifo.getHeight()/2));
         this.disparo = d.getBola();
 
-        Hilo_D hilo2 = new Hilo_D(d);
+        Hilo_D hilo2 = new Hilo_D(d,dragonX);
+
 /*
         if (d.DetectarColision(dragonX)) {
             System.out.println("lo mató xd");
