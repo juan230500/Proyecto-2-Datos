@@ -1,11 +1,11 @@
 package GUI;
 public class Hilos implements Runnable {
     private int op;
-    Marco Marco;
-    public  Hilos(Marco Marco1,int opcion){
+    Fondo fondo1;
+    public  Hilos(Fondo f ,int opcion){
         Thread hilo= new Thread(this);
         op=opcion;
-        Marco=Marco1;
+        fondo1 = f;
         hilo.start();
 
 
@@ -14,7 +14,7 @@ public class Hilos implements Runnable {
     public void run() {
         if (op==1){
             while(true){
-                Marco.moverlabel1();
+                fondo1.moverlabel1();
                 System.out.println("muevo el dragon1");
                 try {
                     Thread.sleep(20);
@@ -25,7 +25,7 @@ public class Hilos implements Runnable {
         }
         if (op==2){
             while(true){
-                Marco.moverlabel2();
+                fondo1.moverlabel2();
                 System.out.println("muevo el dragon2");
                 try {
                     Thread.sleep(20);

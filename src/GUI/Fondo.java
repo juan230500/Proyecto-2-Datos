@@ -17,6 +17,10 @@ public class Fondo extends JPanel implements KeyListener {
     private JLabel lbl = new JLabel();
     private Caballero caballero = new Caballero();
     private JLabel grifo = caballero.getLabel();
+    private JLabel etiqueta =new JLabel();
+    private JLabel etiqueta2 =new JLabel();
+    private int x1=1000;
+    private int x2=1000;
 
     public Fondo() {
         setLayout(null);
@@ -45,10 +49,37 @@ public class Fondo extends JPanel implements KeyListener {
 
         addKeyListener(this);
         setFocusable(true);
+        crearLabel();
 
+        Hilos hilito1=new Hilos(this,1);
+        Hilos hilito2=new Hilos(this,2);
         Hilo_F hilo = new Hilo_F(this);
 
     }
+
+    public void crearLabel(){
+
+        etiqueta.setText("Dragon");
+        etiqueta2.setText("Dragon2");
+        etiqueta.setBounds(x1,300,60,60);
+        etiqueta2.setBounds(x2,450,60,60);
+        this.add(etiqueta);
+        this.add(etiqueta2);
+
+    }
+    public void moverlabel1(){
+        etiqueta.setLocation(x1,etiqueta.getY());
+        System.out.println("muevo al dragon 1");
+        x1 -= 1;
+
+    }
+    public void moverlabel2(){
+        etiqueta2.setLocation(x2,etiqueta2.getY());
+        System.out.println("muevo al dragon 1");
+        x2 -= 1;
+
+    }
+
     public void comenzar_juego(){
 
         while(juego){
