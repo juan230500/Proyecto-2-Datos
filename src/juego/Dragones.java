@@ -2,21 +2,24 @@ package juego;
 
 import adt.LinkedList;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class Dragones {
 
     private LinkedList lista_dragones = new LinkedList();
     private LinkedList edades = new LinkedList();
+    private HashMap letras = new HashMap();
 
     public Dragones(int cantidad){
-
+        letras.put("voc","AEIOU");
+        letras.put("con","BCDFGJKLMNPRSTVWYZ");
         int c = 1;
 
         while (cantidad > 0){
             Dragon dragon = new Dragon();
-            dragon.setNombre("Dragon"+ c);
 
+            asignarNombre(dragon);
             asignarPadres(c,dragon);
             asignarRecarga(dragon);
             asignarResistencia(dragon);
@@ -44,6 +47,20 @@ public class Dragones {
             }
         }
 
+    }
+
+    public  void asignarNombre(Dragon dragon){
+        Random random = new Random();
+        String res = "";
+        for (int i = 3; i > 0; i--){
+            int r1 = random.nextInt(17);
+            int r2 = random.nextInt(4);
+            String letra1 = letras.get("con").toString().substring(r1, r1 + 1);
+            String letra2 = letras.get("voc").toString().substring(r2, r2 + 1);
+            String letras = letra1.concat(letra2);
+            res = res.concat(letras);
+        }
+        dragon.setNombre(res);
     }
 
     private void asignarRecarga(Dragon dragon){
