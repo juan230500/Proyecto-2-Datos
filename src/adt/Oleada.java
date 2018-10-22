@@ -158,7 +158,7 @@ public class Oleada {
                         +" Resistencia "+node.getResistencia()
                         +" Hijo de "+node.getPadre()
                         +" Y: "+node.getPosY()
-                        +" Nivel: "+node.getPosY());
+                        +" Nivel: "+node.getNivel());
             }
             else{
                 System.out.println(node
@@ -167,7 +167,7 @@ public class Oleada {
                         +" Resistencia "+node.getResistencia()
                         +" Hijo de "+node.getPadre().getEdad()
                         +" Y: "+node.getPosY()
-                        +" Nivel: "+node.getPosY());
+                        +" Nivel: "+node.getNivel());
             }
 
             display(node.getHijoDer(),nivel+1);

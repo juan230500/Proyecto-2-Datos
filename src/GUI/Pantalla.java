@@ -302,6 +302,10 @@ class Pane extends JPanel implements ActionListener {
 
             g.drawString(""+D[pos].getEdad(),110+ margenlocal *120,22+fila*50);
 
+            D[pos].setPosY(22+fila*50);
+
+            D[pos].setNivel(margenlocal);
+
             if (Bloqueos[pos]){
                 fila+=2;
             }
