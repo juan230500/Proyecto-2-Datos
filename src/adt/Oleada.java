@@ -2,6 +2,9 @@ package adt;
 
 import juego.Dragon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Oleada {
     private Dragon root;
     private int CantidadDragones;
@@ -153,14 +156,18 @@ public class Oleada {
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
-                        +" Hijo de "+node.getPadre());
+                        +" Hijo de "+node.getPadre()
+                        +" Y: "+node.getPosY()
+                        +" Nivel: "+node.getPosY());
             }
             else{
                 System.out.println(node
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
-                        +" Hijo de "+node.getPadre().getEdad());
+                        +" Hijo de "+node.getPadre().getEdad()
+                        +" Y: "+node.getPosY()
+                        +" Nivel: "+node.getPosY());
             }
 
             display(node.getHijoDer(),nivel+1);
@@ -189,20 +196,40 @@ public class Oleada {
         root = addRecursive(root, value);
     }
 
-    boolean containsNodeRecursive(Dragon current, Dragon value) {
-        if (current == null) {
-            return false;
-        }
-        if (value == current) {
-            return true;
-        }
-        return value.getEdad() < current.getEdad()
-                ? containsNodeRecursive(current.getHijoIz(), value)
-                : containsNodeRecursive(current.getHijoDer(), value);
+    public List<Dragon> FiltrarPorAltura(int Y, int ancho){
+        List<Dragon> ListaDragones=new ArrayList<>();
+        AddPorAltura(Y,ancho,this.root,ListaDragones);
+        return ListaDragones;
     }
 
-    public boolean containsNode(Dragon value) {
-        return containsNodeRecursive(root, value);
+    public void AddPorAltura(int Y,int ancho,Dragon root,List<Dragon> ListaDragones){
+        if (root!=null){
+            AddPorAltura(Y,ancho,root.getHijoIz(),ListaDragones);
+            int altura=root.getPosY();
+
+            if (Y<altura && altura<Y+ancho){
+                ListaDragones.add(root);
+            }
+            AddPorAltura(Y,ancho,root.getHijoDer(),ListaDragones);
+        }
+    }
+
+    public Dragon MasCercanoPorAltura(int Y){
+        int AnchoDefault=50;
+        List<Dragon> ListaDragones= FiltrarPorAltura(Y,AnchoDefault);
+        int i=ListaDragones.size()-2;
+        if (i<-1){
+            return null;
+        }
+        Dragon MasCercano=ListaDragones.get(i+1);
+        Dragon DragonAux;
+        while (i>0){
+            DragonAux=ListaDragones.get(i);
+            if (DragonAux.getNivel()<MasCercano.getNivel())
+                MasCercano=DragonAux;
+            i--;
+        }
+        return MasCercano;
     }
 
 

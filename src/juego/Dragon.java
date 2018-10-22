@@ -29,40 +29,22 @@ public class Dragon {
         //Probar eliminación
         this.resistencia=ThreadLocalRandom.current().nextInt(1,3);
     }
+    private int PosY;
 
-    /**
-     * 
-     */
+    private int Nivel;
+
     private String nombre;
 
-    /**
-     * 
-     */
     private int recarga;
 
-    /**
-     * 
-     */
     private int edad;
 
-    /**
-     * 
-     */
     private int resistencia;
 
-    /**
-     * 
-     */
     private String clase;
 
-    /**
-     * 
-     */
     private Dragon padre;
 
-    /**
-     * 
-     */
     private Dragon hijoDer;
 
     private Dragon hijoIz;
@@ -106,6 +88,22 @@ public class Dragon {
         if (hijoIznuevo!=null)
             hijoIznuevo.setPadre(this);
         this.hijoIz = hijoIznuevo;
+    }
+
+    public void setPosY(int posY) {
+        PosY = posY;
+    }
+
+    public int getPosY() {
+        return PosY;
+    }
+
+    public int getNivel() {
+        return Nivel;
+    }
+
+    public void setNivel(int nivel) {
+        Nivel = nivel;
     }
 
     /**

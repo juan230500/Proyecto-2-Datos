@@ -1,5 +1,6 @@
 package GUI;
 
+import adt.Node;
 import adt.Oleada;
 import juego.Dragon;
 
@@ -120,7 +121,7 @@ class Pane extends JPanel implements ActionListener {
 
             }
             else if (criterio==4){
-                DrawABB(g);
+                DrawAVL(g);
             }
             else if (criterio==3){
                 DrawABB(g);
@@ -131,6 +132,7 @@ class Pane extends JPanel implements ActionListener {
             else{
 
             }
+            System.out.println("###"+criterio);
         }
     }
 
@@ -146,6 +148,10 @@ class Pane extends JPanel implements ActionListener {
 
         Dragon cabeza=OleadaDibujar.getRoot();
 
+        if (cabeza==null){
+            return;
+        }
+
         int yi=275;
         int xi=margen*120;
 
@@ -154,6 +160,10 @@ class Pane extends JPanel implements ActionListener {
         g.setFont(new Font("Calibri", Font.PLAIN, 12));
 
         g.drawString(""+cabeza.getEdad(),xi,yi+20);
+
+        cabeza.setPosY(yi);
+
+        cabeza.setNivel(1);
 
         dibujarArbol(g,cabeza,2,xi,yi);
 
@@ -169,30 +179,106 @@ class Pane extends JPanel implements ActionListener {
 
     public void dibujarHijos(Graphics g,Dragon root,int nivel,int x,int y){
         int xi=x+200;
-        int yi=y-(600)/(int)Math.pow(2,nivel);
+        int yi;
 
-        g.drawRect(xi,yi,100,25);
+        if (root.getHijoDer() != null) {
+            yi=y-(600)/(int)Math.pow(2,nivel);
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
-        if (root.getHijoDer()==null){
-            g.drawString(""+root.getHijoDer(),xi,yi+20);
-        }
-        else{
+            g.drawRect(xi,yi,100,25);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+
             g.drawString(""+root.getHijoDer().getEdad(),xi,yi+20);
+
+            root.getHijoDer().setPosY(yi);
+
+            root.getHijoDer().setNivel(nivel);
         }
 
+        if (root.getHijoIz() != null) {
+            yi=y+(600)/(int)Math.pow(2,nivel);
 
-        yi=y+(600)/(int)Math.pow(2,nivel);
+            g.drawRect(xi,yi,100,25);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+
+            g.drawString(""+root.getHijoIz().getEdad(),xi,yi+20);
+
+            root.getHijoIz().setPosY(yi);
+
+            root.getHijoIz().setNivel(nivel);
+        }
+    }
+
+    public void DrawAVL(Graphics g){
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,800,600);
+
+        g.setColor(Color.BLACK);
+
+        Node cabeza=OleadaDibujar.getRootAVL();
+
+        if (cabeza==null){
+            return;
+        }
+
+        int yi=275;
+        int xi=margen*120;
 
         g.drawRect(xi,yi,100,25);
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+        g.setFont(new Font("Calibri", Font.PLAIN, 12));
 
-        if (root.getHijoIz()==null){
-            g.drawString(""+root.getHijoIz(),xi,yi+20);
+        g.drawString(""+cabeza.key.getEdad(),xi,yi+20);
+
+        cabeza.key.setPosY(yi);
+
+        cabeza.key.setNivel(1);
+
+        dibujarArbol(g,cabeza,2,xi,yi);
+
+    }
+
+    public void dibujarArbol(Graphics g,Node root,int nivel,int x,int y){
+        if (root!=null){
+            dibujarArbol(g,root.right,1+nivel,x+200, y-(600)/(int)Math.pow(2,nivel));
+            dibujarHijos(g,root,nivel,x,y);
+            dibujarArbol(g,root.left,1+nivel,x+200, y+(600)/(int)Math.pow(2,nivel));
         }
-        else{
-            g.drawString(""+root.getHijoIz().getEdad(),xi,yi+20);
+    }
+
+    public void dibujarHijos(Graphics g, Node node, int nivel, int x, int y){
+        int xi=x+200;
+        int yi;
+
+
+        if (node.right != null) {
+            yi=y-(600)/(int)Math.pow(2,nivel);
+
+            g.drawString(""+node.right.key.getEdad(),xi,yi+20);
+
+            g.drawRect(xi,yi,100,25);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+
+            node.right.key.setPosY(yi);
+
+            node.right.key.setNivel(nivel);
+        }
+
+
+        if (node.left != null) {
+            yi=y+(600)/(int)Math.pow(2,nivel);
+
+            g.drawString(""+node.left.key.getEdad(),xi,yi+20);
+
+            g.drawRect(xi,yi,100,25);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+
+            node.left.key.setPosY(yi);
+
+            node.left.key.setNivel(nivel);
         }
     }
 
