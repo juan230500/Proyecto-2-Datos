@@ -9,6 +9,7 @@ public class Oleada {
     private int edadt;
     private Dragon[] DragonesDibujar;
     private Node rootAVL;
+    private boolean EdadRepetida;
 
     /**
      * Constructor de las oleadas que toma la cantidad deseada y se apoya en genDragones
@@ -30,8 +31,10 @@ public class Oleada {
      */
     private void genDragones(int Cantidad){
         while (Cantidad>0){
+            this.EdadRepetida=false;
             add(new Dragon());
-            Cantidad--;
+            if (!EdadRepetida)
+                Cantidad--;
         }
     }
 
@@ -175,14 +178,15 @@ public class Oleada {
             current.setHijoDer(addRecursive(current.getHijoDer(), value));
         } else {
             this.CantidadDragones--;
+            this.EdadRepetida=true;
             return current;
         }
         return current;
     }
 
     public void add(Dragon value) {
-        root = addRecursive(root, value);
         this.CantidadDragones++;
+        root = addRecursive(root, value);
     }
 
     boolean containsNodeRecursive(Dragon current, Dragon value) {

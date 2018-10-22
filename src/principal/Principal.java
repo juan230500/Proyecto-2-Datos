@@ -13,7 +13,7 @@ public class Principal {
         Dragon[] D=O.toArray();
         System.out.println(Arrays.toString(D));
         O.display();
-        int i=7;
+        int i=5;
         while (i>0){
             O.HerirDragon(O.getRoot());
             O.HerirDragon(O.getRoot());
