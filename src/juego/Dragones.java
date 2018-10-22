@@ -76,9 +76,7 @@ public class Dragones {
     private void asignarEdad(Dragon dragon){
         Random random = new Random();
         int edad = (random.nextInt(1000)+1);
-        if (edades.find(edad) == null){
-            dragon.setEdad(edad);
-        }
+        dragon.setEdad(edad);
     }
 
     public LinkedList getLista_dragones() {
