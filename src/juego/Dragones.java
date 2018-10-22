@@ -8,7 +8,7 @@ import java.util.Random;
 public class Dragones {
 
     private LinkedList lista_dragones = new LinkedList();
-    private LinkedList edades = new LinkedList();
+    private LinkedList dragonestmp = new LinkedList();
     private HashMap letras = new HashMap();
 
     public Dragones(int cantidad){
@@ -24,6 +24,7 @@ public class Dragones {
             asignarRecarga(dragon);
             asignarResistencia(dragon);
             asignarEdad(dragon);
+            asignarClase(c, dragon);
 
             cantidad --;
             c++;
@@ -77,6 +78,24 @@ public class Dragones {
         Random random = new Random();
         int edad = (random.nextInt(1000)+1);
         dragon.setEdad(edad);
+    }
+
+    private void asignarClase(int c, Dragon dragon){
+        if (c == 1){
+            dragon.setClase("General");
+        }else{
+            if ((c % 5 )== 0) {
+                dragon.setClase("Capitán");
+                for (int i = 0; i<dragonestmp.getSize(); i++){
+                    Dragon tmp = (Dragon) dragonestmp.recorrer(i);
+                    dragon.setDragones_asignados(tmp);
+                }
+                dragonestmp = new LinkedList();
+            }else{
+                dragon.setClase("Infantería");
+                dragonestmp.insertFirst(dragon);
+            }
+        }
     }
 
     public LinkedList getLista_dragones() {

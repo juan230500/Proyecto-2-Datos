@@ -14,6 +14,7 @@ public class Dragon {
     private String clase;
     private Dragon padre;
     private LinkedList hijos = new LinkedList();
+    private LinkedList dragones_asignados = new LinkedList();
 
     /**
      * Default constructor
@@ -101,6 +102,14 @@ public class Dragon {
 
     public void setHijo(Dragon hijo) {
         this.hijos.insertFirst(hijo);
+    }
+
+    public LinkedList getDragones_asignados(){
+        return dragones_asignados;
+    }
+
+    public void setDragones_asignados(Dragon asignar){
+        this.dragones_asignados.insertFirst(asignar);
     }
 
 
