@@ -67,6 +67,7 @@ public class Fondo extends JPanel implements KeyListener {
         etiqueta2.setBounds(x2,450,60,60);
         this.add(etiqueta);
         this.add(etiqueta2);
+        Hilo_DR hilo_dr = new Hilo_DR(etiqueta2, this);
 
     }
     public void moverlabel1(){
@@ -93,6 +94,32 @@ public class Fondo extends JPanel implements KeyListener {
             }
             label.setLocation(label.getX() - 5, label.getY());
             label2.setLocation(label2.getX() - 5, label2.getY());
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void disparoDragon(JLabel dra){
+        while (juego) {
+            JLabel disp = new JLabel();
+            disp.setText("O");
+            disp.setBounds(dra.getX()-10, dra.getY()+25, 10,10);
+            add(disp);
+            Hilo_DE hilito4 = new Hilo_DE(disp, this);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void moverDisp(JLabel disp){
+        while(juego && disp.getX() > -10){
+            disp.setLocation(disp.getX()-5, disp.getY());
             try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {
