@@ -62,8 +62,9 @@ public class Disparo {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                System.out.println(PosX);
             }
-            this.PosX = 1400;
+            bola.setVisible(false);
         }else{
                 while (PosX+10<=enem.getX()){
                     this.PosX += this.Velocidad;
@@ -73,10 +74,26 @@ public class Disparo {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    System.out.println(PosX);
                 }
-                this.PosX = 1400;
+                //enem.setResistencia(enem.getResistencia-1);
+                bola.setVisible(false);
         }
         bola.setLocation(PosX,PosY);
+    }
+    public void moverDisparo() {
+        while (PosX <= 1366-400) {
+            this.PosX += this.Velocidad;
+            bola.setLocation(this.PosX, this.PosY);
+            try {
+                Thread.sleep(7);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(PosX);
+            bola.setLocation(PosX,PosY);
+        }
+        bola.setVisible(false);
     }
 
 }

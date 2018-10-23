@@ -2,6 +2,7 @@ package GUI;
 
 
 import juego.Caballero;
+import juego.Dragon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,15 +77,51 @@ public class Fondo extends JPanel implements KeyListener {
 
     }
     public void moverlabel2(){
-        etiqueta2.setLocation(x2,etiqueta2.getY());
-        System.out.println("muevo al dragon 1");
-        x2 -= 1;
-
+        while(x2> -70) {
+            etiqueta2.setLocation(x2, etiqueta2.getY());
+            System.out.println("muevo al dragon 1");
+            x2 -= 1;
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        caballero.setDragonesQuePasaron(caballero.getDragonesQuePasaron()+2);
+        etiqueta2.setVisible(false);
     }
+    /*public void moverDragon(Dragon dg){
+        while(dg.getResistencia()!= 0){
+            if(dg.getX() <= -20){
+                caballero.setDragonesQuePasaron(caballero.getDragonesQuePasaron()+1);
+                return dg.setVisible(false);
+            }
+            else{
+                dg.setLocation(x2,etiqueta2.getY());
+                System.out.println("muevo al dragon 1");
+                dg.setX(gd.getX() - 1);
+            }
+        }
+    }
+    */
 
     public void comenzar_juego(){
 
         while(juego){
+            if(caballero.getDragonesQuePasaron()==2 || caballero.getVida() == 0){
+                JLabel end = new JLabel("PERDISTEEEEEE");
+                end.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+                end.setBounds(100, 100,400,400);
+                end.setLocation(100,100);
+                add(end);
+                label = null;
+                label2 = null;
+                lbl = null;
+                etiqueta =null;
+                etiqueta2 =null;
+                caballero = null;
+                juego = false;
+            }
             if (label.getX() <= -1200){
                 label.setLocation(label2.getX()+1200,label2.getY());
             }
@@ -162,7 +199,12 @@ public class Fondo extends JPanel implements KeyListener {
         if (caballero.isChoque()== false) {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
                 if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
-                    caballero.atacar(etiqueta2);
+                    if(etiqueta2.isVisible()){
+                        caballero.atacar(etiqueta2);
+                    }
+                    else{
+                        caballero.atacar();
+                    }
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
                     //caballero.getDisparo().setLocation(20,20);
