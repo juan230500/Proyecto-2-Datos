@@ -130,6 +130,16 @@ public class Fondo extends JPanel implements KeyListener {
                 caballero.setResistencia(caballero.getResistencia() - 1);
                 System.out.println(caballero.getResistencia());
                 disp.setLocation(1400, 1000);
+                JLabel colision = new JLabel();
+                colision.setText("BOOM");
+                colision.setBounds(grifo.getX(), grifo.getY(), 50, 10);
+                this.add(colision);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                colision.setLocation(1400, 1000);
             }
         }
         disp.setLocation(1400, 1000);
