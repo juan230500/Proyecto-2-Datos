@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Hilo_DE implements Runnable {
     private Fondo fondo1;
     private JLabel disparo;
-    private int op;
+    private boolean game=true;
 
     public Hilo_DE(JLabel d, Fondo f1){
         Thread hilo= new Thread(this);
@@ -15,7 +15,7 @@ public class Hilo_DE implements Runnable {
     }
     @Override
     public void run() {
-        while(true){
+        while(game){
             fondo1.moverDisp(disparo);
             try {
                 Thread.sleep(7);
@@ -23,5 +23,8 @@ public class Hilo_DE implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+    public void stop() {
+        game = false;
     }
 }

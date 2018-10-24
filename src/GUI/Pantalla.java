@@ -67,8 +67,11 @@ public class Pantalla extends JFrame {
                 fondo.add(end);
                 juego = false;
                 fondo.setFocusable(false);
+                fondo.setJuego(false);
                 fondo.getH1().stop();
                 fondo.getH2().stop();
+                fondo.getH3().stop();
+                fondo.getH4().stop();
                 hFond.stop();
             }
             else if (label.getX() <= -1200){

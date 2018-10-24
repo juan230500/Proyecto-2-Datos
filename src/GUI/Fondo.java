@@ -11,6 +11,11 @@ import java.awt.event.KeyListener;
 import java.lang.*;
 
 public class Fondo extends JPanel implements KeyListener {
+    private boolean juego = true;
+
+    public void setJuego(boolean juego) {
+        this.juego = juego;
+    }
 
     private JLabel lbl = new JLabel();
 
@@ -37,6 +42,17 @@ public class Fondo extends JPanel implements KeyListener {
 
     private Hilos h1;
     private Hilos h2;
+
+    public Hilo_DR getH3() {
+        return h3;
+    }
+
+    public Hilo_DE getH4() {
+        return h4;
+    }
+
+    private Hilo_DR h3;
+    private Hilo_DE h4;
 
     public Fondo() {
         setLayout(null);
@@ -70,6 +86,7 @@ public class Fondo extends JPanel implements KeyListener {
         this.add(etiqueta);
         this.add(etiqueta2);
         Hilo_DR hilo_dr = new Hilo_DR(etiqueta2, this);
+        h3 = hilo_dr;
 
     }
     public void moverlabel1(){
@@ -106,6 +123,7 @@ public class Fondo extends JPanel implements KeyListener {
             disp.setBounds(dra.getX()-10, dra.getY()+25, 10,10);
             add(disp);
             Hilo_DE hilito4 = new Hilo_DE(disp, this);
+            h4 = hilito4;
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -124,19 +142,8 @@ public class Fondo extends JPanel implements KeyListener {
                     e.printStackTrace();
                 }
             } else{
-                caballero.setResistencia(caballero.getResistencia() - 1);
-                System.out.println(caballero.getResistencia());
+                caballero.recibir_daño();
                 disp.setLocation(1400, 1000);
-                JLabel colision = new JLabel();
-                colision.setText("BOOM");
-                colision.setBounds(grifo.getX(), grifo.getY(), 50, 10);
-                this.add(colision);
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                colision.setLocation(1400, 1000);
             }
         }
         disp.setLocation(1400, 1000);
