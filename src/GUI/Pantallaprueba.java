@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class Pantalla {
+public class Pantallaprueba {
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -22,7 +22,7 @@ public class Pantalla {
     }
 
 
-    public Pantalla() {
+    public Pantallaprueba() {
     }
 
     private String Imagen;
@@ -105,10 +105,8 @@ class Pane extends JPanel implements ActionListener {
         this.margen =0;
         this.OleadaDibujar=new Oleada(25);
         this.Bloqueos=new boolean[25];
-        Bloqueos[2]=true;
-        Bloqueos[5]=true;
 
-        OleadaDibujar.display();
+        //OleadaDibujar.display();
     }
 
     public void actionPerformed (ActionEvent e){

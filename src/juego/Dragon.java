@@ -39,10 +39,6 @@ public class Dragon {
         this.setRecarga();
         this.setResistencia();
         */
-        Random random = new Random();
-        this.edad = random.nextInt(1000);
-        this.recarga = random.nextInt(1000);
-        this.resistencia=2;
     }
 
 
@@ -113,10 +109,14 @@ public class Dragon {
     }
 
     public Dragon getHijoDer(){
+    	
         return hijoDer;
     }
 
     public void setHijoDer(Dragon hijoDer) {
+    	if (hijoDer!=null) {
+    		hijoDer.setPadre(this);
+    	}
         this.hijoDer = hijoDer;
     }
 
@@ -125,6 +125,9 @@ public class Dragon {
     }
 
     public void setHijoIz(Dragon hijoIz) {
+    	if (hijoIz!=null) {
+    		hijoIz.setPadre(this);
+    	}
         this.hijoIz = hijoIz;
     }
 

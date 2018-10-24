@@ -25,9 +25,7 @@ public class Oleada {
         //Bloque para generar los dragones automaticamente con un padre asignado a solo 2 de ellos
         this.Formacion=-1;
         this.edadt=0;
-        //DragonesFabrica dragonesFabrica = new DragonesFabrica(Cantidad, 1, this);
-        int s = 0;
-        genDragones(Cantidad);
+        DragonesFabrica dragonesFabrica = new DragonesFabrica(Cantidad, 1, this);
     }
 
     /**
