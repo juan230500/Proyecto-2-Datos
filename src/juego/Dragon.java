@@ -26,10 +26,18 @@ public class Dragon {
      */
     private int edad;
 
+    public int getResistencia() {
+        return resistencia;
+    }
+
     /**
      * 
      */
     private int resistencia;
+
+    public void setResistencia(int resistencia) {
+        this.resistencia = resistencia;
+    }
 
     /**
      * 

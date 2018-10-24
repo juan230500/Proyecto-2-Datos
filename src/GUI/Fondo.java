@@ -2,6 +2,7 @@ package GUI;
 
 
 import juego.Caballero;
+import juego.Dragon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,10 +12,12 @@ import java.lang.*;
 
 public class Fondo extends JPanel implements KeyListener {
 
-    private boolean juego = true;
-    private JLabel label = new JLabel();
-    private JLabel label2 = new JLabel();
     private JLabel lbl = new JLabel();
+
+    public Caballero getCaballero() {
+        return caballero;
+    }
+
     private Caballero caballero = new Caballero();
     private JLabel grifo = caballero.getLabel();
     private JLabel etiqueta =new JLabel();
@@ -24,6 +27,17 @@ public class Fondo extends JPanel implements KeyListener {
     private int largo = 1366-400;
     private int alto = 768;
 
+    public Hilos getH1() {
+        return h1;
+    }
+
+    public Hilos getH2() {
+        return h2;
+    }
+
+    private Hilos h1;
+    private Hilos h2;
+
     public Fondo() {
         setLayout(null);
         setBounds(0, 0, largo, alto);
@@ -31,32 +45,20 @@ public class Fondo extends JPanel implements KeyListener {
 
         //ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/fondo.png");
 
-        label.setText("FONDO DE PRUEBA");
-        label.setFont(new Font("Comic Sans MS", Font.PLAIN, 40));
-        //label.setIcon(imagen);
-        label.setBounds(0, -100,1200, 800);
-
-        label2.setText("FONDO DE PRUEBA");
-        label2.setFont(new Font("Comic Sans MS", Font.PLAIN, 40));
-        //label2.setIcon(imagen);
-        label2.setBounds(1200,-100,1200,800);
 
         lbl.setText("Su madre");
         lbl.setBounds(100,200,20,20);
-
-        add(label);
-        add(label2);
-        add(lbl);
         add(grifo);
+        add(lbl);
 
         addKeyListener(this);
         setFocusable(true);
         crearLabel();
 
-        Hilos hilito1=new Hilos(this,1);
-        Hilos hilito2=new Hilos(this,2);
-        Hilo_F hilo = new Hilo_F(this);
-
+        Hilos hilito1=new Hilos(this,1, etiqueta);
+        this.h1 = hilito1;
+        Hilos hilito2=new Hilos(this,2,etiqueta2);
+        this.h2 = hilito2;
     }
 
     public void crearLabel(){
@@ -78,29 +80,24 @@ public class Fondo extends JPanel implements KeyListener {
     }
     public void moverlabel2(){
         etiqueta2.setLocation(x2,etiqueta2.getY());
-        //System.out.println("muevo al dragon 1");
+        System.out.println("muevo al dragon 2");
         x2 -= 1;
-
     }
-
-    public void comenzar_juego(){
-
-        while(juego){
-            if (label.getX() <= -1200){
-                label.setLocation(label2.getX()+1200,label2.getY());
+    /*public void moverDragon(Dragon dg){
+        while(dg.getResistencia()!= 0){
+            if(dg.getX() <= -20){
+                caballero.setDragonesQuePasaron(caballero.getDragonesQuePasaron()+1);
+                return dg.setVisible(false);
             }
-            if (label2.getX() <= -1200){
-                label2.setLocation(label.getX()+1200,label.getY());
-            }
-            label.setLocation(label.getX() - 5, label.getY());
-            label2.setLocation(label2.getX() - 5, label2.getY());
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            else{
+                dg.setLocation(x2,etiqueta2.getY());
+                System.out.println("muevo al dragon 1");
+                dg.setX(gd.getX() - 1);
             }
         }
     }
+    */
+
 
     public void disparoDragon(JLabel dra){
         while (juego) {
@@ -206,7 +203,12 @@ public class Fondo extends JPanel implements KeyListener {
         if (caballero.isChoque()== false) {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
                 if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
-                    caballero.atacar(etiqueta2);
+                    if(etiqueta2.isVisible()){
+                        caballero.atacar(etiqueta2);
+                    }
+                    else{
+                        caballero.atacar();
+                    }
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
                     //caballero.getDisparo().setLocation(20,20);

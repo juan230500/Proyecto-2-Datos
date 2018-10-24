@@ -19,6 +19,11 @@ public class Caballero {
     private JLabel disparo = null;
     private int resistencia = 5;
 
+    public int getVida() {
+        return vida;
+    }
+
+    private int vida= 3;
 
     /**
      * Default constructor
@@ -48,6 +53,14 @@ public class Caballero {
 
     public JLabel getDisparo() {
         return disparo;
+    }
+
+    public void setDragonesQuePasaron(int dragonesQuePasaron) {
+        this.dragonesQuePasaron = dragonesQuePasaron;
+    }
+
+    public int getDragonesQuePasaron() {
+        return dragonesQuePasaron;
     }
 
     /**
@@ -161,7 +174,7 @@ public class Caballero {
 
     }
     */
-    private LinkedList dragonesQuePasaron;
+    private int dragonesQuePasaron = 0;
 
     /**
      * Crea un objeto Disparo, verifica si este colisiono con un dragon y si lo hizo disminuye la vida de dicho dragon
@@ -181,6 +194,13 @@ public class Caballero {
         }
         */
     }
+    public void atacar() {
+
+        Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
+        this.disparo = d.getBola();
+
+        Hilo_DS hilo2 = new Hilo_DS(d);
+    }
 
     public int getResistencia() {
         return resistencia;
@@ -194,6 +214,7 @@ public class Caballero {
      * 
      */
     public void recibir_daño() {
+        this.vida -= 1;
         // TODO implement here
     }
 
@@ -215,6 +236,7 @@ public class Caballero {
             if (this.grifo.getY() >= cho.getY() && this.grifo.getY() <= cho.getY() + cho.getHeight() && (cho.getX()<=this.grifo.getX()+this.grifo.getWidth()) && (this.grifo.getX()<=cho.getX()+cho.getWidth())) { //Setea los limites de colision en base a quien sea mas pequeño
                 grifo.setLocation(20, 20);
                 System.out.println("Colisiono");
+                this.recibir_daño();
                 return this.choque = true;
             } else {
                 return this.choque = false;
@@ -224,6 +246,7 @@ public class Caballero {
             if (cho.getY() >= this.grifo.getY() && cho.getY() <= this.grifo.getY() + this.grifo.getHeight() && (cho.getX()<=this.grifo.getX()+this.grifo.getWidth()) && (this.grifo.getX()<=cho.getX()+cho.getWidth())) {
                 grifo.setLocation(20, 20);
                 System.out.println("Colisiono");
+                this.recibir_daño();
                 return this.choque = true;
             } else {
                 return this.choque = false;
