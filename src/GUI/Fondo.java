@@ -72,13 +72,13 @@ public class Fondo extends JPanel implements KeyListener {
     }
     public void moverlabel1(){
         etiqueta.setLocation(x1,etiqueta.getY());
-        System.out.println("muevo al dragon 1");
+        //System.out.println("muevo al dragon 1");
         x1 -= 1;
 
     }
     public void moverlabel2(){
         etiqueta2.setLocation(x2,etiqueta2.getY());
-        System.out.println("muevo al dragon 1");
+        //System.out.println("muevo al dragon 1");
         x2 -= 1;
 
     }
@@ -119,13 +119,20 @@ public class Fondo extends JPanel implements KeyListener {
 
     public void moverDisp(JLabel disp){
         while(juego && disp.getX() > -10){
-            disp.setLocation(disp.getX()-5, disp.getY());
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
+                disp.setLocation(disp.getX() - 5, disp.getY());
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else{
+                caballero.setResistencia(caballero.getResistencia() - 1);
+                System.out.println(caballero.getResistencia());
+                disp.setLocation(1400, 1000);
             }
         }
+        disp.setLocation(1400, 1000);
     }
 
     /**
@@ -169,8 +176,8 @@ public class Fondo extends JPanel implements KeyListener {
                     grifo.setLocation(grifo.getX(), 1);
                 }
             }
-            System.out.print(grifo.getX() + "\t");
-            System.out.println(grifo.getY());
+            //System.out.print(grifo.getX() + "\t");
+            //System.out.println(grifo.getY());
             caballero.colisionEnem(etiqueta);
             caballero.colisionEnem(etiqueta2);
         }

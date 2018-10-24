@@ -15,7 +15,7 @@ public class Hilos implements Runnable {
         if (op==1){
             while(true){
                 fondo1.moverlabel1();
-                System.out.println("muevo el dragon1");
+                //System.out.println("muevo el dragon1");
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {
@@ -26,7 +26,7 @@ public class Hilos implements Runnable {
         if (op==2){
             while(true){
                 fondo1.moverlabel2();
-                System.out.println("muevo el dragon2");
+                //System.out.println("muevo el dragon2");
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException e) {

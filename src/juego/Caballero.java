@@ -17,6 +17,7 @@ public class Caballero {
     private JLabel grifo = new JLabel("Prueba");
     private boolean choque = false;
     private JLabel disparo = null;
+    private int resistencia = 5;
 
 
     /**
@@ -179,6 +180,14 @@ public class Caballero {
             System.out.println("nelson jejeps");
         }
         */
+    }
+
+    public int getResistencia() {
+        return resistencia;
+    }
+
+    public void setResistencia(int resistencia) {
+        this.resistencia = resistencia;
     }
 
     /**
