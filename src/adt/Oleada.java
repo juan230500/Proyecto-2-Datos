@@ -158,7 +158,7 @@ public class Oleada {
                         +" Resistencia "+node.getResistencia()
                         +" Hijo de "+node.getPadre()
                         +" Y: "+node.getPosY()
-                        +" Nivel: "+node.getNivel());
+                        +" Nivel: "+node.getPosX());
             }
             else{
                 System.out.println(node
@@ -167,7 +167,7 @@ public class Oleada {
                         +" Resistencia "+node.getResistencia()
                         +" Hijo de "+node.getPadre().getEdad()
                         +" Y: "+node.getPosY()
-                        +" Nivel: "+node.getNivel());
+                        +" Nivel: "+node.getPosX());
             }
 
             display(node.getHijoDer(),nivel+1);
@@ -225,7 +225,7 @@ public class Oleada {
         Dragon DragonAux;
         while (i>0){
             DragonAux=ListaDragones.get(i);
-            if (DragonAux.getNivel()<MasCercano.getNivel())
+            if (DragonAux.getPosX()<MasCercano.getPosX())
                 MasCercano=DragonAux;
             i--;
         }

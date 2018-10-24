@@ -2,6 +2,8 @@ package juego;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.JLabel;
+
 /**
  * 
  */
@@ -17,6 +19,10 @@ public class Dragon {
         this.recarga=ThreadLocalRandom.current().nextInt(1, 100);
         //Probar eliminación
         this.resistencia=ThreadLocalRandom.current().nextInt(1,3);
+        
+        this.Label=new JLabel();
+        this.Label.setBounds(0, 0, 50, 50);
+        this.Label.setText(""+this);
     }
 
     /**
@@ -29,9 +35,13 @@ public class Dragon {
         //Probar eliminación
         this.resistencia=ThreadLocalRandom.current().nextInt(1,3);
     }
+    
+    
+    
+    
     private int PosY;
 
-    private int Nivel;
+    private int PosX;
 
     private String nombre;
 
@@ -48,6 +58,8 @@ public class Dragon {
     private Dragon hijoDer;
 
     private Dragon hijoIz;
+    
+    private JLabel Label;
 
     public int getRecarga() {
         return recarga;
@@ -98,12 +110,12 @@ public class Dragon {
         return PosY;
     }
 
-    public int getNivel() {
-        return Nivel;
+    public int getPosX() {
+        return PosX;
     }
 
-    public void setNivel(int nivel) {
-        Nivel = nivel;
+    public void setPosX(int nivel) {
+        PosX = nivel;
     }
 
     /**
@@ -135,5 +147,9 @@ public class Dragon {
     public void clickear() {
         // TODO implement here
     }
+
+	public JLabel getLabel() {
+		return Label;
+	}
 
 }

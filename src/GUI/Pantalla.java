@@ -52,6 +52,7 @@ public class Pantalla {
 class MarcoCliente extends JFrame{
 
     public MarcoCliente(){
+    	this.setLayout(null);
         Toolkit mipanatalla=Toolkit.getDefaultToolkit();
 
         Image icono=mipanatalla.getImage("Imagenes/icono.png");
@@ -95,7 +96,6 @@ class Pane extends JPanel implements ActionListener {
         setBounds(0,0,800,600);
         setVisible(true);
         setLayout(null);
-        repaint();
 
         next = new JButton("Next");
         next.setBounds(10,10,100,30);
@@ -117,6 +117,7 @@ class Pane extends JPanel implements ActionListener {
             Graphics g = this.getGraphics();
             criterio=OleadaDibujar.HerirDragon(OleadaDibujar.getRoot());
             OleadaDibujar.display();
+            
             if (criterio==5){
 
             }
@@ -163,7 +164,7 @@ class Pane extends JPanel implements ActionListener {
 
         cabeza.setPosY(yi);
 
-        cabeza.setNivel(1);
+        cabeza.setPosX(xi);
 
         dibujarArbol(g,cabeza,2,xi,yi);
 
@@ -192,7 +193,7 @@ class Pane extends JPanel implements ActionListener {
 
             root.getHijoDer().setPosY(yi);
 
-            root.getHijoDer().setNivel(nivel);
+            root.getHijoDer().setPosX(xi);
         }
 
         if (root.getHijoIz() != null) {
@@ -206,7 +207,7 @@ class Pane extends JPanel implements ActionListener {
 
             root.getHijoIz().setPosY(yi);
 
-            root.getHijoIz().setNivel(nivel);
+            root.getHijoIz().setPosX(xi);
         }
     }
 
@@ -233,7 +234,7 @@ class Pane extends JPanel implements ActionListener {
 
         cabeza.key.setPosY(yi);
 
-        cabeza.key.setNivel(1);
+        cabeza.key.setPosX(xi);
 
         dibujarArbol(g,cabeza,2,xi,yi);
 
@@ -263,7 +264,7 @@ class Pane extends JPanel implements ActionListener {
 
             node.right.key.setPosY(yi);
 
-            node.right.key.setNivel(nivel);
+            node.right.key.setPosX(xi);
         }
 
 
@@ -278,7 +279,7 @@ class Pane extends JPanel implements ActionListener {
 
             node.left.key.setPosY(yi);
 
-            node.left.key.setNivel(nivel);
+            node.left.key.setPosX(xi);
         }
     }
 
@@ -295,16 +296,19 @@ class Pane extends JPanel implements ActionListener {
         int fila=0;
 
         while (pos<largo){
+        	
+        	int xi=100+ margenlocal *120;
+        	int yi=10+fila*50;
 
-            g.drawRect(100+ margenlocal *120,10+fila*50,100,25);
+            g.drawRect(xi,yi,100,25);
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 10));
 
             g.drawString(""+D[pos].getEdad(),110+ margenlocal *120,22+fila*50);
 
-            D[pos].setPosY(22+fila*50);
+            D[pos].setPosY(yi);
 
-            D[pos].setNivel(margenlocal);
+            D[pos].setPosX(xi);
 
             if (Bloqueos[pos]){
                 fila+=2;
