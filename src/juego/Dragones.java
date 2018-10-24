@@ -1,6 +1,7 @@
 package juego;
 
 import adt.LinkedList;
+import adt.ABB;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -9,6 +10,7 @@ public class Dragones {
 
     private LinkedList lista_dragones = new LinkedList();
     private LinkedList dragonestmp = new LinkedList();
+    private ABB arbol_edades = new ABB();
     private HashMap letras = new HashMap();
     private Dragon capi_aux;
 
@@ -38,7 +40,6 @@ public class Dragones {
     private void asignarPadres(int c, Dragon dragon){
         if (c == 1){
             dragon.setPadre(null);
-
         }else{
             Random random = new Random();
             Dragon aleatorio = (Dragon) lista_dragones.recorrer(random.nextInt(lista_dragones.getSize()));
@@ -49,7 +50,6 @@ public class Dragones {
                 asignarPadres(c,dragon);
             }
         }
-
     }
 
     public  void asignarNombre(int ronda, int c, Dragon dragon){
@@ -69,7 +69,7 @@ public class Dragones {
 
     private void asignarRecarga(Dragon dragon){
         Random random = new Random();
-        dragon.setRecarga(random.nextInt(100)+1);
+        dragon.setRecarga(random.nextInt(100) + 1);
     }
 
     private void asignarResistencia(Dragon dragon) {
@@ -79,7 +79,11 @@ public class Dragones {
 
     private void asignarEdad(Dragon dragon){
         Random random = new Random();
-        int edad = (random.nextInt(1000)+1);
+        int edad = (random.nextInt(1000) + 1);
+        while (arbol_edades.buscar(edad) != null){
+            edad = (random.nextInt(1000) + 1);
+        }
+        arbol_edades.insertar(edad);
         dragon.setEdad(edad);
     }
 
