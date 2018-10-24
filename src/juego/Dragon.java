@@ -1,122 +1,124 @@
 package juego;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-import javax.swing.JLabel;
+import adt.LinkedList;
 
 /**
  * 
  */
 public class Dragon {
 
+    private String nombre;
+    private int recarga;
+    private int edad;
+    private int resistencia;
+    private String clase;
+    private Dragon padre;
+    private LinkedList hijos = new LinkedList();
+    private LinkedList dragones_asignados = new LinkedList();
+
     /**
      * Default constructor
      */
 
     public Dragon() {
-        //para probar lógica
-        this.edad= ThreadLocalRandom.current().nextInt(1, 1000);
-        this.recarga=ThreadLocalRandom.current().nextInt(1, 100);
-        //Probar eliminación
-        this.resistencia=ThreadLocalRandom.current().nextInt(1,3);
-        
-        this.Label=new JLabel();
-        this.Label.setBounds(0, 0, 50, 50);
-        this.Label.setText(""+this);
+        /*
+        this.setClase();
+        this.setEdad();
+        this.setHijos();
+        this.setNombre();
+        this.setPadre();
+        this.setRecarga();
+        this.setResistencia();
+    */}
+
+
+    public String getNombre() {
+        return nombre;
     }
 
-    /**
-     * Default constructor
-     */
 
-    public Dragon(int edadt) {
-        this.edad= edadt;
-        this.recarga=ThreadLocalRandom.current().nextInt(1, 100);
-        //Probar eliminación
-        this.resistencia=ThreadLocalRandom.current().nextInt(1,3);
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    
-    
-    
-    
-    private int PosY;
 
-    private int PosX;
-
-    private String nombre;
-
-    private int recarga;
-
-    private int edad;
-
-    private int resistencia;
-
-    private String clase;
-
-    private Dragon padre;
-
-    private Dragon hijoDer;
-
-    private Dragon hijoIz;
-    
-    private JLabel Label;
 
     public int getRecarga() {
         return recarga;
     }
 
+
+    public void setRecarga(int recarga) {
+        this.recarga = recarga;
+    }
+
+
     public int getEdad() {
         return edad;
     }
 
+    public int getRecarga() {
+        return recarga;
+    }
 
-    public Dragon getPadre() {
-        return padre;
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+
+    public int getResistencia() {
+        return resistencia;
     }
 
     public Dragon getHijoDer() {
         return hijoDer;
     }
 
-    public Dragon getHijoIz() {
-        return hijoIz;
+    public void setResistencia(int resistencia) {
+        this.resistencia = resistencia;
     }
 
-    public int getResistencia() {
-        return resistencia;
+
+    public String getClase() {
+        return clase;
     }
+
+
+    public void setClase(String clase) {
+        this.clase = clase;
+    }
+
+
+    public Dragon getPadre() {
+        try {
+            return padre;
+        } catch (NullPointerException exception){
+            return null;
+        }
+    }
+
 
     public void setPadre(Dragon padre) {
         this.padre = padre;
     }
 
-    public void setHijoDer(Dragon hijoDernuevo) {
-        if (hijoDernuevo!=null)
-            hijoDernuevo.setPadre(this);
-        this.hijoDer = hijoDernuevo;
+
+    public LinkedList getHijos() {
+        return hijos;
     }
 
-    public void setHijoIz(Dragon hijoIznuevo) {
-        if (hijoIznuevo!=null)
-            hijoIznuevo.setPadre(this);
-        this.hijoIz = hijoIznuevo;
+
+    public void setHijo(Dragon hijo) {
+        this.hijos.insertFirst(hijo);
     }
 
-    public void setPosY(int posY) {
-        PosY = posY;
+    public LinkedList getDragones_asignados(){
+        return dragones_asignados;
     }
 
-    public int getPosY() {
-        return PosY;
+    public void setDragones_asignados(Dragon asignar){
+        this.dragones_asignados.insertFirst(asignar);
     }
 
-    public int getPosX() {
-        return PosX;
-    }
-
-    public void setPosX(int nivel) {
-        PosX = nivel;
-    }
 
     /**
      * Baja la resistencia y devuelve un booleano acerca de si se debe eliminar o no
