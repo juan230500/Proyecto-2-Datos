@@ -3,6 +3,7 @@ package GUI;
 
 import juego.Caballero;
 import juego.Dragon;
+import juego.Oleada;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,9 @@ import java.lang.*;
 
 public class Fondo extends JPanel implements KeyListener {
     private boolean juego = true;
+    private int margen;
+    private Oleada OleadaDibujar;
+    private boolean[] Bloqueos;
 
     public void setJuego(boolean juego) {
         this.juego = juego;
@@ -66,7 +70,10 @@ public class Fondo extends JPanel implements KeyListener {
         lbl.setBounds(100,200,20,20);
         add(grifo);
         add(lbl);
-
+        this.margen =0;
+        this.OleadaDibujar=new Oleada(25);
+        this.Bloqueos=new boolean[25];
+        DrawArray();
         addKeyListener(this);
         setFocusable(true);
         crearLabel();
@@ -89,11 +96,17 @@ public class Fondo extends JPanel implements KeyListener {
         h3 = hilo_dr;
 
     }
-    public void moverlabel1(){
-        etiqueta.setLocation(x1,etiqueta.getY());
-        //System.out.println("muevo al dragon 1");
-        x1 -= 1;
-
+    public void moverlabel(){
+        for (int i = 0; i< OleadaDibujar.getCantidadDragones(); i ++) {
+            OleadaDibujar.getDragonesDibujar()[i].setPosX(OleadaDibujar.getDragonesDibujar()[i].getPosX()- 10);
+            OleadaDibujar.getDragonesDibujar()[i].getLabel().setLocation(OleadaDibujar.getDragonesDibujar()[i].getPosX(), OleadaDibujar.getDragonesDibujar()[i].getLabel().getY());
+            //System.out.println("muevo al dragon 1");
+            try {
+                Thread.sleep(15);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void moverlabel2(){
         etiqueta2.setLocation(x2,etiqueta2.getY());
@@ -265,5 +278,38 @@ public class Fondo extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    public void DrawArray(){
+        Dragon[] D= OleadaDibujar.getDragonesDibujar();
+        int largo=D.length;
+        int margenlocal=margen;
+        int pos=0;
+        int fila=0;
+
+        while (pos<largo){
+
+            int xi=600+ margenlocal *120;
+            int yi=100+fila*50;
+
+            D[pos].getLabel().setBounds(xi,yi,100,25);
+            D[pos].getLabel().setVisible(true);
+            D[pos].setPosY(yi);
+
+            D[pos].setPosX(xi);
+            add(D[pos].getLabel());
+            if (Bloqueos[pos]){
+                fila+=2;
+            }
+            else{
+                fila++;
+            }
+            pos++;
+
+            if (fila>9){
+                fila=0;
+                margenlocal++;
+            }
+        }
+        //this.margen++;
     }
 }

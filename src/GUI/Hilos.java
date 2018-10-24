@@ -21,7 +21,7 @@ public class Hilos implements Runnable {
         if (op==1){
             while(drag.getX()> -70){
                 while(correr) {
-                    fondo1.moverlabel1();
+                    fondo1.moverlabel();
                     System.out.println("muevo el dragon2");
                     try {
                         Thread.sleep(20);

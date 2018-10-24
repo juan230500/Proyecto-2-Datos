@@ -1,6 +1,6 @@
 package principal;
 
-import adt.Oleada;
+import juego.Oleada;
 import juego.Dragon;
 
 import java.util.Arrays;

@@ -1,6 +1,9 @@
 package GUI;
 
-import adt.B_tree;
+import adt.BTree;
+import juego.Dragon;
+import juego.Oleada;
+
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
@@ -98,7 +101,7 @@ public class Pantalla extends JFrame {
     /**
      * 
      */
-    private B_tree ArbolB_edad;
+    private BTree ArbolB_edad;
 
 
 
@@ -149,5 +152,4 @@ public class Pantalla extends JFrame {
     public void EliminarKey() {
         // TODO implement here
     }
-
 }

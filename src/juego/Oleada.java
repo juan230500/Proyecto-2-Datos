@@ -1,5 +1,8 @@
-package adt;
+package juego;
 
+import adt.AVLTree;
+import adt.Node;
+import adt.SortArray;
 import juego.Dragon;
 import juego.DragonesFabrica;
 
@@ -26,6 +29,7 @@ public class Oleada {
         this.Formacion=-1;
         this.edadt=0;
         DragonesFabrica dragonesFabrica = new DragonesFabrica(Cantidad, 1, this);
+        this.DragonesDibujar = toArray();
     }
 
     /**

@@ -2,7 +2,6 @@ package juego;
 
 import adt.LinkedList;
 import adt.ABB;
-import adt.Oleada;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -30,7 +29,7 @@ public class DragonesFabrica {
             asignarResistencia(dragon);
             asignarEdad(dragon);
             asignarClase(c, cantidad, dragon);
-
+            dragon.getLabel().setText(dragon.getNombre());
             cantidad --;
             c++;
 
