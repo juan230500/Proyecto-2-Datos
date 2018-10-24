@@ -10,21 +10,23 @@ public class Dragones {
     private LinkedList lista_dragones = new LinkedList();
     private LinkedList dragonestmp = new LinkedList();
     private HashMap letras = new HashMap();
+    private Dragon capi_aux;
 
-    public Dragones(int cantidad){
+    public Dragones(int cantidad, int ronda){
         letras.put("voc","AEIOU");
         letras.put("con","BCDFGJKLMNPRSTVWYZ");
+        letras.put("abc", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         int c = 1;
 
         while (cantidad > 0){
             Dragon dragon = new Dragon();
 
-            asignarNombre(dragon);
+            asignarNombre(ronda, c, dragon);
             asignarPadres(c,dragon);
             asignarRecarga(dragon);
             asignarResistencia(dragon);
             asignarEdad(dragon);
-            asignarClase(c, dragon);
+            asignarClase(c, cantidad, dragon);
 
             cantidad --;
             c++;
@@ -50,9 +52,10 @@ public class Dragones {
 
     }
 
-    public  void asignarNombre(Dragon dragon){
+    public  void asignarNombre(int ronda, int c, Dragon dragon){
         Random random = new Random();
-        String res = "";
+        String gen = letras.get("abc").toString().substring(ronda-1, ronda);
+        String res = gen.concat(Integer.toString(c)+"_");
         for (int i = 3; i > 0; i--){
             int r1 = random.nextInt(17);
             int r2 = random.nextInt(4);
@@ -80,20 +83,37 @@ public class Dragones {
         dragon.setEdad(edad);
     }
 
-    private void asignarClase(int c, Dragon dragon){
-        if (c == 1){
-            dragon.setClase("General");
+    private void asignarClase(int c, int cantidad, Dragon dragon){
+        if ((cantidad == 1) && (dragonestmp.size() != 0)){
+            for (int i = 0; i < dragonestmp.getSize(); i++) {
+                Dragon tmp = (Dragon) dragonestmp.recorrer(i);
+                capi_aux.setDragones_asignados(tmp);
+            }
         }else{
-            if ((c % 5 )== 0) {
-                dragon.setClase("Capitán");
-                for (int i = 0; i<dragonestmp.getSize(); i++){
-                    Dragon tmp = (Dragon) dragonestmp.recorrer(i);
-                    dragon.setDragones_asignados(tmp);
+            if (c == 1) {
+                dragon.setClase("General");
+            } else {
+                if ((c % 5) == 0) {
+                    if (c == 5) {
+                        dragon.setClase("Capitán");
+                        capi_aux = dragon;
+                        for (int i = 0; i < dragonestmp.getSize(); i++) {
+                            Dragon tmp = (Dragon) dragonestmp.recorrer(i);
+                            dragon.setDragones_asignados(tmp);
+                        }
+                        dragonestmp = new LinkedList();
+                    } else {
+                        dragon.setClase("Capitán");
+                        for (int i = 0; i < dragonestmp.getSize(); i++) {
+                            Dragon tmp = (Dragon) dragonestmp.recorrer(i);
+                            dragon.setDragones_asignados(tmp);
+                        }
+                        dragonestmp = new LinkedList();
+                    }
+                } else {
+                    dragon.setClase("Infantería");
+                    dragonestmp.insertFirst(dragon);
                 }
-                dragonestmp = new LinkedList();
-            }else{
-                dragon.setClase("Infantería");
-                dragonestmp.insertFirst(dragon);
             }
         }
     }

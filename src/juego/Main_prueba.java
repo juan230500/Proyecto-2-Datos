@@ -5,7 +5,7 @@ import adt.LinkedList;
 public class Main_prueba {
     public static void main(String args[]) {
 
-        Dragones dragones = new Dragones(10);
+        Dragones dragones = new Dragones(19, 2);
         LinkedList lista = dragones.getLista_dragones();
         Dragon dp = (Dragon) lista.recorrer(0);
         for (int i=1; i < lista.size(); i++) {
