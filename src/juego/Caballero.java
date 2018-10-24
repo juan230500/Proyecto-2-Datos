@@ -17,6 +17,7 @@ public class Caballero {
     private JLabel grifo = new JLabel("Prueba");
     private boolean choque = false;
     private JLabel disparo = null;
+    private int resistencia = 5;
 
     public int getVida() {
         return vida;
@@ -199,6 +200,14 @@ public class Caballero {
         this.disparo = d.getBola();
 
         Hilo_DS hilo2 = new Hilo_DS(d);
+    }
+
+    public int getResistencia() {
+        return resistencia;
+    }
+
+    public void setResistencia(int resistencia) {
+        this.resistencia = resistencia;
     }
 
     /**

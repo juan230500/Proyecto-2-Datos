@@ -69,11 +69,12 @@ public class Fondo extends JPanel implements KeyListener {
         etiqueta2.setBounds(x2,450,60,60);
         this.add(etiqueta);
         this.add(etiqueta2);
+        Hilo_DR hilo_dr = new Hilo_DR(etiqueta2, this);
 
     }
     public void moverlabel1(){
         etiqueta.setLocation(x1,etiqueta.getY());
-        System.out.println("muevo al dragon 1");
+        //System.out.println("muevo al dragon 1");
         x1 -= 1;
 
     }
@@ -97,6 +98,49 @@ public class Fondo extends JPanel implements KeyListener {
     }
     */
 
+
+    public void disparoDragon(JLabel dra){
+        while (juego) {
+            JLabel disp = new JLabel();
+            disp.setText("O");
+            disp.setBounds(dra.getX()-10, dra.getY()+25, 10,10);
+            add(disp);
+            Hilo_DE hilito4 = new Hilo_DE(disp, this);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void moverDisp(JLabel disp){
+        while(juego && disp.getX() > -10){
+            if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
+                disp.setLocation(disp.getX() - 5, disp.getY());
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else{
+                caballero.setResistencia(caballero.getResistencia() - 1);
+                System.out.println(caballero.getResistencia());
+                disp.setLocation(1400, 1000);
+                JLabel colision = new JLabel();
+                colision.setText("BOOM");
+                colision.setBounds(grifo.getX(), grifo.getY(), 50, 10);
+                this.add(colision);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                colision.setLocation(1400, 1000);
+            }
+        }
+        disp.setLocation(1400, 1000);
+    }
 
     /**
      *Verifica cuando se tocan las teclas W,A,S,D que se usan como direccionales y cuando se tocan dos de estas al mismo tiempo
@@ -139,8 +183,8 @@ public class Fondo extends JPanel implements KeyListener {
                     grifo.setLocation(grifo.getX(), 1);
                 }
             }
-            System.out.print(grifo.getX() + "\t");
-            System.out.println(grifo.getY());
+            //System.out.print(grifo.getX() + "\t");
+            //System.out.println(grifo.getY());
             caballero.colisionEnem(etiqueta);
             caballero.colisionEnem(etiqueta2);
         }
