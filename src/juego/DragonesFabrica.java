@@ -2,11 +2,12 @@ package juego;
 
 import adt.LinkedList;
 import adt.ABB;
+import adt.Oleada;
 
 import java.util.HashMap;
 import java.util.Random;
 
-public class Dragones {
+public class DragonesFabrica {
 
     private LinkedList lista_dragones = new LinkedList();
     private LinkedList dragonestmp = new LinkedList();
@@ -14,7 +15,7 @@ public class Dragones {
     private HashMap letras = new HashMap();
     private Dragon capi_aux;
 
-    public Dragones(int cantidad, int ronda){
+    public DragonesFabrica(int cantidad, int ronda, Oleada oleada){
         letras.put("voc","AEIOU");
         letras.put("con","BCDFGJKLMNPRSTVWYZ");
         letras.put("abc", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -33,6 +34,7 @@ public class Dragones {
             cantidad --;
             c++;
 
+            oleada.add(dragon);
             lista_dragones.insertLast(dragon);
         }
     }
