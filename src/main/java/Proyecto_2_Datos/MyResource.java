@@ -1,9 +1,21 @@
 package Proyecto_2_Datos;
 
+import java.io.IOException;
+import java.io.StringReader;
+
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import adt.Oleada;
+import juego.Dragon;
+
+import org.jdom2.*;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.XMLOutputter;
+import servidor.Traductor;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -17,9 +29,24 @@ public class MyResource {
      *
      * @return String that will be returned as a text/plain response.
      */
+	Oleada OleadaPruebas=new Oleada(10);
+	Oleada OleadaInterna;
+	Traductor Trad=new Traductor();
+	
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Produces(MediaType.TEXT_XML)
+    public String getIt() throws JDOMException, IOException {
+    	String fin=Trad.ToXML(OleadaPruebas);
+    	OleadaInterna=Trad.GenOleada(fin);
+    	OleadaInterna.display();
+    	return fin;
     }
+    
+    @POST
+    @Produces(MediaType.TEXT_XML)
+    public String Respuesta() {
+        return Trad.ToXML(OleadaPruebas);
+    }
+    
+    
 }

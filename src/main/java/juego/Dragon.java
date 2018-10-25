@@ -23,9 +23,20 @@ public class Dragon {
     private JLabel Label = new JLabel();
     private int PosX;
     private int PosY;
+    private int id;
 
 
-    /**
+    public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	/**
      * Default constructor
      */
 
