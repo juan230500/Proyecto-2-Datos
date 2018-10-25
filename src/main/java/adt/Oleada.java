@@ -60,7 +60,8 @@ public class Oleada {
             //Se elimina el dragón y se le asigna otro padre o otros hijos
             delete(Herido);
             this.CantidadDragones--;
-            return Realinear();
+            this.Formacion++;
+            return Realinear(this.Formacion%5);
         }
         return 5;
     }
@@ -79,10 +80,7 @@ public class Oleada {
      * por ahora imprime la alineacion de dragones resultante
      * pero no cambia nada de los dragones ya que no es necesario
      */
-    public int Realinear(){
-        this.Formacion++;
-
-        int criterio=Formacion%5;
+    public int Realinear(int criterio){
         //AVL
         if (criterio==4){
             AVLTree tree=new AVLTree();
@@ -125,7 +123,11 @@ public class Oleada {
         }
     }
 
-    /**
+    public void setCantidadDragones(int cantidadDragones) {
+		CantidadDragones = cantidadDragones;
+	}
+
+	/**
      * Hace un print de la edad del dragon y su respectivo padre para asegurarse que lo muestra correctamente
      */
     public void displayFamilias() {

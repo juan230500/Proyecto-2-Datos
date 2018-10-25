@@ -2,6 +2,7 @@ package Proyecto_2_Datos;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import adt.AVLTree;
 import adt.Oleada;
 import juego.Dragon;
 
@@ -37,8 +39,20 @@ public class MyResource {
     @Produces(MediaType.TEXT_XML)
     public String getIt() throws JDOMException, IOException {
     	String fin=Trad.ToXML(OleadaPruebas);
-    	OleadaInterna=Trad.GenOleada(fin);
+    	OleadaInterna=Trad.GetOleada(fin);
+    	Dragon[] ArrayInterno=Trad.getArrayPorID();
+    	
     	OleadaInterna.display();
+    	OleadaInterna.Realinear(4);
+    	
+    	String XML=Trad.AVLtoXML(OleadaInterna.getRootAVL());
+    	
+    	AVLTree tree=Trad.DesempaquetarAVL(ArrayInterno, XML);
+    	tree.preOrder();
+    	/*System.out.println(Arrays.toString(ArrayInterno));
+    	
+    	Trad.DesempaquetarIDArray(ArrayInterno, Trad.ArraytoXML(ArrayInterno));
+    	*/
     	return fin;
     }
     
