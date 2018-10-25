@@ -1,6 +1,6 @@
 package ArbolB;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Write a description of class Raiz here.
@@ -17,8 +17,90 @@ public class Raiz
     public static int nivel = 1;
     public static int imprimir = 1;
     public static String arbol = "";
+    public int tamano(int oleada) {
+        int resultado = 0;
+        int numero=0;
+        boolean flag=true;
+        while(flag) {
+            if ((oleada + numero) % 5 == 0) {
+                flag=false;
+
+            }
+            numero+=1;
+        }
+        resultado = (oleada + numero);
+        System.out.println("este es el grado"+ resultado/5);
+        return resultado/5;
+    }
+    public String serializarTexto(String Texto1){
+        String hijo="";
+        String Texto=(Texto1.replace("]","x"));
+        Texto=(Texto.replace("[","x"));
+        Texto=Texto.replaceAll("\\s","");
+        String informacionRecolectada="";
+        boolean encontreNumero=false;
+        boolean ecnontreX=false;
+        int numeroDearrobas=0;
+        for (int i = 0; i < Texto.length(); i++) {
+            if(Texto.charAt(i)=='x'){
+                ecnontreX=true;
+                encontreNumero=false;
+            }
+            if (Texto.charAt(i)!='x'&&ecnontreX){
+                hijo+="@";
+                numeroDearrobas+=1;
+            }
+
+            if (Texto.charAt(i)!='x'){
+                encontreNumero=true;
+                ecnontreX=false;
+            }
+            if(encontreNumero){
+                hijo+=Texto.charAt(i);
+            }
+        }
+        System.out.println(Texto);
+        hijo=(hijo.replace("x",""));
+        hijo=(hijo.replace("@","@"+"\n"));
+        hijo=(hijo.replace(",","\n"));
+        return hijo+"@";
+    }
+    public String giveArrayHijos(String Texto,int elemento){
+        int numerodeValor=0;
+        int numeroArrobaEncontrado=0;
+        String contenidoPagina="";
+        String[] paginas = new String[5];
+
+        for (int i = 0; i < Texto.length(); i++) {
+
+            if(Texto.charAt(i)=='@'){
+                numeroArrobaEncontrado+=1;
+            }
+            if (numeroArrobaEncontrado>elemento+0&&numeroArrobaEncontrado<elemento+2){
+                contenidoPagina+=Texto.charAt(i);
+            }
+        }
+        contenidoPagina=contenidoPagina.replace("@","");
+        return contenidoPagina;
+    }
+    public String Recorrido(){
+        String raiz = "[ ";
+        for(int i = 0; i < this.primerNodo.valores.length && this.primerNodo.valores[i] != 0; i++){
+            raiz += this.primerNodo.valores[i] + ", ";
+        }
+        raiz += " ]\n";
+        raiz += this.llamarRecorrer();
+        return raiz;
+    }
+    public String  dameInfo(int opcion){
+        String Texto1=this.serializarTexto(this.Recorrido());
+        String Info=this.giveArrayHijos(Texto1,opcion);
+        return Info;
+
+    }
     public Raiz(int grado)
     {
+        grado=tamano(grado);
         this.grado = grado;
         primerNodo = new Nodo ();
         Lista llevarIngresos = new Lista();
@@ -130,7 +212,7 @@ public class Raiz
         Nodo hijoIzq = new Nodo();
         Nodo hijoDer = new Nodo();
 
-        //split general 
+        //split general
         if (nodo.nodo[0]!=null) { //si tiene hijos antes de hacer el split entonces
             for (int i = 0; i <grado+1; i++) { // los separa los hijos del nodo en hijoIzq e hijoDer
                 hijoIzq.nodo[i] = nodo.nodo[i];
@@ -154,7 +236,7 @@ public class Raiz
         nodo.nodo[0] = hijoIzq; //asigna a nodo el nuevo hijo izquierdo (hijoIzq)
         nodo.nodo[0].padre = nodo; // se hizo en primer ciclo
         nodo.nodo[1] = hijoDer; // asigna a nodo el nuevo hijo derecho (hijoDer)
-        nodo.nodo[1].padre = nodo; // se hizo en el primer ciclo        
+        nodo.nodo[1].padre = nodo; // se hizo en el primer ciclo
         setTengoHijos(primerNodo);
         ordenarNodos(nodo);
 
