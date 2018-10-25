@@ -29,14 +29,13 @@ public class Fondo extends JPanel implements KeyListener {
 
     private Caballero caballero = new Caballero();
     private JLabel grifo = caballero.getLabel();
-    private JLabel etiqueta =new JLabel();
     private JLabel etiqueta2 =new JLabel();
     private int x1=1000;
     private int x2=1000;
     private int largo = 1366-400;
     private int alto = 768;
 
-    public Hilos getH1() {
+    public HiloOleada getH1() {
         return h1;
     }
 
@@ -44,7 +43,7 @@ public class Fondo extends JPanel implements KeyListener {
         return h2;
     }
 
-    private Hilos h1;
+    private HiloOleada h1;
     private Hilos h2;
 
     public Hilo_DR getH3() {
@@ -71,14 +70,14 @@ public class Fondo extends JPanel implements KeyListener {
         add(grifo);
         add(lbl);
         this.margen =0;
-        this.OleadaDibujar=new Oleada(25);
-        this.Bloqueos=new boolean[25];
+        this.OleadaDibujar=new Oleada(100);
+        this.Bloqueos=new boolean[100];
         DrawArray();
         addKeyListener(this);
         setFocusable(true);
         crearLabel();
 
-        Hilos hilito1=new Hilos(this,1, etiqueta);
+        HiloOleada hilito1=new HiloOleada(this);
         this.h1 = hilito1;
         Hilos hilito2=new Hilos(this,2,etiqueta2);
         this.h2 = hilito2;
@@ -86,11 +85,8 @@ public class Fondo extends JPanel implements KeyListener {
 
     public void crearLabel(){
 
-        etiqueta.setText("Dragon");
         etiqueta2.setText("Dragon2");
-        etiqueta.setBounds(x1,300,60,60);
         etiqueta2.setBounds(x2,450,60,60);
-        this.add(etiqueta);
         this.add(etiqueta2);
         Hilo_DR hilo_dr = new Hilo_DR(etiqueta2, this);
         h3 = hilo_dr;
@@ -98,14 +94,9 @@ public class Fondo extends JPanel implements KeyListener {
     }
     public void moverlabel(){
         for (int i = 0; i< OleadaDibujar.getCantidadDragones(); i ++) {
-            OleadaDibujar.getDragonesDibujar()[i].setPosX(OleadaDibujar.getDragonesDibujar()[i].getPosX()- 10);
+            OleadaDibujar.getDragonesDibujar()[i].setPosX(OleadaDibujar.getDragonesDibujar()[i].getPosX()- 1);
             OleadaDibujar.getDragonesDibujar()[i].getLabel().setLocation(OleadaDibujar.getDragonesDibujar()[i].getPosX(), OleadaDibujar.getDragonesDibujar()[i].getLabel().getY());
             //System.out.println("muevo al dragon 1");
-            try {
-                Thread.sleep(15);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
     public void moverlabel2(){
@@ -205,7 +196,6 @@ public class Fondo extends JPanel implements KeyListener {
             }
             //System.out.print(grifo.getX() + "\t");
             //System.out.println(grifo.getY());
-            caballero.colisionEnem(etiqueta);
             caballero.colisionEnem(etiqueta2);
         }
         else{
@@ -266,7 +256,6 @@ public class Fondo extends JPanel implements KeyListener {
             }
             System.out.print(grifo.getX() + "\t");
             System.out.println(grifo.getY());
-            caballero.colisionEnem(etiqueta);
             caballero.colisionEnem(etiqueta2);
         }
         else{
