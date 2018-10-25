@@ -2,6 +2,8 @@ package servidor;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.List;
 
 import org.jdom2.Attribute;
 import org.jdom2.Document;
@@ -10,12 +12,108 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
+import adt.AVLTree;
+import adt.Node;
 import adt.Oleada;
 import juego.Dragon;
 
 public class Traductor {
 	Dragon[] ArrayPorID;
+	
+	public Dragon[] getArrayPorID() {
+		return ArrayPorID;
+	}
+
 	int i=0;
+	int CantidadDragones;
+	
+	public Dragon[] DesempaquetarIDArray(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
+		SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new StringReader(XML));
+        Element Root = document.getRootElement();
+        
+        List<Element> IdList = Root.getChildren();
+        Dragon[] ArrayDragonesFinal=new Dragon[IdList.size()];
+        
+        for (int temp = 0; temp < IdList.size(); temp++) {    
+            Element student = IdList.get(temp);
+            
+            int id=Integer.parseInt(student.getText());
+            
+            ArrayDragonesFinal[temp]=ArrayDragonesOriginal[id];
+        }
+        System.out.println(Arrays.toString(ArrayDragonesFinal));
+        return ArrayDragonesFinal;
+	}
+	
+	public AVLTree DesempaquetarAVL(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
+		SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new StringReader(XML));
+        Element Root = document.getRootElement();
+        
+        AVLTree tree=new AVLTree();
+        int id=Integer.parseInt(Root.getText());
+        tree.setRoot(new Node(ArrayDragonesOriginal[id]));
+        
+        DesempaquetarAVLREc(Root,tree.getRoot(),ArrayDragonesOriginal);
+        
+        return tree;
+	}
+	
+	public void DesempaquetarAVLREc(Element Root,Node node,Dragon[] ArrayDragonesOriginal) {
+		int id;
+		
+    	Element Iz=Root.getChild("hijoIz");
+    	if (Iz!=null) {
+    		id=Integer.parseInt(Iz.getText());
+    		Node hijoIz=new Node(ArrayDragonesOriginal[id]);
+    		DesempaquetarAVLREc(Iz,hijoIz,ArrayDragonesOriginal);
+    		node.left=hijoIz;
+    	}
+    	
+    	Element Der=Root.getChild("hijoDer");
+    	if (Der!=null) {
+    		id=Integer.parseInt(Der.getText());
+    		Node hijoDer=new Node(ArrayDragonesOriginal[id]);
+    		DesempaquetarAVLREc(Der,hijoDer,ArrayDragonesOriginal);
+    		node.right=hijoDer;
+    	}
+    }
+	
+	public String ArraytoXML(Dragon[] ArrayDragones) {
+		Element Padre = new Element("root");
+		for (int i=0;i<ArrayDragones.length;i++) {
+			Element Puntero=new Element("id");
+			Puntero.setText(""+ArrayDragones[i].getId());
+			Padre.addContent(Puntero);
+		}
+        Document doc = new Document(Padre);
+        System.out.println(new XMLOutputter().outputString(doc));
+        return new XMLOutputter().outputString(doc);
+	}
+	
+	public String AVLtoXML(Node root) {
+		Element Padre = new Element("root");
+        Document doc = new Document(Padre);
+        EmpaquetarAVL(root, Padre);
+        System.out.println(new XMLOutputter().outputString(doc));
+        return new XMLOutputter().outputString(doc);
+	}
+	
+	private void EmpaquetarAVL(Node node,Element Padre)
+    {
+    	Padre.setText(""+node.key.getId());
+    	if (node.left!=null) {
+    		Element hijoIz = new Element("hijoIz");
+    		EmpaquetarAVL(node.left, hijoIz);
+	    	Padre.addContent(hijoIz);
+    	}
+    	if (node.right!=null) {
+    		Element hijoDer = new Element("hijoDer");
+    		EmpaquetarAVL(node.right, hijoDer);
+    		Padre.addContent(hijoDer);
+    	}
+    }
 	
 	/**
 	 * Método principal para generar la oleada en el servidor a partir
@@ -25,19 +123,23 @@ public class Traductor {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public Oleada GenOleada(String XML) throws JDOMException, IOException {
+	public Oleada GetOleada(String XML) throws JDOMException, IOException {
     	SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(XML));
         Element Root = document.getRootElement();
         
         Oleada OleadaNueva=new Oleada(1);
+        this.CantidadDragones=0;
         
         DesempaquetarArbol(Root, OleadaNueva.getRoot());
+        
+        OleadaNueva.setCantidadDragones(this.CantidadDragones);
         
         return OleadaNueva;
     }
     
     public void DesempaquetarAtributos(Element ElementoDragon, Dragon dragon) {
+    	this.CantidadDragones++;
     	int Edad=Integer.parseInt(ElementoDragon.getAttribute("edad").getValue());
     	dragon.setEdad(Edad);
     	int Recarga=Integer.parseInt(ElementoDragon.getAttribute("recarga").getValue());
