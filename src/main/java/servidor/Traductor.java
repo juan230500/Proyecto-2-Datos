@@ -11,9 +11,13 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import adt.AVLTree;
 import adt.Node;
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.core.util.StatusPrinter;
 import juego.Dragon;
 import juego.Oleada;
 
@@ -26,6 +30,7 @@ public class Traductor {
 
 	int i=0;
 	int CantidadDragones;
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(Traductor.class);
 	
 	public Dragon[] DesempaquetarIDArray(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
 		SAXBuilder saxBuilder = new SAXBuilder();
@@ -172,6 +177,12 @@ public class Traductor {
      * @return la string con el formato xml
      */
     public String ToXML(Oleada O) {
+        
+        slf4jLogger.info("Traduciendo...");
+        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
+        // print logback's internal status
+        StatusPrinter.print(lc);
+        System.out.println("$$$");
     	Element Padre = new Element("root");
     	this.ArrayPorID=new Dragon[O.getCantidadDragones()];
     	EmpaquetarAtributos(O.getRoot(), Padre);
