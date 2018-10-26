@@ -7,35 +7,70 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+/**
+ *  Clase: InfoDragon
+ * @author Andrey Sanchez
+ * @version 26/10/2018
+ */
+
 public class InfoDragon extends JPanel {
     public void setNombre(String nombre) {
         this.nombre.setVisible(false);
         JLabel n = new JLabel("Nombre:"+ nombre);
         this.nombre = n;
     }
+
+    /**
+     * Setter
+     * @param clas
+     */
+
     public void setClase(String clas) {
         this.clase.setVisible(false);
         JLabel n = new JLabel("Clase:"+ clas);
         this.clase = n;
     }
+
+    /**
+     * Setter
+     * @param padre
+     */
+
     public void setPadre(Dragon padre) {
         String p = padre.getNombre();
         this.padre.setVisible(false);
         JLabel n = new JLabel("Padre:"+ p);
         this.padre = n;
     }
+
+    /**
+     * Setter
+     * @param hijoi
+     */
+
     public void setHijoI(Dragon hijoi) {
         String hi = hijoi.getNombre();
         this.hijoI.setVisible(false);
         JLabel n = new JLabel("Hijo Izquierdo:"+ hi);
         this.hijoI = n;
     }
+
+    /**
+     * Setter
+     * @param hijod
+     */
+
     public void setHijoD(Dragon hijod) {
         String hd = hijod.getNombre();
         this.hijoD.setVisible(false);
         JLabel n = new JLabel("Hijo Derecho:"+ hd);
         this.hijoD = n;
     }
+
+    /**
+     * Setter
+     * @param edad
+     */
 
     public void setEdad(int edad) {
         this.edad.setVisible(false);
@@ -44,12 +79,22 @@ public class InfoDragon extends JPanel {
         this.edad = n;
     }
 
+    /**
+     * Setter
+     * @param resistencia
+     */
+
     public void setResistencia(int resistencia) {
         this.resistencia.setVisible(false);
         String st = Integer.toString(resistencia);
         JLabel n = new JLabel("Resistencia:"+st);
         this.resistencia = n;
     }
+
+    /**
+     * Setter
+     * @param recarga
+     */
 
     public void setRecarga(int recarga) {
         this.recarga.setVisible(false);
@@ -66,6 +111,9 @@ public class InfoDragon extends JPanel {
     JLabel hijoD=new JLabel("Hijo Derecho:");
     JLabel clase=new JLabel("Clase:");
 
+    /**
+     * Default constructor
+     */
 
     public InfoDragon() {
         setLayout(null);
@@ -75,6 +123,11 @@ public class InfoDragon extends JPanel {
         setBackground(Color.darkGray);
         addInfo();
     }
+
+    /**
+     * Metodo para setear la informacion de un dragon en el JPanel InfoDragon
+     */
+
     public void addInfo(){
         this.nombre.setBounds(20, 20, 220, 20);
         this.nombre.setForeground(Color.white);

@@ -214,7 +214,7 @@ public class Oleada {
             AddPorAltura(Y,ancho,root.getHijoIz(),ListaDragones);
             int altura=root.getPosY();
 
-            if (Y<altura && altura<Y+ancho){
+            if (Y>=altura && Y<=altura+ancho){
                 ListaDragones.add(root);
             }
             AddPorAltura(Y,ancho,root.getHijoDer(),ListaDragones);
@@ -222,7 +222,7 @@ public class Oleada {
     }
 
     public Dragon MasCercanoPorAltura(int Y){
-        int AnchoDefault=50;
+        int AnchoDefault=25;
         List<Dragon> ListaDragones= FiltrarPorAltura(Y,AnchoDefault);
         int i=ListaDragones.size()-2;
         if (i<-1){
@@ -232,7 +232,7 @@ public class Oleada {
         Dragon DragonAux;
         while (i>0){
             DragonAux=ListaDragones.get(i);
-            if (DragonAux.getPosX()<MasCercano.getPosX())
+            if (DragonAux.getLabel().getX()<MasCercano.getLabel().getX())
                 MasCercano=DragonAux;
             i--;
         }

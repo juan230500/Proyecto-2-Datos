@@ -9,8 +9,11 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * 
+ * Clase: Pantalla
+ * @author Andrey Sanchez
+ * @version 26/10/2018
  */
+
 public class Pantalla extends JFrame {
     private boolean juego = true;
     private JLabel label = new JLabel();
@@ -54,10 +57,15 @@ public class Pantalla extends JFrame {
         Hilo_F xd = new Hilo_F(this);
         hPrin= xd;
     }
+
+
+    /**
+     * Metodo usado por Hilo_F para verificar constantemente si se clickea un dragon y si se cumple alguna condicion de finalizado
+     */
+
     public void comenzar_juego(){
 
-        while(juego){
-            if(fondo.getCaballero().getDragonesQuePasaron()==2 || fondo.getCaballero().getVida() == 2){
+            if(fondo.getCaballero().getDragonesQuePasaron()>=3 || fondo.getCaballero().getVida() == 0){
                 hPrin.stop();
                 JLabel end = new JLabel("PERDISTEEEEEE");
                 end.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
@@ -71,7 +79,6 @@ public class Pantalla extends JFrame {
                 fondo.getH2().stop();
                 fondo.getH3().stop();
                 fondo.getH4().stop();
-                hPrin.stop();
             }
                 for (int i = 0; i< fondo.getOleadaDibujar().toArray().length;i++){
                     Dragon dg = (Dragon) fondo.getOleadaDibujar().toArray()[i];
@@ -122,7 +129,7 @@ public class Pantalla extends JFrame {
                         dg.setClick(false);
                     }
                 }
-        }
+
     }
 
     /**

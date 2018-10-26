@@ -24,6 +24,16 @@ public class Dragon {
     private int PosX;
     private int PosY;
 
+    public boolean getCruce() {
+        return cruce;
+    }
+
+    public void setCruce(boolean cruce) {
+        this.cruce = cruce;
+    }
+
+    private boolean cruce=false;
+
     public boolean getClick() {
         return click;
     }

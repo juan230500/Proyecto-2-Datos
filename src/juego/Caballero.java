@@ -179,9 +179,8 @@ public class Caballero {
     /**
      * Crea un objeto Disparo, verifica si este colisiono con un dragon y si lo hizo disminuye la vida de dicho dragon
      */
-    public void atacar(JLabel dragonX) {
+    public void atacar(JLabel dragonX, Disparo d) {
 
-        Disparo d = new Disparo(this.grifo.getX()+this.grifo.getWidth(),this.grifo.getY()+(this.grifo.getHeight()/2));
         this.disparo = d.getBola();
 
         Hilo_D hilo2 = new Hilo_D(d,dragonX);

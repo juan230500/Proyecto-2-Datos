@@ -3,9 +3,20 @@ package GUI;
 import javax.swing.*;
 import juego.Disparo;
 
+/**
+ * Clase: Hilo_F
+ * @author Andrey Sanchez
+ * @version 26/10/2018
+ */
+
 public class Hilo_F implements Runnable {
     Pantalla SideScroller = null;
     private boolean juego = true;
+
+    /**
+     * Default constructor
+     * @param sidescroller
+     */
 
     public  Hilo_F(Pantalla sidescroller){
         Thread hilo= new Thread(this);
