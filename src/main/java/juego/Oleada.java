@@ -15,8 +15,16 @@ public class Oleada {
     private Dragon[] DragonesDibujar;
     private Node rootAVL;
     private boolean EdadRepetida;
+    
+    public Oleada() {
+    	
+    }
 
-    /**
+    public void setRoot(Dragon root) {
+		this.root = root;
+	}
+
+	/**
      * Constructor de las oleadas que toma la cantidad deseada y se apoya en genDragones
      * La oleada solo guarda la referencia a su dragon Head (sin padre) el resto se acceden desde sus padres
      * @param Cantidad numero de dragones que se espera en la oleada inicial
@@ -157,20 +165,20 @@ public class Oleada {
         if (node != null) {
             display(node.getHijoIz(),nivel+1);
             if (node.getPadre()==null){
-                System.out.println(node.getNombre()
+                System.out.println(node.getEdad()
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
-                        +" Hijo de "+node.getPadre()
+                        +" Hijo de "+node.getEdad()
                         +" Y: "+node.getPosY()
                         +" Nivel: "+node.getPosX());
             }
             else{
-                System.out.println(node.getNombre()
+                System.out.println(node.getEdad()
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
-                        +" Hijo de "+node.getPadre().getNombre()
+                        +" Hijo de "+node.getPadre().getEdad()
                         +" Y: "+node.getPosY()
                         +" Nivel: "+node.getPosX());
             }

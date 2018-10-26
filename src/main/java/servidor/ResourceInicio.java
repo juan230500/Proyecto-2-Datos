@@ -14,8 +14,6 @@ import juego.Oleada;
 
 @Path("inicio")
 public class ResourceInicio {
-	
-	private Oleada OleadaInterna;
 	private TraductorInicio Trad1=new TraductorInicio();
 	
 	@GET
@@ -32,7 +30,7 @@ public class ResourceInicio {
 	
 	@POST
 	@Produces(MediaType.TEXT_XML)
-	public String getout(String request) throws JDOMException, IOException {
+	public String RequestGenerarOleada(String request) throws JDOMException, IOException {
 		int i=Trad1.GetCantidad(request);
 		Oleada OleadaTmp=new Oleada(i);
 		OleadaTmp.display();

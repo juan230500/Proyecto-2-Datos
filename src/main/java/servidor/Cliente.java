@@ -17,25 +17,40 @@ public class Cliente {
 	public static void main(String[] args) throws InterruptedException, JDOMException, IOException {
 		
 		long time_start, time_end;
+		
 		time_start = System.currentTimeMillis();
 		
 		TraductorInicio Trad1=new TraductorInicio();
 		
+		TraductorEliminarcion Trad2=new TraductorEliminarcion();
+		
 		Client client = ClientBuilder.newBuilder()
 		          .build();
 		
-		 WebTarget target = client.target("http://localhost:8080/ProyectoServidor/webapi/inicio");
+		 WebTarget target = client.target("http://localhost:8080/ProyectoServidor/webapi/eliminar");
 		 
-		 String xml=Trad1.CantidadToXMl(10);
+		 
+		 for (int i=11;i>10;i--) {
+			 Oleada O=new Oleada(i);
+			 String xml2=Trad2.ToXML(O,0,900);
+			 String res3 = target.request().post(Entity.entity(xml2, MediaType.TEXT_XML), String.class);
+			 System.out.println(res3);
+		 }
+		 
+		 //System.out.println(xml2);
+		 
+		 /*String xml=Trad1.CantidadToXMl(10);
 		 
 		 String res3 = target.request().post(Entity.entity(xml, MediaType.TEXT_XML), String.class);
 		 
 		 Oleada O=Trad1.GetOleadaFull(res3);
 		 
-		 O.display();
+		 O.display();*/
 		 
-		time_end = System.currentTimeMillis();
-		System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
+		 time_end = System.currentTimeMillis();
+		 System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
+		 
+		 
 		
 		
 	}

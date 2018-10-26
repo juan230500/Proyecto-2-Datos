@@ -37,8 +37,8 @@ public class ResourceEliminacion {
     @GET
     @Produces(MediaType.TEXT_XML)
     public String getIt() throws JDOMException, IOException {
-    	String fin=Trad.ToXML(OleadaPruebas);
-    	OleadaInterna=Trad.GetOleada(fin);
+    	String fin=Trad.ToXML(OleadaPruebas,0,4);
+    	/*OleadaInterna=Trad.GetOleada(fin);
     	Dragon[] ArrayInterno=Trad.getArrayPorID();
     	
     	OleadaInterna.display();
@@ -50,15 +50,18 @@ public class ResourceEliminacion {
     	tree.preOrder();
     	/*System.out.println(Arrays.toString(ArrayInterno));
     	
-    	Trad.DesempaquetarIDArray(ArrayInterno, Trad.ArraytoXML(ArrayInterno));
-    	*/
+    	Trad.DesempaquetarIDArray(ArrayInterno, Trad.ArraytoXML(ArrayInterno));*/
+    	
     	return fin;
     }
     
     @POST
     @Produces(MediaType.TEXT_XML)
-    public String Respuesta() {
-        return Trad.ToXML(OleadaPruebas);
+    public String RequestEliminar(String request) throws JDOMException, IOException {
+    	Oleada Oleadatmp=Trad.GetOleada(request);
+    	Oleadatmp.display();
+    	Oleadatmp.delete(Oleadatmp.getRoot());
+        return Trad.IDToXMl(Oleadatmp);
     }
     
     
