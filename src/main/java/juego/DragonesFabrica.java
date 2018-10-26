@@ -29,7 +29,7 @@ public class DragonesFabrica {
             asignarResistencia(dragon);
             asignarEdad(dragon);
             asignarClase(c, cantidad, dragon);
-
+            dragon.getLabel().setText(dragon.getNombre());
             cantidad --;
             c++;
 
