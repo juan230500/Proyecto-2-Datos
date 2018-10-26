@@ -6,6 +6,7 @@ import juego.Oleada;
 
 import java.awt.*;
 import javax.swing.*;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -15,6 +16,7 @@ import java.util.*;
  */
 
 public class Pantalla extends JFrame {
+    private static Logger log;
     private boolean juego = true;
     private JLabel label = new JLabel();
     private JLabel label2 = new JLabel();
@@ -26,8 +28,7 @@ public class Pantalla extends JFrame {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
         Pantalla frame = new Pantalla();
         frame.setVisible(true);
     }
@@ -35,7 +36,7 @@ public class Pantalla extends JFrame {
     /**
      * Default constructor
      */
-    public Pantalla() {
+    public Pantalla() throws IOException {
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 1366, 768);
@@ -56,6 +57,9 @@ public class Pantalla extends JFrame {
         add(pan);
         Hilo_F xd = new Hilo_F(this);
         hPrin= xd;
+        Logger lg = new Logger(fondo.addLogger());
+        lg.muestraContenido(lg.ruta);
+
     }
 
 
@@ -64,7 +68,6 @@ public class Pantalla extends JFrame {
      */
 
     public void comenzar_juego(){
-
             if(fondo.getCaballero().getDragonesQuePasaron()>=3 || fondo.getCaballero().getVida() == 0){
                 hPrin.stop();
                 JLabel end = new JLabel("PERDISTEEEEEE");

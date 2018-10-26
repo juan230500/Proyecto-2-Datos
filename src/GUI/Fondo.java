@@ -20,6 +20,15 @@ public class Fondo extends JPanel implements KeyListener {
     private boolean juego = true;
     private int margen;
     private Oleada OleadaDibujar;
+    private String LogInfo="1";
+
+    public String addLogger(){
+        return LogInfo;
+    }
+
+    public void addInfo(String info){
+        this.LogInfo = info;
+    }
 
     /**
      * Getter
@@ -254,6 +263,7 @@ public class Fondo extends JPanel implements KeyListener {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
                 if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
                     Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
+                    addInfo("Ataque nuevo");
                     if(OleadaDibujar.MasCercanoPorAltura(d.getPosY())== null){
                         caballero.atacar();
                     }
