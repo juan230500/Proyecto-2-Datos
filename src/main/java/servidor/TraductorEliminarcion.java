@@ -27,6 +27,7 @@ public class TraductorEliminarcion {
 	int CantidadDragones;
 	int criterio;
 	int EdadEliminar;
+	Dragon DragonEliminar;
 	//private static final Logger slf4jLogger = LoggerFactory.getLogger(TraductorEliminarcion.class);
 	
 	/**
@@ -132,6 +133,9 @@ public class TraductorEliminarcion {
     	dragon.setRecarga(Recarga);
     	int Id=Integer.parseInt(ElementoDragon.getAttribute("id").getValue());
     	dragon.setId(Id);
+    	
+    	if (Edad==this.EdadEliminar)
+    		this.DragonEliminar=dragon;
     }
     
     public String IDToXMl(Oleada O) {
@@ -165,13 +169,63 @@ public class TraductorEliminarcion {
 	    	destino.addContent(hijoDer);
     	}
     }
-    
-    
-	public Dragon[] getArrayPorID() {
-		return ArrayPorID;
-	}
 
-	public Dragon[] DesempaquetarIDArray(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
+    public Oleada GetOleadaId(String XML) throws JDOMException, IOException {
+    	SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new StringReader(XML));
+        
+        Element Principal = document.getRootElement();
+        
+        Element Root = Principal.getChild("root");
+        
+        Oleada OleadaNueva=new Oleada();
+        int id=Integer.parseInt(Root.getAttribute("id").getValue());
+        this.ArrayPorID[id].setPadre(null);
+        OleadaNueva.setRoot(this.ArrayPorID[id]);
+        this.CantidadDragones=0;
+        
+        DesempaquetarArbolID(Root, OleadaNueva.getRoot());
+        System.out.println(Arrays.toString(this.ArrayPorID));
+        
+        OleadaNueva.setCantidadDragones(this.CantidadDragones);
+        
+        System.out.println(OleadaNueva.getRoot());
+        
+        return OleadaNueva;
+    }
+    
+    public void DesempaquetarArbolID(Element Root,Dragon node) {
+    	this.CantidadDragones++;
+    	
+    	
+    	Element Iz=Root.getChild("hijoIz");
+    	if (Iz!=null) {
+    		int id=Integer.parseInt(Iz.getAttribute("id").getValue());
+    		System.out.println(id);
+    		Dragon hijoIz=this.ArrayPorID[id];
+        	node.setHijoIz(hijoIz);
+    		DesempaquetarArbolID(Iz,hijoIz);
+    		
+    	}
+    	else {
+    		node.setHijoIz(null);
+    	}
+    	
+    	Element Der=Root.getChild("hijoDer");
+    	if (Der!=null) {
+    		int id=Integer.parseInt(Der.getAttribute("id").getValue());
+    		System.out.println(id);
+    		Dragon hijoDer=this.ArrayPorID[id];
+        	node.setHijoDer(hijoDer);
+    		DesempaquetarArbolID(Der,hijoDer);
+    	}
+    	else {
+    		node.setHijoDer(null);
+    	}
+    }
+    
+    
+    public Dragon[] DesempaquetarIDArray(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
 		SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(XML));
         Element Root = document.getRootElement();
@@ -189,7 +243,8 @@ public class TraductorEliminarcion {
         System.out.println(Arrays.toString(ArrayDragonesFinal));
         return ArrayDragonesFinal;
 	}
-	
+
+
 	public AVLTree DesempaquetarAVL(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
 		SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(XML));
@@ -259,6 +314,8 @@ public class TraductorEliminarcion {
     	}
     }
 	
-	
+	public Dragon[] getArrayPorID() {
+		return ArrayPorID;
+	}
     
 }

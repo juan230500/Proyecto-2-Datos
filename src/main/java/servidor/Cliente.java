@@ -34,6 +34,8 @@ public class Cliente {
 			 Oleada O=new Oleada(i);
 			 String xml2=Trad2.ToXML(O,0,900);
 			 String res3 = target.request().post(Entity.entity(xml2, MediaType.TEXT_XML), String.class);
+			 O=Trad2.GetOleadaId(res3);
+			 O.display();
 			 System.out.println(res3);
 		 }
 		 

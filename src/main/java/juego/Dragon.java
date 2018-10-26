@@ -25,7 +25,6 @@ public class Dragon {
     private int PosY;
     private int id;
 
-
     public int getId() {
 		return id;
 	}
