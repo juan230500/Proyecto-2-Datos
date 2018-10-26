@@ -26,13 +26,13 @@ public class Cliente {
 		
 		 WebTarget target = client.target("http://localhost:8080/ProyectoServidor/webapi/inicio");
 		 
-		 String xml=Trad1.CantidadToXMl(500);
+		 String xml=Trad1.CantidadToXMl(10);
 		 
 		 String res3 = target.request().post(Entity.entity(xml, MediaType.TEXT_XML), String.class);
 		 
-		 /*Oleada O=Trad1.GetOleadaFull(res3);
+		 Oleada O=Trad1.GetOleadaFull(res3);
 		 
-		 O.display();*/
+		 O.display();
 		 
 		time_end = System.currentTimeMillis();
 		System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");

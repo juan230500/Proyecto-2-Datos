@@ -35,6 +35,7 @@ public class ResourceInicio {
 	public String getout(String request) throws JDOMException, IOException {
 		int i=Trad1.GetCantidad(request);
 		Oleada OleadaTmp=new Oleada(i);
+		OleadaTmp.display();
 		String XML=Trad1.ToXMLFull(OleadaTmp);
 		return Trad1.ToXMLFull(OleadaTmp);
 	}
