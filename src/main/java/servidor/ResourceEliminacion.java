@@ -1,4 +1,4 @@
-package Hola.ProyectoServidor;
+package servidor;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,13 +17,12 @@ import juego.Oleada;
 import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
-import servidor.Traductor;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("myresource")
-public class MyResource {
+@Path("eliminar")
+public class ResourceEliminacion {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -33,7 +32,7 @@ public class MyResource {
      */
 	Oleada OleadaPruebas=new Oleada(10);
 	Oleada OleadaInterna;
-	Traductor Trad=new Traductor();
+	TraductorEliminarcion Trad=new TraductorEliminarcion();
 	
     @GET
     @Produces(MediaType.TEXT_XML)

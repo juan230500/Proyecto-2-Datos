@@ -157,7 +157,7 @@ public class Oleada {
         if (node != null) {
             display(node.getHijoIz(),nivel+1);
             if (node.getPadre()==null){
-                System.out.println(node
+                System.out.println(node.getNombre()
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
@@ -166,11 +166,11 @@ public class Oleada {
                         +" Nivel: "+node.getPosX());
             }
             else{
-                System.out.println(node
+                System.out.println(node.getNombre()
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
-                        +" Hijo de "+node.getPadre().getEdad()
+                        +" Hijo de "+node.getPadre().getNombre()
                         +" Y: "+node.getPosY()
                         +" Nivel: "+node.getPosX());
             }

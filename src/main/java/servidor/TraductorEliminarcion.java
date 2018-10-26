@@ -21,7 +21,7 @@ import ch.qos.logback.core.util.StatusPrinter;
 import juego.Dragon;
 import juego.Oleada;
 
-public class Traductor {
+public class TraductorEliminarcion {
 	Dragon[] ArrayPorID;
 	
 	public Dragon[] getArrayPorID() {
@@ -30,7 +30,7 @@ public class Traductor {
 
 	int i=0;
 	int CantidadDragones;
-	private static final Logger slf4jLogger = LoggerFactory.getLogger(Traductor.class);
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(TraductorEliminarcion.class);
 	
 	public Dragon[] DesempaquetarIDArray(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
 		SAXBuilder saxBuilder = new SAXBuilder();
@@ -179,10 +179,7 @@ public class Traductor {
     public String ToXML(Oleada O) {
         
         slf4jLogger.info("Traduciendo...");
-        LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
-        // print logback's internal status
-        StatusPrinter.print(lc);
-        System.out.println("$$$");
+        
     	Element Padre = new Element("root");
     	this.ArrayPorID=new Dragon[O.getCantidadDragones()];
     	EmpaquetarAtributos(O.getRoot(), Padre);
