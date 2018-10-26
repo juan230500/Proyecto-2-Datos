@@ -89,7 +89,11 @@ public class AVLTree
         return height(N.left) - height(N.right);
     }
 
-    /**
+    public void setRoot(Node root) {
+		this.root = root;
+	}
+
+	/**
      * Sobrecarga para facilitar método recursivo
      * @param key dragon a insertar
      */

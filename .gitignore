@@ -1,5 +1,7 @@
 **/.idea
 **/.classpath
+**/.settings
+**/target
 **/out
 **/bin
 *.iml

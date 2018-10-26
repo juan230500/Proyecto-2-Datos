@@ -1,8 +1,8 @@
 package GUI;
 
 import adt.Node;
-import juego.Oleada;
 import juego.Dragon;
+import juego.Oleada;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,7 +105,7 @@ class Pane extends JPanel implements ActionListener {
         this.margen =0;
         this.OleadaDibujar=new Oleada(25);
         this.Bloqueos=new boolean[25];
-        DrawArray();
+
         //OleadaDibujar.display();
     }
 
@@ -126,7 +126,7 @@ class Pane extends JPanel implements ActionListener {
                 DrawABB(g);
             }
             else if(criterio>=0) {
-                DrawArray();
+                DrawArray(g);
             }
             else{
 
@@ -281,7 +281,12 @@ class Pane extends JPanel implements ActionListener {
         }
     }
 
-    public void DrawArray(){
+    public void DrawArray(Graphics g){
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,800,600);
+
+        g.setColor(Color.BLACK);
+
         Dragon[] D= OleadaDibujar.getDragonesDibujar();
         int largo=D.length;
         int margenlocal=margen;
@@ -293,8 +298,12 @@ class Pane extends JPanel implements ActionListener {
         	int xi=100+ margenlocal *120;
         	int yi=10+fila*50;
 
-            D[pos].getLabel().setBounds(xi,yi,100,25);
-            D[pos].getLabel().setVisible(true);
+            g.drawRect(xi,yi,100,25);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 10));
+
+            g.drawString(""+D[pos].getEdad(),110+ margenlocal *120,22+fila*50);
+
             D[pos].setPosY(yi);
 
             D[pos].setPosX(xi);
@@ -305,7 +314,7 @@ class Pane extends JPanel implements ActionListener {
             else{
                 fila++;
             }
-            add(D[pos].getLabel());
+
             pos++;
 
             if (fila>9){
@@ -313,6 +322,7 @@ class Pane extends JPanel implements ActionListener {
                 margenlocal++;
             }
         }
+        OleadaDibujar.display();
         //this.margen++;
     }
 
