@@ -3,6 +3,8 @@ package juego;
 import adt.LinkedList;
 import adt.ABB;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -30,6 +32,13 @@ public class DragonesFabrica {
             asignarEdad(dragon);
             asignarClase(c, cantidad, dragon);
             dragon.getLabel().setText(dragon.getNombre());
+            dragon.getLabel().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    dragon.setClick(true);
+                }
+            });
             cantidad --;
             c++;
 

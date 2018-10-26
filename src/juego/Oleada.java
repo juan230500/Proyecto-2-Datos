@@ -1,6 +1,7 @@
 package juego;
 
 import adt.AVLTree;
+import adt.LinkedList;
 import adt.Node;
 import adt.SortArray;
 import juego.Dragon;
@@ -17,6 +18,7 @@ public class Oleada {
     private Dragon[] DragonesDibujar;
     private Node rootAVL;
     private boolean EdadRepetida;
+
 
     /**
      * Constructor de las oleadas que toma la cantidad deseada y se apoya en genDragones

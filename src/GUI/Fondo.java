@@ -15,6 +15,11 @@ public class Fondo extends JPanel implements KeyListener {
     private boolean juego = true;
     private int margen;
     private Oleada OleadaDibujar;
+
+    public Oleada getOleadaDibujar() {
+        return OleadaDibujar;
+    }
+
     private boolean[] Bloqueos;
 
     public void setJuego(boolean juego) {

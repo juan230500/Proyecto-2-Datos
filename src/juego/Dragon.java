@@ -24,6 +24,16 @@ public class Dragon {
     private int PosX;
     private int PosY;
 
+    public boolean getClick() {
+        return click;
+    }
+
+    public void setClick(boolean click) {
+        this.click = click;
+    }
+
+    private boolean click = false;
+
 
     /**
      * Default constructor
@@ -182,8 +192,8 @@ public class Dragon {
     /**
      * 
      */
-    public void clickear() {
-        // TODO implement here
+    public void getInfo() {
+        System.out.println(nombre +" " + Integer.toString(recarga) +" " + Integer.toString(edad) +" " + Integer.toString(resistencia) );
     }
 
 	public JLabel getLabel() {
