@@ -58,6 +58,7 @@ public class Pantalla extends JFrame {
 
         while(juego){
             if(fondo.getCaballero().getDragonesQuePasaron()==2 || fondo.getCaballero().getVida() == 2){
+                hPrin.stop();
                 JLabel end = new JLabel("PERDISTEEEEEE");
                 end.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
                 end.setBounds(100, 100, 400, 400);
