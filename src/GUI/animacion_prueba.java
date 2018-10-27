@@ -55,7 +55,34 @@ public class animacion_prueba extends JFrame {
     }
 
     public void animar(){
+        float m;
+        float b;
+
         for (int i = 0; i<10; i++){
+            float x1 = array1[i].getX();
+            float y1 = array1[i].getY();
+            float x2 = array2[i].getX();
+            float y2 = array2[i].getY();
+
+            m = (y2 - y1)/(x2 - x1);
+            b = y1 - (m * x1);
+            //System.out.println(y2-y1);
+
+            float movx = (x2-x1)/40;
+
+            float xi=x1;
+            float yi;
+
+            while ((xi<x2)) {
+                //int movx = (i1 - i2)/20;
+                //int movy = (j1 - j2)/20;
+                xi+=movx;
+                yi=m*xi+b;
+
+                array1[i].setLocation((int)xi, (int)yi);
+
+
+            /*
             int c = 1;
             //System.out.println("aca1");
             while ((array1[i].getX()!=array2[i].getX()) || (array1[i].getY()!=array2[i].getY())) {
@@ -85,9 +112,10 @@ public class animacion_prueba extends JFrame {
                     array1[i].setLocation(array1[i].getX() + 5, array1[i].getY()+5);
                 }
                 c++;
+                */
 
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(7);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
