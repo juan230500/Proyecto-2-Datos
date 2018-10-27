@@ -1,6 +1,6 @@
 package ArbolB;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Write a description of class Raiz here.
@@ -14,9 +14,9 @@ public class Raiz
     public static int grado;
     public Nodo primerNodo;
     public static boolean esRaiz;
-    public static int nivel = 1;
-    public static int imprimir = 1;
-    public static String arbol = "";
+    public static int nivel ;
+    public static int imprimir ;
+    public static String arbol ;
     public int tamano(int oleada) {
         int resultado = 0;
         int numero=0;
@@ -29,14 +29,16 @@ public class Raiz
             numero+=1;
         }
         resultado = (oleada + numero);
-        System.out.println("este es el grado"+ resultado/5);
+        //System.out.println("este es el grado"+ resultado/5);
         return resultado/5;
     }
-    public String serializarTexto(String Texto1){
+    public String serializarTexto(String Texto1,String oleada){
         String hijo="";
+        //System.out.println("debugiando por aqui "+Texto1);
         String Texto=(Texto1.replace("]","x"));
         Texto=(Texto.replace("[","x"));
         Texto=Texto.replaceAll("\\s","");
+        //System.out.println("debugiando por aqui 2"+Texto);
         String informacionRecolectada="";
         boolean encontreNumero=false;
         boolean ecnontreX=false;
@@ -48,6 +50,7 @@ public class Raiz
             }
             if (Texto.charAt(i)!='x'&&ecnontreX){
                 hijo+="@";
+                hijo+=oleada;
                 numeroDearrobas+=1;
             }
 
@@ -59,10 +62,10 @@ public class Raiz
                 hijo+=Texto.charAt(i);
             }
         }
-        System.out.println(Texto);
+        //System.out.println(Texto);
         hijo=(hijo.replace("x",""));
         hijo=(hijo.replace("@","@"+"\n"));
-        hijo=(hijo.replace(",","\n"));
+        hijo=(hijo.replace(",",","+"\n"+oleada));
         return hijo+"@";
     }
     public String giveArrayHijos(String Texto,int elemento){
@@ -76,7 +79,7 @@ public class Raiz
             if(Texto.charAt(i)=='@'){
                 numeroArrobaEncontrado+=1;
             }
-            if (numeroArrobaEncontrado>elemento+0&&numeroArrobaEncontrado<elemento+2){
+            if (numeroArrobaEncontrado>elemento&&numeroArrobaEncontrado<elemento+2){
                 contenidoPagina+=Texto.charAt(i);
             }
         }
@@ -90,16 +93,25 @@ public class Raiz
         }
         raiz += " ]\n";
         raiz += this.llamarRecorrer();
+        //System.out.println("este es el recorrido"+raiz);
         return raiz;
     }
-    public String  dameInfo(int opcion){
-        String Texto1=this.serializarTexto(this.Recorrido());
+    public String  dameInfo(int opcion,String oleada){
+        String Texto1=this.serializarTexto(this.Recorrido(),oleada);
         String Info=this.giveArrayHijos(Texto1,opcion);
-        return Info;
-
+        if(Info.length()==0){
+            return "";
+        }
+        else{
+            //System.out.println("este es el largo"+Info.length());
+            Info=Info.substring(1,Info.length()-1);
+            return  Info;
+        }
     }
-    public Raiz(int grado)
-    {
+    public Raiz(int grado) {
+        nivel = 1;
+        imprimir = 1;
+        arbol = "";
         grado=tamano(grado);
         this.grado = grado;
         primerNodo = new Nodo ();
