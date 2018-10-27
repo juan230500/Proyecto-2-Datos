@@ -103,7 +103,7 @@ class Pane extends JPanel implements ActionListener {
         add(next);
 
         this.margen =0;
-        this.OleadaDibujar=new Oleada(25);
+        this.OleadaDibujar=new Oleada(25,1);
         this.Bloqueos=new boolean[25];
         DrawArray();
         //OleadaDibujar.display();

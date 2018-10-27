@@ -31,8 +31,6 @@ public class Fondo extends JPanel implements KeyListener {
         return OleadaDibujar;
     }
 
-    private boolean[] Bloqueos;
-
     /**
      * Setter
      * @param juego
@@ -62,6 +60,8 @@ public class Fondo extends JPanel implements KeyListener {
     private int x2=1000;
     private int largo = 1366-400;
     private int alto = 768;
+    private int CantidadOriginal;
+    private int ronda;
 
     /**
      * Getter
@@ -120,8 +120,10 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.OleadaDibujar=new Oleada(10);
-        this.Bloqueos=new boolean[100];
+        this.CantidadOriginal=10;
+        this.ronda=1;
+        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
+        this.juego=true;
         DrawArray();
         addKeyListener(this);
         setFocusable(true);
@@ -130,6 +132,22 @@ public class Fondo extends JPanel implements KeyListener {
         this.h1 = hilito1;
         add(sidescroller);
         //add(nubes);
+    }
+
+    public void  reiniciar(){
+        setBackground(new Color(150,220,255));
+        this.margen =0;
+        this.CantidadOriginal*=1.2;
+        this.ronda++;
+        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
+        this.juego=true;
+        DrawArray();
+        addKeyListener(this);
+        setFocusable(true);
+
+        HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
+        this.h1 = hilito1;
+        add(sidescroller);
     }
 
     /*public void crearLabel(){
@@ -152,24 +170,10 @@ public class Fondo extends JPanel implements KeyListener {
         for (int i = 0; i< largo; i ++) {
             DragonesADibujar[i].setPosX(DragonesADibujar[i].getPosX()- 1);
             DragonesADibujar[i].getLabel().setLocation(DragonesADibujar[i].getPosX(), DragonesADibujar[i].getPosY());
-            //System.out.println("muevo al dragon 1");
+
         }
     }
 
-    /*public void moverDragon(Dragon dg){
-        while(dg.getResistencia()!= 0){
-            if(dg.getX() <= -20){
-                caballero.setDragonesQuePasaron(caballero.getDragonesQuePasaron()+1);
-                return dg.setVisible(false);
-            }
-            else{
-                dg.setLocation(x2,etiqueta2.getY());
-                System.out.println("muevo al dragon 1");
-                dg.setX(gd.getX() - 1);
-            }
-        }
-    }
-    */
 
     /**
      * Metodo para que los dragones o enemigos disparen
@@ -197,7 +201,10 @@ public class Fondo extends JPanel implements KeyListener {
      */
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("ohh");
+        if (!juego){
+            reiniciar();
+            return;
+        }
         //JLabel grifo = caballero.getLabel();
         if (caballero.isChoque()== false) {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
@@ -232,8 +239,6 @@ public class Fondo extends JPanel implements KeyListener {
                     grifo.setLocation(grifo.getX(), 1);
                 }
             }
-            //System.out.print(grifo.getX() + "\t");
-            //System.out.println(grifo.getY());
             caballero.colisionEnem(etiqueta2);
         }
         else{
@@ -251,6 +256,10 @@ public class Fondo extends JPanel implements KeyListener {
      */
     @Override
     public void keyPressed(KeyEvent e) {
+        if (!juego){
+            reiniciar();
+            return;
+        }
         //JLabel grifo = caballero.getLabel();
         if (caballero.isChoque()== false) {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
@@ -266,8 +275,6 @@ public class Fondo extends JPanel implements KeyListener {
                     }
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
-                    //OleadaDibujar.MasCercanoPorAltura(d.getPosY()+25).getLabel().setVisible(false);
-                    //caballero.getDisparo().setLocation(20,20);
                 }
                 if (e.getExtendedKeyCode() == KeyEvent.VK_UP && e.getExtendedKeyCode() == KeyEvent.VK_LEFT) {
                     grifo.setLocation(grifo.getX() - 5, grifo.getY() - 5);
@@ -300,14 +307,13 @@ public class Fondo extends JPanel implements KeyListener {
                     grifo.setLocation(grifo.getX(), 1);
                 }
             }
-            System.out.print(grifo.getX() + "\t");
-            System.out.println(grifo.getY());
         }
         else{
             caballero.setChoque(false);
         }
-        for (int i=0; i<OleadaDibujar.getDragonesDibujar().length;i++) {
-            Dragon dg = OleadaDibujar.getDragonesDibujar()[i];
+        Dragon[] ArrayDragones=OleadaDibujar.toArray();
+        for (int i=0; i<ArrayDragones.length;i++) {
+            Dragon dg = ArrayDragones[i];
             caballero.colisionEnem(dg.getLabel());
         }
 
@@ -341,12 +347,9 @@ public class Fondo extends JPanel implements KeyListener {
 
             add(D[pos].getLabel());
 
-            if (Bloqueos[pos]){
-                fila+=2;
-            }
-            else{
-                fila++;
-            }
+
+            fila++;
+
             pos++;
 
             if (fila>9){
@@ -527,4 +530,6 @@ public class Fondo extends JPanel implements KeyListener {
             add(node.left.key.getLabel());
         }
     }
+
+
 }

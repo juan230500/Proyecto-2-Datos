@@ -33,7 +33,6 @@ public class Hilo_D implements Runnable {
             }
             Disparo1.getBola().setVisible(false);
             int criterio=OleadaDibujar.HerirDragon(dg);
-            System.out.println(criterio);
             if (dg.getResistencia()==0){
                 dLabel.setVisible(false);
                 if (criterio<3) {
@@ -44,6 +43,10 @@ public class Hilo_D implements Runnable {
                 }
                 else {
                 	this.fondo.DrawABB();
+                }
+
+                if (OleadaDibujar.getCantidadDragones()==0){
+                    fondo.setJuego(false);
                 }
             }
             stop();

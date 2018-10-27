@@ -84,7 +84,6 @@ public class Disparo {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(PosX);
             bola.setLocation(PosX,PosY);
         }
         bola.setVisible(false);

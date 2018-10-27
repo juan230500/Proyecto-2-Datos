@@ -25,12 +25,12 @@ public class Oleada {
      * La oleada solo guarda la referencia a su dragon Head (sin padre) el resto se acceden desde sus padres
      * @param Cantidad numero de dragones que se espera en la oleada inicial
      */
-    public Oleada(int Cantidad) {
+    public Oleada(int Cantidad,int ronda) {
         this.CantidadDragones=0;
         //Bloque para generar los dragones automaticamente con un padre asignado a solo 2 de ellos
         this.Formacion=-1;
         this.edadt=0;
-        DragonesFabrica dragonesFabrica = new DragonesFabrica(Cantidad, 1, this);
+        new DragonesFabrica(Cantidad, ronda, this);
         this.DragonesDibujar = toArray();
     }
 

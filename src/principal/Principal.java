@@ -9,7 +9,7 @@ public class Principal {
     public static void main(String[] args){
         System.out.println("Hola 2");
 
-        Oleada O=new Oleada(4);
+        Oleada O=new Oleada(4,1);
         Dragon[] D=O.toArray();
         System.out.println(Arrays.toString(D));
         O.display();
