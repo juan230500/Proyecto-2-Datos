@@ -133,7 +133,15 @@ public class Oleada {
         }
     }
 
-    public void setCantidadDragones(int cantidadDragones) {
+    public void setDragonesDibujar(Dragon[] dragonesDibujar) {
+		DragonesDibujar = dragonesDibujar;
+	}
+
+	public void setRootAVL(Node rootAVL) {
+		this.rootAVL = rootAVL;
+	}
+
+	public void setCantidadDragones(int cantidadDragones) {
 		CantidadDragones = cantidadDragones;
 	}
 

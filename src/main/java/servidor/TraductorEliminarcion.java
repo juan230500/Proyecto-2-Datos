@@ -46,6 +46,7 @@ public class TraductorEliminarcion {
     	Element Padre = new Element("root");
     	this.ArrayPorID=new Dragon[O.getCantidadDragones()];
     	this.i=0;
+    	this.criterio=criterio;
     	EmpaquetarAtributos(O.getRoot(), Padre);
     	
     	Request.addContent(Padre);
@@ -54,7 +55,7 @@ public class TraductorEliminarcion {
         return new XMLOutputter().outputString(doc);
     }
     
-    public void EmpaquetarAtributos(Dragon dragon, Element destino) {
+    private void EmpaquetarAtributos(Dragon dragon, Element destino) {
     	if (dragon!=null) {
 	    	destino.setAttribute(new Attribute("edad",""+dragon.getEdad()));
 	    	destino.setAttribute(new Attribute("recarga",""+dragon.getRecarga()));
@@ -102,12 +103,14 @@ public class TraductorEliminarcion {
         
         DesempaquetarArbol(Root, OleadaNueva.getRoot());
         
+        this.CantidadDragones--;
+        
         OleadaNueva.setCantidadDragones(this.CantidadDragones);
         
         return OleadaNueva;
     }
     
-    public void DesempaquetarArbol(Element Root,Dragon node) {
+    private void DesempaquetarArbol(Element Root,Dragon node) {
     	DesempaquetarAtributos(Root, node);
     	
     	Element Iz=Root.getChild("hijoIz");
@@ -125,7 +128,7 @@ public class TraductorEliminarcion {
     	}
     }
     
-    public void DesempaquetarAtributos(Element ElementoDragon, Dragon dragon) {
+    private void DesempaquetarAtributos(Element ElementoDragon, Dragon dragon) {
     	this.CantidadDragones++;
     	int Edad=Integer.parseInt(ElementoDragon.getAttribute("edad").getValue());
     	dragon.setEdad(Edad);
@@ -137,25 +140,38 @@ public class TraductorEliminarcion {
     	if (Edad==this.EdadEliminar)
     		this.DragonEliminar=dragon;
     }
-    
-    public String IDToXMl(Oleada O) {
+
+    /**
+     * Emtodo principal que toma los ID de los dragones ordenados en el arbol temporal
+     * y los escribe en un arbol por familias para que se actualice en el cliente
+     * ademas escribe tanto array o avl para dibujarlos, el ABB no porque con actualizarlo en el cliente es suficiente
+     * @param O
+     * @return
+     */
+	public String IDToXMl(Oleada O) {
     	Element Principal = new Element("principal");
 
     	Element Padre = this.IDArboltoXML(O);
-    	
     	Principal.addContent(Padre);
+    	if (this.criterio<3) {
+    		Element Array = this.ArraytoXML(O.getDragonesDibujar());
+        	Principal.addContent(Array);
+    	}
+    	else if (this.criterio==4) {
+    		Element AVL = this.AVLtoXML(O.getRootAVL());
+        	Principal.addContent(AVL);
+    	}
         Document doc = new Document(Principal);
-
         return new XMLOutputter().outputString(doc);
     }
     
-    public Element IDArboltoXML(Oleada O) {
+    private Element IDArboltoXML(Oleada O) {
     	Element Padre = new Element("root");
     	EmpaquetarID(O.getRoot(), Padre);
         return Padre;
     }
     
-    public void EmpaquetarID(Dragon dragon, Element destino) {
+    private void EmpaquetarID(Dragon dragon, Element destino) {
     	destino.setAttribute(new Attribute("id",""+""+dragon.getId()));
     	
     	if (dragon.getHijoIz()!=null) {
@@ -169,134 +185,21 @@ public class TraductorEliminarcion {
 	    	destino.addContent(hijoDer);
     	}
     }
-
-    public Oleada GetOleadaId(String XML) throws JDOMException, IOException {
-    	SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new StringReader(XML));
-        
-        Element Principal = document.getRootElement();
-        
-        Element Root = Principal.getChild("root");
-        
-        Oleada OleadaNueva=new Oleada();
-        int id=Integer.parseInt(Root.getAttribute("id").getValue());
-        this.ArrayPorID[id].setPadre(null);
-        OleadaNueva.setRoot(this.ArrayPorID[id]);
-        this.CantidadDragones=0;
-        
-        DesempaquetarArbolID(Root, OleadaNueva.getRoot());
-        System.out.println(Arrays.toString(this.ArrayPorID));
-        
-        OleadaNueva.setCantidadDragones(this.CantidadDragones);
-        
-        System.out.println(OleadaNueva.getRoot());
-        
-        return OleadaNueva;
-    }
     
-    public void DesempaquetarArbolID(Element Root,Dragon node) {
-    	this.CantidadDragones++;
-    	
-    	
-    	Element Iz=Root.getChild("hijoIz");
-    	if (Iz!=null) {
-    		int id=Integer.parseInt(Iz.getAttribute("id").getValue());
-    		System.out.println(id);
-    		Dragon hijoIz=this.ArrayPorID[id];
-        	node.setHijoIz(hijoIz);
-    		DesempaquetarArbolID(Iz,hijoIz);
-    		
-    	}
-    	else {
-    		node.setHijoIz(null);
-    	}
-    	
-    	Element Der=Root.getChild("hijoDer");
-    	if (Der!=null) {
-    		int id=Integer.parseInt(Der.getAttribute("id").getValue());
-    		System.out.println(id);
-    		Dragon hijoDer=this.ArrayPorID[id];
-        	node.setHijoDer(hijoDer);
-    		DesempaquetarArbolID(Der,hijoDer);
-    	}
-    	else {
-    		node.setHijoDer(null);
-    	}
-    }
-    
-    
-    public Dragon[] DesempaquetarIDArray(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
-		SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new StringReader(XML));
-        Element Root = document.getRootElement();
-        
-        List<Element> IdList = Root.getChildren();
-        Dragon[] ArrayDragonesFinal=new Dragon[IdList.size()];
-        
-        for (int temp = 0; temp < IdList.size(); temp++) {    
-            Element student = IdList.get(temp);
-            
-            int id=Integer.parseInt(student.getText());
-            
-            ArrayDragonesFinal[temp]=ArrayDragonesOriginal[id];
-        }
-        System.out.println(Arrays.toString(ArrayDragonesFinal));
-        return ArrayDragonesFinal;
-	}
-
-
-	public AVLTree DesempaquetarAVL(Dragon[] ArrayDragonesOriginal,String XML) throws JDOMException, IOException {
-		SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new StringReader(XML));
-        Element Root = document.getRootElement();
-        
-        AVLTree tree=new AVLTree();
-        int id=Integer.parseInt(Root.getText());
-        tree.setRoot(new Node(ArrayDragonesOriginal[id]));
-        
-        DesempaquetarAVLREc(Root,tree.getRoot(),ArrayDragonesOriginal);
-        
-        return tree;
-	}
-	
-	public void DesempaquetarAVLREc(Element Root,Node node,Dragon[] ArrayDragonesOriginal) {
-		int id;
-		
-    	Element Iz=Root.getChild("hijoIz");
-    	if (Iz!=null) {
-    		id=Integer.parseInt(Iz.getText());
-    		Node hijoIz=new Node(ArrayDragonesOriginal[id]);
-    		DesempaquetarAVLREc(Iz,hijoIz,ArrayDragonesOriginal);
-    		node.left=hijoIz;
-    	}
-    	
-    	Element Der=Root.getChild("hijoDer");
-    	if (Der!=null) {
-    		id=Integer.parseInt(Der.getText());
-    		Node hijoDer=new Node(ArrayDragonesOriginal[id]);
-    		DesempaquetarAVLREc(Der,hijoDer,ArrayDragonesOriginal);
-    		node.right=hijoDer;
-    	}
-    }
-	
-	public String ArraytoXML(Dragon[] ArrayDragones) {
-		Element Padre = new Element("root");
+    private Element ArraytoXML(Dragon[] ArrayDragones) {
+		Element Padre = new Element("Array");
 		for (int i=0;i<ArrayDragones.length;i++) {
 			Element Puntero=new Element("id");
 			Puntero.setText(""+ArrayDragones[i].getId());
 			Padre.addContent(Puntero);
 		}
-        Document doc = new Document(Padre);
-        System.out.println(new XMLOutputter().outputString(doc));
-        return new XMLOutputter().outputString(doc);
+        return Padre;
 	}
 	
-	public String AVLtoXML(Node root) {
-		Element Padre = new Element("root");
-        Document doc = new Document(Padre);
+	private Element AVLtoXML(Node root) {
+		Element Padre = new Element("AVL");
         EmpaquetarAVL(root, Padre);
-        System.out.println(new XMLOutputter().outputString(doc));
-        return new XMLOutputter().outputString(doc);
+        return Padre;
 	}
 	
 	private void EmpaquetarAVL(Node node,Element Padre)
@@ -313,9 +216,124 @@ public class TraductorEliminarcion {
     		Padre.addContent(hijoDer);
     	}
     }
+	/**
+	 * Metodo Que toma el xml que da el servidor con los ID que asigno al inicio a los dragones
+	 * y actuliza los hijos y padres del arbol del cliente y guarda el avl o array ordenado dentro de mismo
+	 * @param XML
+	 * @return
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+    public Oleada GetOleadaId(String XML) throws JDOMException, IOException {
+    	SAXBuilder saxBuilder = new SAXBuilder();
+        Document document = saxBuilder.build(new StringReader(XML));
+        
+        Element Principal = document.getRootElement();
+        
+        Element Root = Principal.getChild("root");
+        
+        Oleada OleadaNueva=new Oleada();
+        int id=Integer.parseInt(Root.getAttribute("id").getValue());
+        this.ArrayPorID[id].setPadre(null);
+        OleadaNueva.setRoot(this.ArrayPorID[id]);
+        this.CantidadDragones=0;
+        
+        DesempaquetarArbolID(Root, OleadaNueva.getRoot());
+        
+        OleadaNueva.setCantidadDragones(this.CantidadDragones);
+        
+        if (this.criterio<3) {
+        	Element Array = Principal.getChild("Array");
+        	OleadaNueva.setDragonesDibujar(DesempaquetarIDArray(Array));
+        }
+        else if (this.criterio==4) {
+        	Element AVL = Principal.getChild("AVL");
+        	OleadaNueva.setRootAVL(DesempaquetarAVL(AVL));
+        }
+        
+        return OleadaNueva;
+    }
+    
+    private void DesempaquetarArbolID(Element Root,Dragon node) {
+    	this.CantidadDragones++;
+    	
+    	
+    	Element Iz=Root.getChild("hijoIz");
+    	if (Iz!=null) {
+    		int id=Integer.parseInt(Iz.getAttribute("id").getValue());
+    		Dragon hijoIz=this.ArrayPorID[id];
+        	node.setHijoIz(hijoIz);
+    		DesempaquetarArbolID(Iz,hijoIz);
+    		
+    	}
+    	else {
+    		node.setHijoIz(null);
+    	}
+    	
+    	Element Der=Root.getChild("hijoDer");
+    	if (Der!=null) {
+    		int id=Integer.parseInt(Der.getAttribute("id").getValue());
+    		Dragon hijoDer=this.ArrayPorID[id];
+        	node.setHijoDer(hijoDer);
+    		DesempaquetarArbolID(Der,hijoDer);
+    	}
+    	else {
+    		node.setHijoDer(null);
+    	}
+    }
+    
+    private Dragon[] DesempaquetarIDArray(Element Root) throws JDOMException, IOException {
+        List<Element> IdList = Root.getChildren();
+        Dragon[] ArrayDragonesFinal=new Dragon[IdList.size()];
+        
+        for (int temp = 0; temp < IdList.size(); temp++) {    
+            Element student = IdList.get(temp);
+            
+            int id=Integer.parseInt(student.getText());
+            
+            ArrayDragonesFinal[temp]=this.ArrayPorID[id];
+        }
+        System.out.println(Arrays.toString(ArrayDragonesFinal));
+        return ArrayDragonesFinal;
+	}
+
+    private Node DesempaquetarAVL(Element Root) throws JDOMException, IOException {
+        AVLTree tree=new AVLTree();
+        int id=Integer.parseInt(Root.getText());
+        tree.setRoot(new Node(this.ArrayPorID[id]));
+        DesempaquetarAVLREc(Root,tree.getRoot());
+        tree.preOrder();
+        return tree.getRoot();
+	}
+	
+	private void DesempaquetarAVLREc(Element Root,Node node) {
+		int id;
+		
+    	Element Iz=Root.getChild("hijoIz");
+    	if (Iz!=null) {
+    		id=Integer.parseInt(Iz.getText());
+    		Node hijoIz=new Node(this.ArrayPorID[id]);
+    		DesempaquetarAVLREc(Iz,hijoIz);
+    		node.left=hijoIz;
+    	}
+    	
+    	Element Der=Root.getChild("hijoDer");
+    	if (Der!=null) {
+    		id=Integer.parseInt(Der.getText());
+    		Node hijoDer=new Node(this.ArrayPorID[id]);
+    		DesempaquetarAVLREc(Der,hijoDer);
+    		node.right=hijoDer;
+    	}
+    }
+	
+	
 	
 	public Dragon[] getArrayPorID() {
 		return ArrayPorID;
+	}
+	
+	public int getCriterio() {
+		return criterio;
 	}
     
 }
