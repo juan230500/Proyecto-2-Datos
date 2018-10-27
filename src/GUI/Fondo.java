@@ -43,7 +43,7 @@ public class Fondo extends JPanel implements KeyListener {
         this.juego = juego;
     }
 
-    private JLabel lbl = new JLabel();
+    private JLabel sidescroller = new JLabel();
 
     /**
      * Getter
@@ -73,18 +73,10 @@ public class Fondo extends JPanel implements KeyListener {
         return h1;
     }
 
-    /**
-     * Getter
-     * @return h2
-     */
 
-    public Hilos getH2() {
-
-        return h2;
-    }
 
     private HiloOleada h1;
-    private Hilos h2;
+
 
     /**
      * Getter
@@ -117,14 +109,16 @@ public class Fondo extends JPanel implements KeyListener {
         setLayout(null);
         setBounds(0, 0, largo, alto);
         setMaximumSize(new Dimension(800, 600));
+        setBackground(new Color(150,220,255));
 
-        //ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/fondo.png");
+        ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/MontanasFondo.gif");
+        //ImageIcon imagen2 = new ImageIcon("C:/Users/andre/Desktop/nubes1.gif");
 
-
-        lbl.setText("Su madre");
-        lbl.setBounds(100,200,20,20);
+        //JLabel nubes = new JLabel(imagen2);
+        //nubes.setBounds(0, 0,largo,alto);
+        sidescroller.setIcon(imagen);
+        sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
-        add(lbl);
         this.margen =0;
         this.OleadaDibujar=new Oleada(100);
         this.Bloqueos=new boolean[100];
@@ -134,6 +128,8 @@ public class Fondo extends JPanel implements KeyListener {
 
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
+        add(sidescroller);
+        //add(nubes);
     }
 
     /*public void crearLabel(){
@@ -151,9 +147,11 @@ public class Fondo extends JPanel implements KeyListener {
      */
 
     public void moverlabel(){
-        for (int i = 0; i< OleadaDibujar.getCantidadDragones(); i ++) {
-            OleadaDibujar.getDragonesDibujar()[i].setPosX(OleadaDibujar.getDragonesDibujar()[i].getPosX()- 1);
-            OleadaDibujar.getDragonesDibujar()[i].getLabel().setLocation(OleadaDibujar.getDragonesDibujar()[i].getPosX(), OleadaDibujar.getDragonesDibujar()[i].getLabel().getY());
+        int largo=OleadaDibujar.getCantidadDragones();
+        Dragon[] DragonesADibujar=OleadaDibujar.getDragonesDibujar();
+        for (int i = 0; i< largo; i ++) {
+            DragonesADibujar[i].setPosX(DragonesADibujar[i].getPosX()- 1);
+            DragonesADibujar[i].getLabel().setLocation(DragonesADibujar[i].getPosX(), DragonesADibujar[i].getPosY());
             //System.out.println("muevo al dragon 1");
         }
     }
@@ -243,6 +241,10 @@ public class Fondo extends JPanel implements KeyListener {
         }
     }
 
+
+
+
+
     /**
      * Verifica cuando se tocan las flechas y cuando se tocan dos de estas al mismo tiempo, verifica que no exista colision y si la hay "resetea" al caballero y detecta cuando se ataca
      * @param e
@@ -254,15 +256,16 @@ public class Fondo extends JPanel implements KeyListener {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
                 if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
                     Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
-                    if(OleadaDibujar.MasCercanoPorAltura(d.getPosY())== null){
+                    Dragon toImpact = OleadaDibujar.MasCercanoPorAltura(d.getPosY());
+                    if(toImpact== null){
                         caballero.atacar();
                     }
                     else {
-                        caballero.atacar(OleadaDibujar.MasCercanoPorAltura(d.getPosY()).getLabel(), d);
+                        boolean isKill=false;
+                        caballero.atacar(toImpact, d,OleadaDibujar);
                     }
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
-                    OleadaDibujar.HerirDragon(OleadaDibujar.MasCercanoPorAltura(d.getPosY()));
                     //OleadaDibujar.MasCercanoPorAltura(d.getPosY()+25).getLabel().setVisible(false);
                     //caballero.getDisparo().setLocation(20,20);
                 }
@@ -332,11 +335,12 @@ public class Fondo extends JPanel implements KeyListener {
             int yi=100+fila*50;
 
             D[pos].getLabel().setBounds(xi,yi,100,25);
-            D[pos].getLabel().setVisible(true);
-            D[pos].setPosY(yi);
 
+            D[pos].setPosY(yi);
             D[pos].setPosX(xi);
+
             add(D[pos].getLabel());
+
             if (Bloqueos[pos]){
                 fila+=2;
             }

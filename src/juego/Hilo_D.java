@@ -3,22 +3,24 @@ package juego;
 import javax.swing.*;
 
 public class Hilo_D implements Runnable {
-    private JLabel dg;
-    private int op;
+    private  Dragon dg;
+    private JLabel dLabel;
     Disparo Disparo1 = null;
-    private boolean wh= true;
+    private  Oleada OleadaDibujar;
 
-    public Hilo_D(Disparo d, JLabel dragon){
+    public Hilo_D(Disparo d, Dragon dragon,Oleada OleadaDibujar){
         Thread hilo= new Thread(this);
         Disparo1 = d;
-        dg= dragon;
+        dLabel= dragon.getLabel();
+        this.dg=dragon;
+        this.OleadaDibujar=OleadaDibujar;
         hilo.start();
     }
     @Override
     public void run() {
         if (dg != null) {
-            while (Disparo1.getPosX() <= dg.getX()) {
-                Disparo1.moverDisparo(dg);
+            while (Disparo1.getPosX() <= dLabel.getX()) {
+                Disparo1.moverDisparo(dLabel);
                 try {
                     Thread.sleep(7);
                 } catch (InterruptedException e) {
@@ -26,7 +28,10 @@ public class Hilo_D implements Runnable {
                 }
             }
             Disparo1.getBola().setVisible(false);
-            dg.setVisible(false);
+            OleadaDibujar.HerirDragon(dg);
+            if (dg.getResistencia()==0){
+                dLabel.setVisible(false);
+            }
             stop();
         }
         else{

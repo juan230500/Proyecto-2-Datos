@@ -203,13 +203,30 @@ public class Oleada {
         root = addRecursive(root, value);
     }
 
-    public List<Dragon> FiltrarPorAltura(int Y, int ancho){
+    public Dragon MasCercanoPorAltura(int Y){
+        int AnchoDefault=25;
+        List<Dragon> ListaDragones= FiltrarPorAltura(Y,AnchoDefault);
+        int largo=ListaDragones.size();
+        if (largo==0){
+            return null;
+        }
+        Dragon MasCercano=ListaDragones.get(0);
+        Dragon DragonAux;
+        for (int i=0;i<largo;i++){
+            DragonAux=ListaDragones.get(i);
+            if (DragonAux.getLabel().getX()<MasCercano.getLabel().getX())
+                MasCercano=DragonAux;
+        }
+        return MasCercano;
+    }
+
+    private List<Dragon> FiltrarPorAltura(int Y, int ancho){
         List<Dragon> ListaDragones=new ArrayList<>();
         AddPorAltura(Y,ancho,this.root,ListaDragones);
         return ListaDragones;
     }
 
-    public void AddPorAltura(int Y,int ancho,Dragon root,List<Dragon> ListaDragones){
+    private void AddPorAltura(int Y,int ancho,Dragon root,List<Dragon> ListaDragones){
         if (root!=null){
             AddPorAltura(Y,ancho,root.getHijoIz(),ListaDragones);
             int altura=root.getPosY();
@@ -220,25 +237,6 @@ public class Oleada {
             AddPorAltura(Y,ancho,root.getHijoDer(),ListaDragones);
         }
     }
-
-    public Dragon MasCercanoPorAltura(int Y){
-        int AnchoDefault=25;
-        List<Dragon> ListaDragones= FiltrarPorAltura(Y,AnchoDefault);
-        int i=ListaDragones.size()-2;
-        if (i<-1){
-            return null;
-        }
-        Dragon MasCercano=ListaDragones.get(i+1);
-        Dragon DragonAux;
-        while (i>0){
-            DragonAux=ListaDragones.get(i);
-            if (DragonAux.getLabel().getX()<MasCercano.getLabel().getX())
-                MasCercano=DragonAux;
-            i--;
-        }
-        return MasCercano;
-    }
-
 
     public void delete(Dragon Herido){
         Dragon padre=Herido.getPadre();

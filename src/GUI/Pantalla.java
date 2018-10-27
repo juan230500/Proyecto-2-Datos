@@ -48,12 +48,12 @@ public class Pantalla extends JFrame {
         i_layP=i_lay;
         i_draP=i_dra;
         i_treeP=i_tree;
-        JPanel pan = new JPanel();
+        //JPanel pan = new JPanel();
         add(fondo);
         add(i_layP);
         add(i_draP);
         add(i_treeP);
-        add(pan);
+        //add(pan);
         Hilo_F xd = new Hilo_F(this);
         hPrin= xd;
     }
@@ -76,8 +76,6 @@ public class Pantalla extends JFrame {
                 fondo.setFocusable(false);
                 fondo.setJuego(false);
                 fondo.getH1().stop();
-                fondo.getH2().stop();
-                fondo.getH3().stop();
                 fondo.getH4().stop();
             }
                 for (int i = 0; i< fondo.getOleadaDibujar().toArray().length;i++){
