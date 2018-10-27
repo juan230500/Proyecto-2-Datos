@@ -26,6 +26,10 @@ public class Caballero {
 
     private int vida= 3;
 
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
     /**
      * Default constructor
      */

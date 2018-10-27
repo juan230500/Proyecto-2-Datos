@@ -53,7 +53,6 @@ public class Hilo_D implements Runnable {
         }
         else{
             Disparo1.moverDisparo();
-            stop();
         }
     }
     public void stop(){

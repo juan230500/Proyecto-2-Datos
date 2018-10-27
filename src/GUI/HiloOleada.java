@@ -49,7 +49,7 @@ public class HiloOleada implements Runnable {
             }
 
         }
-        correr = false;
+        //correr = false;
     }
 
     public void stop(){

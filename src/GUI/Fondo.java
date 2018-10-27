@@ -135,6 +135,8 @@ public class Fondo extends JPanel implements KeyListener {
     }
 
     public void  reiniciar(){
+        h1.stop();
+        caballero.setDragonesQuePasaron(0);
         setBackground(new Color(150,220,255));
         this.margen =0;
         this.CantidadOriginal*=1.2;
