@@ -1,11 +1,17 @@
 package GUI;
 
+import adt.LinkedList;
+import juego.Dragon;
+import juego.Dragones;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class animacion_prueba extends JFrame {
-
+    private Dragones dragons = new Dragones(10, 1);
     private JLabel[] array1 = new JLabel[10];
     private JLabel[] array2 = new JLabel[10];
+    private JLabel[] array3 = new JLabel[10];
     private int posicion = 20;
 
     public static void main (String[] args){
@@ -20,22 +26,34 @@ public class animacion_prueba extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(250, 100, 800, 600);
         setResizable(false);
+        setBounds(0,0,800,600);
+        setVisible(true);
+        setLayout(null);
         //ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/dragon.gif");
 
 
         for (int j = 9; j >= 0; j--){
             array1[j] = new JLabel();
             array2[j] = new JLabel();
+            array3[j] = new JLabel();
         }
 
         for (int i = 0; i<10; i++){
             //array1[i].setIcon(imagen);
-            array1[i].setText("Labels1 "+i);
-            array2[i].setText("Labels2 "+i);
-            array1[i].setBounds(10,posicion,150,50 );
+            Dragon dtmp = (Dragon) dragons.getLista_dragones().recorrer(i);
+            dtmp.getLabel().setText("Labels1 "+i);
+            array2[i].setText("        "+i);
+            dtmp.getLabel().setBounds(10,posicion,150,50 );
             array2[i].setBounds(30,posicion+300,60,10);
-            add(array1[i]);
+            array3[i].setBounds(dtmp.getLabel().getX(),dtmp.getLabel().getY()-15,50,50);
+            array3[i].setText("RCR: "+dtmp.getRecarga());
+            array3[i].setForeground(coloresEtiquetasVrcr(dtmp.getRecarga()));
+            //array3[i].setText("Edad: "+dtmp.getEdad());
+            //array3[i].setForeground(coloresEtiquetasEdad(dtmp.getEdad()));
+
+            add(dtmp.getLabel());
             add(array2[i]);
+            add(array3[i]);
             posicion+=20;
         }
 
@@ -50,17 +68,44 @@ public class animacion_prueba extends JFrame {
         array2[8].setLocation(580,400);
         array2[9].setLocation(680,300);
 
+
         Hilo_A hilo_a = new Hilo_A(this);
         System.out.println("aca2");
     }
+
+
+    public Color coloresEtiquetasEdad(int edad){
+        int r = (edad * 255)/1000;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+    public Color coloresEtiquetasVrcr(int vrcr){
+        int r = (vrcr * 255)/100;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+//    public Color coloresEtiquetasPadre(LinkedList lista) {
+//        for (int i = lista.size(); i >= 0; i--){
+//            if (i == lista.size()){
+//
+//            }
+//        }
+//        int r = (9 * 255) / 100;
+//        Color color = new Color(0 + r, 255 - r, 10);
+//        return color;
+//    }
 
     public void animar(){
         float m;
         float b;
 
         for (int i = 0; i<10; i++){
-            float x1 = array1[i].getX();
-            float y1 = array1[i].getY();
+            Dragon dtmp = (Dragon) dragons.getLista_dragones().recorrer(i);
+
+            float x1 = dtmp.getLabel().getX();
+            float y1 = dtmp.getLabel().getY();
             float x2 = array2[i].getX();
             float y2 = array2[i].getY();
 
@@ -79,7 +124,8 @@ public class animacion_prueba extends JFrame {
                 xi+=movx;
                 yi=m*xi+b;
 
-                array1[i].setLocation((int)xi, (int)yi);
+                dtmp.getLabel().setLocation((int)xi, (int)yi);
+                array3[i].setLocation((int)xi, (int)yi-20);
 
 
             /*
@@ -122,4 +168,22 @@ public class animacion_prueba extends JFrame {
             }
         }
     }
+
+    /*public void paint(Graphics g) {
+        Dragon h1;
+        Dragon h2;
+        Dragon drag;
+        g.setColor(Color.black);
+        for (int i = 0; i < 10; i++) {
+            drag = (Dragon) dragons.getLista_dragones().recorrer(i);
+            h1 = drag.getHijoDer();
+            h2 = drag.getHijoIz();
+            System.out.println("ciclo" + i);
+            if (h1 != null) {
+                g.drawLine(drag.getLabel().getX(), drag.getLabel().getY(), h1.getLabel().getX(), h1.getLabel().getY());
+            } else if (h2 != null) {
+                g.drawLine(drag.getLabel().getX(), drag.getLabel().getY(), h2.getLabel().getX(), h2.getLabel().getY());
+            }
+        }
+    }*/
 }
