@@ -1,6 +1,4 @@
-
-
-import javax.swing.*;
+package ArbolB;
 
 
 /**

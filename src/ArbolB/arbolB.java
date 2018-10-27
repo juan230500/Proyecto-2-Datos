@@ -1,4 +1,7 @@
+package ArbolB;
+
 import javax.swing.*;
+
 public class arbolB {
     private String stringOleada;
     private Raiz arbolito;
@@ -7,7 +10,7 @@ public class arbolB {
     private JLabel pagina2 = new JLabel();
     private JLabel pagina3 = new JLabel();
     private JLabel pagina4 = new JLabel();
-    public arbolB(String oleada,int tamanoOleada) {
+    public arbolB(String oleada, int tamanoOleada) {
     stringOleada=oleada;
     arbolito=new Raiz(tamanoOleada);
     }
