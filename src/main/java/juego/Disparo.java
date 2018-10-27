@@ -12,8 +12,26 @@ public class Disparo {
     private float Velocidad = 5;
     private int PosX;
     private int PosY;
+    private boolean disparar;
+
+    public void setDisparar(boolean disparar) {
+        this.disparar = disparar;
+    }
+
+    public boolean isDisparar() {
+        return disparar;
+    }
+
+    public int getPosY() {
+        return PosY;
+    }
+
     private JLabel bola = new JLabel("o");
     private boolean en_aire;
+
+    public int getPosX() {
+        return PosX;
+    }
 
     /**
      * Default constructor
@@ -53,33 +71,9 @@ public class Disparo {
     }
 */
     public void moverDisparo(JLabel enem) {
-        if (PosY<enem.getY() || PosY>enem.getY()+60)  {
-            while (PosX <= 1366-400) {
-                this.PosX += this.Velocidad;
-                bola.setLocation(this.PosX, this.PosY);
-                try {
-                    Thread.sleep(7);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(PosX);
-            }
-            bola.setVisible(false);
-        }else{
-                while (PosX+10<=enem.getX()){
-                    this.PosX += this.Velocidad;
-                    bola.setLocation(this.PosX, this.PosY);
-                    try {
-                        Thread.sleep(7);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println(PosX);
-                }
-                //enem.setResistencia(enem.getResistencia-1);
-                bola.setVisible(false);
-        }
-        bola.setLocation(PosX,PosY);
+        bola.setLocation(PosX, PosY);
+        PosX += 5;
+        ;
     }
     public void moverDisparo() {
         while (PosX <= 1366-400) {
@@ -90,7 +84,6 @@ public class Disparo {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(PosX);
             bola.setLocation(PosX,PosY);
         }
         bola.setVisible(false);

@@ -3,6 +3,8 @@ package juego;
 import adt.LinkedList;
 import adt.ABB;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -21,7 +23,7 @@ public class DragonesFabrica {
         int c = 1;
 
         while (cantidad > 0){
-            Dragon dragon = new Dragon();
+            final Dragon dragon = new Dragon();
 
             asignarNombre(ronda, c, dragon);
             asignarPadres(c,dragon);
@@ -30,6 +32,13 @@ public class DragonesFabrica {
             asignarEdad(dragon);
             asignarClase(c, cantidad, dragon);
             dragon.getLabel().setText(dragon.getNombre());
+            dragon.getLabel().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    dragon.setClick(true);
+                }
+            });
             cantidad --;
             c++;
 
@@ -92,7 +101,7 @@ public class DragonesFabrica {
         if ((cantidad == 1) && (dragonestmp.size() != 0)){
             for (int i = 0; i < dragonestmp.getSize(); i++) {
                 Dragon tmp = (Dragon) dragonestmp.recorrer(i);
-                capi_aux.AddDragones_asignados(tmp);
+                capi_aux.setDragones_asignados(tmp);
             }
         }else{
             if (c == 1) {
@@ -104,14 +113,14 @@ public class DragonesFabrica {
                         capi_aux = dragon;
                         for (int i = 0; i < dragonestmp.getSize(); i++) {
                             Dragon tmp = (Dragon) dragonestmp.recorrer(i);
-                            dragon.AddDragones_asignados(tmp);
+                            dragon.setDragones_asignados(tmp);
                         }
                         dragonestmp = new LinkedList();
                     } else {
                         dragon.setClase("Capitán");
                         for (int i = 0; i < dragonestmp.getSize(); i++) {
                             Dragon tmp = (Dragon) dragonestmp.recorrer(i);
-                            dragon.AddDragones_asignados(tmp);
+                            dragon.setDragones_asignados(tmp);
                         }
                         dragonestmp = new LinkedList();
                     }

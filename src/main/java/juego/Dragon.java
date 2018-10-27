@@ -20,22 +20,32 @@ public class Dragon {
     private Dragon hijoIz;
     private LinkedList hijos = new LinkedList();
     private LinkedList dragones_asignados = new LinkedList();
-	private JLabel Label = new JLabel();
+    private JLabel Label = new JLabel();
     private int PosX;
     private int PosY;
-    private int id;
 
-    public int getId() {
-		return id;
-	}
+    public boolean getCruce() {
+        return cruce;
+    }
+
+    public void setCruce(boolean cruce) {
+        this.cruce = cruce;
+    }
+
+    private boolean cruce=false;
+
+    public boolean getClick() {
+        return click;
+    }
+
+    public void setClick(boolean click) {
+        this.click = click;
+    }
+
+    private boolean click = false;
 
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-
-	/**
+    /**
      * Default constructor
      */
 
@@ -161,17 +171,12 @@ public class Dragon {
         return dragones_asignados;
     }
 
-    public void AddDragones_asignados(Dragon asignar){
+    public void setDragones_asignados(Dragon asignar){
         this.dragones_asignados.insertFirst(asignar);
     }
-    
-    
-    public void setDragones_asignados(LinkedList dragones_asignados) {
-		this.dragones_asignados = dragones_asignados;
-	}
 
 
-	/**
+    /**
      * Baja la resistencia y devuelve un booleano acerca de si se debe eliminar o no
      * @return true si murió, false sino
      */
@@ -197,8 +202,8 @@ public class Dragon {
     /**
      * 
      */
-    public void clickear() {
-        // TODO implement here
+    public void getInfo() {
+        System.out.println(nombre +" " + Integer.toString(recarga) +" " + Integer.toString(edad) +" " + Integer.toString(resistencia) );
     }
 
 	public JLabel getLabel() {
