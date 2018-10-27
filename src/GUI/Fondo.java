@@ -120,7 +120,7 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.OleadaDibujar=new Oleada(100);
+        this.OleadaDibujar=new Oleada(10);
         this.Bloqueos=new boolean[100];
         DrawArray();
         addKeyListener(this);
@@ -148,7 +148,7 @@ public class Fondo extends JPanel implements KeyListener {
 
     public void moverlabel(){
         int largo=OleadaDibujar.getCantidadDragones();
-        Dragon[] DragonesADibujar=OleadaDibujar.getDragonesDibujar();
+        Dragon[] DragonesADibujar=OleadaDibujar.toArray();
         for (int i = 0; i< largo; i ++) {
             DragonesADibujar[i].setPosX(DragonesADibujar[i].getPosX()- 1);
             DragonesADibujar[i].getLabel().setLocation(DragonesADibujar[i].getPosX(), DragonesADibujar[i].getPosY());
@@ -262,7 +262,7 @@ public class Fondo extends JPanel implements KeyListener {
                     }
                     else {
                         boolean isKill=false;
-                        caballero.atacar(toImpact, d,OleadaDibujar);
+                        caballero.atacar(toImpact, d,OleadaDibujar,this);
                     }
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
@@ -376,9 +376,10 @@ public class Fondo extends JPanel implements KeyListener {
 
 
         cabeza.setPosY(yi);
-
         cabeza.setPosX(xi);
+
         cabeza.getLabel().setVisible(true);
+
         add(cabeza.getLabel());
 
         dibujarArbol(cabeza,2,xi,yi);

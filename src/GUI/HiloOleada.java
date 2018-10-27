@@ -30,7 +30,6 @@ public class HiloOleada implements Runnable {
     public void run() {
         while(correr) {
             fondo1.moverlabel();
-            System.out.println("muevo el dragon2");
             int num;
             /*num =(int) (Math.random()*fondo1.getOleadaDibujar().getDragonesDibujar().length);
             //fondo1.disparoDragon(fondo1.getOleadaDibujar().getDragonesDibujar()[num].getLabel());

@@ -1,5 +1,6 @@
 package juego;
 
+import GUI.Fondo;
 import GUI.Hilo_F;
 import adt.LinkedList;
 
@@ -179,11 +180,11 @@ public class Caballero {
     /**
      * Crea un objeto Disparo, verifica si este colisiono con un dragon y si lo hizo disminuye la vida de dicho dragon
      */
-    public void atacar(Dragon dragonX, Disparo d,Oleada OleadaDibujar) {
+    public void atacar(Dragon dragonX, Disparo d,Oleada OleadaDibujar,Fondo fondo) {
 
         this.disparo = d.getBola();
 
-        Hilo_D hilo2 = new Hilo_D(d,dragonX,OleadaDibujar);
+        Hilo_D hilo2 = new Hilo_D(d,dragonX,OleadaDibujar,fondo);
 
 /*
         if (d.DetectarColision(dragonX)) {
