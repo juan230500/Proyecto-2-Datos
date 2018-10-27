@@ -311,12 +311,6 @@ public class Fondo extends JPanel implements KeyListener {
         else{
             caballero.setChoque(false);
         }
-        Dragon[] ArrayDragones=OleadaDibujar.toArray();
-        for (int i=0; i<ArrayDragones.length;i++) {
-            Dragon dg = ArrayDragones[i];
-            caballero.colisionEnem(dg.getLabel());
-        }
-
     }
 
     @Override
