@@ -33,6 +33,10 @@ public class Oleada {
         new DragonesFabrica(Cantidad, ronda, this);
         this.DragonesDibujar = toArray();
     }
+    
+    public Oleada() {
+    }
+    
 
     /**
      * Método que toma la cabeza de la oleada y se asegura de crear el resto de dragones con un padre
@@ -66,7 +70,8 @@ public class Oleada {
             //Se elimina el dragón y se le asigna otro padre o otros hijos
             delete(Herido);
             this.CantidadDragones--;
-            return Realinear();
+            this.Formacion++;
+            return Realinear(this.Formacion%5);
         }
         return 5;
     }
@@ -85,10 +90,7 @@ public class Oleada {
      * por ahora imprime la alineacion de dragones resultante
      * pero no cambia nada de los dragones ya que no es necesario
      */
-    public int Realinear(){
-        this.Formacion++;
-
-        int criterio=Formacion%5;
+    public int Realinear(int criterio){
         //AVL
         if (criterio==4){
             AVLTree tree=new AVLTree();
@@ -159,7 +161,7 @@ public class Oleada {
         if (node != null) {
             display(node.getHijoIz(),nivel+1);
             if (node.getPadre()==null){
-                System.out.println(node
+                System.out.println(node.getNombre()
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
@@ -168,7 +170,7 @@ public class Oleada {
                         +" Nivel: "+node.getPosX());
             }
             else{
-                System.out.println(node
+                System.out.println(node.getNombre()
                         +" Edad: "+node.getEdad()
                         +" Recarga "+node.getRecarga()
                         +" Resistencia "+node.getResistencia()
@@ -393,5 +395,26 @@ public class Oleada {
     public Dragon getRoot() {
         return root;
     }
+
+
+	public void setCantidadDragones(int cantidadDragones) {
+		CantidadDragones = cantidadDragones;
+	}
+
+	public void setRoot(Dragon root) {
+		this.root = root;
+	}
+
+	public void setDragonesDibujar(Dragon[] dragonesDibujar) {
+		DragonesDibujar = dragonesDibujar;
+	}
+
+	public void setRootAVL(Node rootAVL) {
+		this.rootAVL = rootAVL;
+	}
+	
+	
+	
+	
 }
 

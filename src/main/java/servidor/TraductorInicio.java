@@ -22,20 +22,30 @@ import juego.Oleada;
 public class TraductorInicio {
 	
 	private int CantidadDragones;
+	private int Ronda;
 	
-	public String CantidadToXMl(int i) {
+	public int getCantidadDragones() {
+		return CantidadDragones;
+	}
+
+	public int getRonda() {
+		return Ronda;
+	}
+
+	public String CantidadToXML(int cantidad,int ronda) {
 		Element Padre = new Element("Cantidad");
-		Padre.setText(""+i);
+		Padre.setText(""+cantidad);
+		Padre.setAttribute(new Attribute("ronda",""+ronda));
         Document doc = new Document(Padre);
         return new XMLOutputter().outputString(doc);
 	}
 	
-	public int GetCantidad(String XML) throws JDOMException, IOException {
+	public void getDatosOleada(String XML) throws JDOMException, IOException {
 		SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(XML));
         Element Root = document.getRootElement();
-        int i=Integer.parseInt(Root.getText());
-        return i;
+        this.CantidadDragones=Integer.parseInt(Root.getText());
+        this.Ronda=Integer.parseInt(Root.getAttributeValue("ronda"));
 	}
 	
 	public String ToXMLFull(Oleada O) {
@@ -82,12 +92,12 @@ public class TraductorInicio {
 		}
 	}
 	
-	public Oleada GetOleadaFull(String XML) throws JDOMException, IOException {
+	public Oleada getOleadaFull(String XML) throws JDOMException, IOException {
 		SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(XML));
         Element Root = document.getRootElement();
         
-        Oleada OleadaNueva=new Oleada(1);
+        Oleada OleadaNueva=new Oleada(1,1);
         this.CantidadDragones=0;
         
         DesempaquetarArbol(Root, OleadaNueva.getRoot());
@@ -97,7 +107,7 @@ public class TraductorInicio {
         return OleadaNueva;
 	}
 	
-    public void DesempaquetarArbol(Element Root,Dragon node) {
+    private void DesempaquetarArbol(Element Root,Dragon node) {
     	DesempaquetarAtributos(Root, node);
     	
     	Element mando=Root.getChild("Mando");
@@ -126,7 +136,7 @@ public class TraductorInicio {
     	}
     }
     
-    public void DesempaquetarAtributos(Element ElementoDragon, Dragon dragon) {
+     void DesempaquetarAtributos(Element ElementoDragon, Dragon dragon) {
     	this.CantidadDragones++;
     	int edad=Integer.parseInt(ElementoDragon.getAttribute("edad").getValue());
     	dragon.setEdad(edad);

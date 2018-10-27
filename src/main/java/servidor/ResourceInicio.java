@@ -19,23 +19,18 @@ public class ResourceInicio {
 	@GET
 	@Produces(MediaType.TEXT_XML)
 	public String getIt() throws JDOMException, IOException {
-		String XML=Trad1.CantidadToXMl(100);
-		int i=Trad1.GetCantidad(XML);
-		System.out.println(i);
-		Oleada OleadaTmp=new Oleada(i);
-		System.out.println(XML);
-		XML=Trad1.ToXMLFull(OleadaTmp);
+		Oleada OleadaTmp=new Oleada(1,Trad1.getRonda());
+		String XML=Trad1.ToXMLFull(OleadaTmp);
 		return XML;
 	}
 	
 	@POST
 	@Produces(MediaType.TEXT_XML)
 	public String RequestGenerarOleada(String request) throws JDOMException, IOException {
-		int i=Trad1.GetCantidad(request);
-		Oleada OleadaTmp=new Oleada(i);
-		OleadaTmp.display();
+		Trad1.getDatosOleada(request);
+		Oleada OleadaTmp=new Oleada(Trad1.getCantidadDragones(),Trad1.getRonda());
 		String XML=Trad1.ToXMLFull(OleadaTmp);
-		return Trad1.ToXMLFull(OleadaTmp);
+		return XML;
 	}
 
 }

@@ -10,51 +10,40 @@ import javax.ws.rs.core.MediaType;
 
 import org.jdom2.JDOMException;
 
+import juego.Dragon;
 import juego.Oleada;
 
 public class Cliente {
+	TraductorInicio Trad1=new TraductorInicio();
+	TraductorEliminarcion Trad2=new TraductorEliminarcion();
+	Client client;
+	WebTarget target;
 	
-	public static void main(String[] args) throws InterruptedException, JDOMException, IOException {
+	public Cliente(boolean inicio) {
 		
-		long time_start, time_end;
+		client= ClientBuilder.newBuilder().build();
 		
-		time_start = System.currentTimeMillis();
+		if (inicio) {
+			target= client.target("http://localhost:8080/ProyectoServidor/webapi/inicio");
+		}
+		else {
+			target= client.target("http://localhost:8080/ProyectoServidor/webapi/eliminar");
+		}
 		
-		TraductorInicio Trad1=new TraductorInicio();
-		
-		TraductorEliminarcion Trad2=new TraductorEliminarcion();
-		
-		Client client = ClientBuilder.newBuilder()
-		          .build();
-		
-		 WebTarget target = client.target("http://localhost:8080/ProyectoServidor/webapi/eliminar");
-		 
-		 
-		 for (int i=11;i>10;i--) {
-			 Oleada O=new Oleada(i);
-			 String xml2=Trad2.ToXML(O,4,900);
-			 O.display();
-			 String res3 = target.request().post(Entity.entity(xml2, MediaType.TEXT_XML), String.class);
-			 O=Trad2.GetOleadaId(res3);
-			 O.display();
-			 System.out.println(res3);
-		 }
-		 
-		 //System.out.println(xml2);
-		 
-		 /*String xml=Trad1.CantidadToXMl(10);
-		 
-		 String res3 = target.request().post(Entity.entity(xml, MediaType.TEXT_XML), String.class);
-		 
-		 Oleada O=Trad1.GetOleadaFull(res3);
-		 
-		 O.display();*/
-		 
-		 time_end = System.currentTimeMillis();
-		 System.out.println("the task has taken "+ ( time_end - time_start ) +" milliseconds");
-		 
-		 
-		
-		
+	}
+
+	public Oleada RequestGen(int Cantidad,int Ronda) throws JDOMException, IOException {
+		 String xml=Trad1.CantidadToXML(Cantidad,Ronda);
+		 String res = target.request().post(Entity.entity(xml, MediaType.TEXT_XML), String.class);
+		 return Trad1.getOleadaFull(res);
+	 }
+	
+	public Oleada RequestAlineacion(Oleada Inicial,int criterio,Dragon DragonEliminar) throws JDOMException, IOException {
+		 String xml2=Trad2.ToXML(Inicial,criterio,DragonEliminar.getEdad());
+		 Inicial.display();
+		 String res3 = target.request().post(Entity.entity(xml2, MediaType.TEXT_XML), String.class);
+		 Inicial.display();
+		 System.out.println(res3);
+		 return Trad2.GetOleadaId(res3);
 	}
 }

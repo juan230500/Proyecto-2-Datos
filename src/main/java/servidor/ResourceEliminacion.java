@@ -30,7 +30,7 @@ public class ResourceEliminacion {
      *
      * @return String that will be returned as a text/plain response.
      */
-	Oleada OleadaPruebas=new Oleada(10);
+	Oleada OleadaPruebas=new Oleada(10,1);
 	Oleada OleadaInterna;
 	TraductorEliminarcion Trad=new TraductorEliminarcion();
 	

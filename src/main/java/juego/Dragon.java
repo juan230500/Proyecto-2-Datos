@@ -23,6 +23,7 @@ public class Dragon {
     private JLabel Label = new JLabel();
     private int PosX;
     private int PosY;
+    private int id;
 
     public boolean getCruce() {
         return cruce;
@@ -210,4 +211,19 @@ public class Dragon {
 		return Label;
 	}
 
+	public void setDragones_asignados(LinkedList dragones_asignados) {
+		this.dragones_asignados = dragones_asignados;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
+	
+	
 }
