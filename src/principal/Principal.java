@@ -9,10 +9,10 @@ public class Principal {
     public static void main(String[] args){
         System.out.println("Hola 2");
 
-        Oleada O=new Oleada(4,1);
-        Dragon[] D=O.toArray();
-        System.out.println(Arrays.toString(D));
-        O.display();
+        //Oleada O=new Oleada(4,1);
+        //Dragon[] D=O.toArray();
+        //System.out.println(Arrays.toString(D));
+        //O.display();
         /*int i=5;
         while (i>0){
             O.HerirDragon(O.getRoot());
@@ -21,8 +21,8 @@ public class Principal {
             i--;
         }*/
 
-        D[0].setPosY(60);
-        System.out.println(O.MasCercanoPorAltura(30));
+        //D[0].setPosY(60);
+        //System.out.println(O.MasCercanoPorAltura(30));
 
     }
 }

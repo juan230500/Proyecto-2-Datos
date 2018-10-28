@@ -1,5 +1,6 @@
 package juego;
 
+import GUI.Fondo;
 import adt.AVLTree;
 import adt.LinkedList;
 import adt.Node;
@@ -7,6 +8,7 @@ import adt.SortArray;
 import juego.Dragon;
 import juego.DragonesFabrica;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class Oleada {
     private Dragon[] DragonesDibujar;
     private Node rootAVL;
     private boolean EdadRepetida;
+    private Fondo fondo1;
+    private Caballero caballero;
 
 
     /**
@@ -25,12 +29,16 @@ public class Oleada {
      * La oleada solo guarda la referencia a su dragon Head (sin padre) el resto se acceden desde sus padres
      * @param Cantidad numero de dragones que se espera en la oleada inicial
      */
-    public Oleada(int Cantidad,int ronda) {
+    public Oleada(int Cantidad,int ronda, Fondo fondo, Caballero jugador) {
         this.CantidadDragones=0;
         //Bloque para generar los dragones automaticamente con un padre asignado a solo 2 de ellos
         this.Formacion=-1;
         this.edadt=0;
+        this.fondo1 = fondo;
+        this.caballero = jugador;
         new DragonesFabrica(Cantidad, ronda, this);
+        ataqueDragones();
+
         
         this.DragonesDibujar = toArray();
         
@@ -397,6 +405,29 @@ public class Oleada {
 
     public Dragon getRoot() {
         return root;
+    }
+
+    public void ataqueDragones(){
+        for(int i = 0; i < CantidadDragones; i++){
+            JLabel dragon = this.toArray()[i].getLabel();
+            MoverDisparo(dragon, caballero, fondo1);
+        }
+    }
+
+    public void MoverDisparo (JLabel dra, Caballero caballero, Fondo fondo) {
+        JLabel grifo = caballero.getLabel();
+        JLabel disp = new JLabel();
+        disp.setText("O");
+        System.out.println("disparo");
+        disp.setBounds(dra.getX() - 10, dra.getY() + 25, 10, 10);
+        fondo.add(disp);
+        if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
+            disp.setBounds(disp.getX() - 5, disp.getY(), 10, 10);
+        } else {
+            caballero.recibir_daño();
+            disp.setBounds(1400, 1000, 10, 10);
+        }
+        disp.setVisible(true);
     }
 }
 
