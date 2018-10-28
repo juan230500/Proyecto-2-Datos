@@ -42,7 +42,7 @@ public class HiloOleada implements Runnable {
                 e.printStackTrace();
             }
             for(int i=0; i<fondo1.getOleadaDibujar().getDragonesDibujar().length;i++){
-                if (fondo1.getOleadaDibujar().getDragonesDibujar()[i].getCruce()== false && fondo1.getOleadaDibujar().getDragonesDibujar()[i].getLabel().getX()<=0){
+                if (fondo1.getOleadaDibujar().getDragonesDibujar()[i].getCruce()== false && fondo1.getOleadaDibujar().getDragonesDibujar()[i].getLabel().getX()<=-70){
                     fondo1.getCaballero().setDragonesQuePasaron(fondo1.getCaballero().getDragonesQuePasaron()+1);
                     fondo1.getOleadaDibujar().getDragonesDibujar()[i].setCruce(true);
                     if(fondo1.getOleadaDibujar().getCantidadDragones()<= 2){
