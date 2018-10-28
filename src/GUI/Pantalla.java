@@ -85,6 +85,7 @@ public class Pantalla extends JFrame {
                         i_draP.setRecarga(dg.getRecarga());
                         i_draP.setEdad(dg.getEdad());
                         i_draP.setResistencia(dg.getResistencia());
+                        i_draP.setInfanteria(dg.getDragones_asignados());
                         i_draP.nombre.setBounds(20, 20, 220, 20);
                         i_draP.add(i_draP.nombre);
                         i_draP.recarga.setBounds(20, 110, 100, 20);
@@ -93,6 +94,8 @@ public class Pantalla extends JFrame {
                         i_draP.add(i_draP.resistencia);
                         i_draP.edad.setBounds(20, 50, 100, 20);
                         i_draP.add(i_draP.edad);
+                        i_draP.infanteria.setBounds(20, 230,400,20);
+                        i_draP.add(i_draP.infanteria);
                         if(dg.getPadre()== null){
                             i_draP.padre.setVisible(false);
                             i_draP.padre= new JLabel("Padre:No tengo");
@@ -121,7 +124,7 @@ public class Pantalla extends JFrame {
                         add(i_draP.hijoI);
                         i_draP.hijoD.setBounds(20, 200, 260, 20);
                         add(i_draP.hijoD);
-                        i_draP.clase.setBounds(20, 230, 100, 20);
+                        i_draP.clase.setBounds(130, 50, 100, 20);
                         add(i_draP.clase);
                         i_draP.addInfo();
                         dg.setClick(false);
