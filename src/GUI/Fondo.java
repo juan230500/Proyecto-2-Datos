@@ -118,7 +118,7 @@ public class Fondo extends JPanel implements KeyListener {
         setMaximumSize(new Dimension(800, 600));
         setBackground(new Color(150,220,255));
 
-        ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/MontanasFondo.gif");
+        ImageIcon imagen = new ImageIcon("src/MultiMedia/MontanasFondo.gif");
         //ImageIcon imagen2 = new ImageIcon("C:/Users/andre/Desktop/nubes1.gif");
 
         //JLabel nubes = new JLabel(imagen2);
