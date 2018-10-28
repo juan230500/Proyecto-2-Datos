@@ -29,14 +29,21 @@ public class Dragon {
     private int id;
     
     public Dragon copy() {
-    	Dragon D=new Dragon();
+    	final Dragon D=new Dragon();
     	D.setNombre(this.nombre);
     	D.setRecarga(this.getResistencia());
     	D.setEdad(this.getEdad());
     	D.setResistencia(this.getResistencia());
     	D.setClase(this.getClase());
     	D.setDragones_asignados(this.getDragones_asignados());
-    	D.setLabel(this.getLabel());
+    	D.getLabel().setText(D.getNombre());
+        D.getLabel().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                D.setClick(true);
+            }
+        });
     	return D;
     }
     
@@ -198,7 +205,7 @@ public class Dragon {
      */
     public boolean RecibirDano(){
         this.resistencia--;
-        return this.resistencia==0;
+        return this.resistencia<1;
     }
 
     /**

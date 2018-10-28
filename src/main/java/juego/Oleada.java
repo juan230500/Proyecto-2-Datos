@@ -6,9 +6,14 @@ import adt.Node;
 import adt.SortArray;
 import juego.Dragon;
 import juego.DragonesFabrica;
+import servidor.Cliente;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.jdom2.JDOMException;
 
 public class Oleada {
     private Dragon root;
@@ -35,6 +40,7 @@ public class Oleada {
     }
     
     public Oleada() {
+    	this.DragonesDibujar=new Dragon[0];
     }
     
 
@@ -67,14 +73,57 @@ public class Oleada {
         }
         boolean Realinear=Herido.RecibirDano();
         if (Realinear){
+        	this.Formacion++;
+        	int criterio=this.Formacion%5;
+        	Cliente C2=new Cliente(false);
+    		
+    		Oleada O=this;
+    		
+    		O.display();
+    		
+    		Dragon D[]=O.toArray();
+    		
+    		System.out.println(Arrays.toString(D));
+    		
+			System.out.println(O.getCantidadDragones());
+			Oleada nueva=new Oleada();
+			try {
+				nueva = C2.RequestAlineacion(O, criterio, Herido);
+			} catch (JDOMException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("@@@");
+			Dragon[] ArrayD=nueva.getDragonesDibujar();
+			Node RootAVL=nueva.getRootAVL();
+			
+			if (nueva.getCantidadDragones()==1) {
+				O.setDragonesDibujar(ArrayD);
+				O.setRootAVL(nueva.getRootAVL());
+			}
+			else {
+				if (ArrayD!=null) {
+					O.setDragonesDibujar(ArrayD);
+				}
+				if (RootAVL!=null) {
+					O.setRootAVL(nueva.getRootAVL());
+				}
+			}
+			O.setCantidadDragones(nueva.getCantidadDragones());
+			O.setRoot(nueva.getRoot());
             //Se elimina el dragón y se le asigna otro padre o otros hijos
-            delete(Herido);
+        	
+            /*delete(Herido);
             this.CantidadDragones--;
             if (this.CantidadDragones==0) {
             	return 5;
-            }
-            this.Formacion++;
-            return Realinear(this.Formacion%5);
+            }*/
+			
+            return criterio;
+            //return Realinear(this.Formacion%5);
         }
         return 5;
     }

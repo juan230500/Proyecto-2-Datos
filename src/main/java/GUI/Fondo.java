@@ -127,8 +127,8 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.CantidadOriginal=100;
-        this.ronda=1;
+        this.CantidadOriginal=12;
+        this.ronda=2;
         this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
         this.juego=true;
         this.anchoDragon=12;
@@ -388,7 +388,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2;
-        int xi=200;
+        int xi=400;
 
         cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
 
@@ -469,7 +469,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2-12;
-        int xi=100;
+        int xi=400;
 
         cabeza.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 
