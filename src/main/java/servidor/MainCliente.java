@@ -24,7 +24,7 @@ public class MainCliente {
 		
 		Cliente C2=new Cliente(false);
 		
-		Oleada O=new Oleada(10,4);
+		Oleada O=new Oleada(20,4);
 		
 		O.display();
 		
@@ -44,7 +44,7 @@ public class MainCliente {
 				O.setRootAVL(nueva.getRootAVL());
 			}
 			else {
-				if (ArrayD.length!=0) {
+				if (ArrayD!=null) {
 					O.setDragonesDibujar(ArrayD);
 				}
 				if (RootAVL!=null) {

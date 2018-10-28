@@ -3,16 +3,11 @@ package GUI;
 
 import adt.Node;
 import juego.*;
-import servidor.Cliente;
 
 import javax.swing.*;
-
-import org.jdom2.JDOMException;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
 import java.lang.*;
 
 /**
@@ -34,6 +29,10 @@ public class Fondo extends JPanel implements KeyListener {
     public Oleada getOleadaDibujar() {
 
         return OleadaDibujar;
+    }
+
+    public void setFuego(boolean valor){
+        this.fuego = valor;
     }
 
     /**
@@ -69,7 +68,7 @@ public class Fondo extends JPanel implements KeyListener {
     private int ronda;
     private int anchoDragon;
     private int tamanoLetra;
-    private Cliente ClienteGen=new Cliente(true);
+    private boolean fuego = false;
 
     /**
      * Getter
@@ -119,7 +118,7 @@ public class Fondo extends JPanel implements KeyListener {
         setMaximumSize(new Dimension(800, 600));
         setBackground(new Color(150,220,255));
 
-        ImageIcon imagen = new ImageIcon("C:/Users/andre/Desktop/MontanasFondo.gif");
+        ImageIcon imagen = new ImageIcon("src/MultiMedia/MontanasFondo.gif");
         //ImageIcon imagen2 = new ImageIcon("C:/Users/andre/Desktop/nubes1.gif");
 
         //JLabel nubes = new JLabel(imagen2);
@@ -128,17 +127,9 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.CantidadOriginal=10;
+        this.CantidadOriginal=100;
         this.ronda=1;
-        try {
-			this.OleadaDibujar=ClienteGen.RequestGen(CantidadOriginal, ronda);
-		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
         this.juego=true;
         this.anchoDragon=12;
         this.tamanoLetra=10;
@@ -162,17 +153,8 @@ public class Fondo extends JPanel implements KeyListener {
         this.margen =0;
         this.CantidadOriginal*=1.2;
         this.ronda++;
-        try {
-			this.OleadaDibujar=ClienteGen.RequestGen(CantidadOriginal, ronda);
-		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
         this.juego=true;
-        CicloSetTamanoLetra();
         DrawArray();
         addKeyListener(this);
         setFocusable(true);
@@ -295,15 +277,16 @@ public class Fondo extends JPanel implements KeyListener {
         //JLabel grifo = caballero.getLabel();
         if (caballero.isChoque()== false) {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
-                if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
+                if ((e.getExtendedKeyCode() == KeyEvent.VK_SPACE) && !fuego){
                     Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
                     Dragon toImpact = OleadaDibujar.MasCercanoPorAltura(d.getPosY());
+                    fuego = true;
                     if(toImpact== null){
-                        caballero.atacar();
+                        caballero.atacar(this);
                     }
                     else {
                         boolean isKill=false;
-                        caballero.atacar(toImpact, d,OleadaDibujar,this);
+                        caballero.atacar(toImpact, d,OleadaDibujar,this, fuego);
                     }
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
@@ -405,7 +388,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2;
-        int xi=300;
+        int xi=200;
 
         cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
 
@@ -486,7 +469,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2-12;
-        int xi=300;
+        int xi=100;
 
         cabeza.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 

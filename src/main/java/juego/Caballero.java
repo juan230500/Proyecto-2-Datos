@@ -184,7 +184,7 @@ public class Caballero {
     /**
      * Crea un objeto Disparo, verifica si este colisiono con un dragon y si lo hizo disminuye la vida de dicho dragon
      */
-    public void atacar(Dragon dragonX, Disparo d,Oleada OleadaDibujar,Fondo fondo) {
+    public void atacar(Dragon dragonX, Disparo d,Oleada OleadaDibujar,Fondo fondo, boolean fuego) {
 
         this.disparo = d.getBola();
 
@@ -198,12 +198,12 @@ public class Caballero {
         }
         */
     }
-    public void atacar() {
+    public void atacar(Fondo fondo) {
 
         Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
         this.disparo = d.getBola();
 
-        Hilo_DS hilo2 = new Hilo_DS(d);
+        Hilo_DS hilo2 = new Hilo_DS(d, fondo);
     }
 
     public int getResistencia() {

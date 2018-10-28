@@ -31,14 +31,14 @@ public class DragonesFabrica {
             asignarResistencia(dragon);
             asignarEdad(dragon);
             asignarClase(c, cantidad, dragon);
-            /*dragon.getLabel().setText(dragon.getNombre());
+            dragon.getLabel().setText(dragon.getNombre());
             dragon.getLabel().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
                     dragon.setClick(true);
                 }
-            });*/
+            });
             cantidad --;
             c++;
 
