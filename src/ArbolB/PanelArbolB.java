@@ -72,24 +72,31 @@ public String decieQueInfoMuestro() {
     return "";
 
 }
-    public void eliminar(Dragon DragonEliminado){
-
-        String nombreSinLetras=DragonEliminado.getNombre().substring(1);
+    public void eliminar(String eliminar){
+        String nombreSinLetras=eliminar.substring(1);
         int numEntero = Integer.parseInt(nombreSinLetras);
         ArbolB.eliminar(numEntero);
 
+       // dibujarArbolB();
     }
-    public PanelArbolB(String info0, String info1, String info2, String info3, String info4) {
-        raiz=info0;
-        pag1=info1.replaceAll("\\s","");
-        pag2=info2.replaceAll("\\s","");
-        pag3=info3.replaceAll("\\s","");
-        pag4=info4.replaceAll("\\s","");
+    public void dibujarArbolB(String Oleada){
+        raiz =(ArbolB.dameInfo(0,Oleada));
+        pag1=(ArbolB.dameInfo(1,Oleada)).replaceAll("\\s","");
+        pag2=(ArbolB.dameInfo(2,Oleada)).replaceAll("\\s","");
+        pag3=(ArbolB.dameInfo(3,Oleada)).replaceAll("\\s","");
+        pag4=(ArbolB.dameInfo(4,Oleada)).replaceAll("\\s","");
         establecerPaginas();
         setBounds(200,350,400,768-400);
         areaTexto=new JTextArea();
         areaTexto.setText(decieQueInfoMuestro());
         JScrollPane scroll=new JScrollPane(areaTexto);
         this.add(scroll);
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    }
+    public PanelArbolB(Raiz raiz1) {
+        ArbolB=raiz1;
+
     }
 }
