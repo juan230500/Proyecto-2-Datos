@@ -127,6 +127,11 @@ public class Pantalla extends JFrame {
                         dg.setClick(false);
                     }
                 }
+        Dragon[] ArrayDragones=fondo.getOleadaDibujar().toArray();
+        for (int i=0; i<ArrayDragones.length;i++) {
+            Dragon dg = ArrayDragones[i];
+            fondo.getCaballero().colisionEnem(dg.getLabel());
+        }
 
     }
 
