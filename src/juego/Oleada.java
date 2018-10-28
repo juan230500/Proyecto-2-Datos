@@ -31,7 +31,12 @@ public class Oleada {
         this.Formacion=-1;
         this.edadt=0;
         new DragonesFabrica(Cantidad, ronda, this);
+        
         this.DragonesDibujar = toArray();
+        
+        AVLTree tree=new AVLTree();
+        InsertarEnAVl(tree);
+        rootAVL=tree.getRoot();
     }
 
     /**
@@ -231,7 +236,7 @@ public class Oleada {
             AddPorAltura(Y,ancho,root.getHijoIz(),ListaDragones);
             int altura=root.getPosY();
 
-            if (Y>=altura && Y<=altura+ancho){
+            if (Y>=altura-5 && Y<=altura+ancho){
                 ListaDragones.add(root);
             }
             AddPorAltura(Y,ancho,root.getHijoDer(),ListaDragones);
