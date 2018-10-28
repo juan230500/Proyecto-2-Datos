@@ -52,6 +52,7 @@ public class MainCliente {
 				}
 			}
 			O.setCantidadDragones(nueva.getCantidadDragones());
+			O.setRoot(nueva.getRoot());
 			
 			System.out.println(Arrays.toString(O.getDragonesDibujar()));
 			System.out.println(O.getRootAVL());

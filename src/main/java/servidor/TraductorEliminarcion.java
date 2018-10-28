@@ -235,6 +235,8 @@ public class TraductorEliminarcion {
         
         Oleada OleadaNueva=new Oleada();
         int id=Integer.parseInt(Root.getAttribute("id").getValue());
+        Dragon root=this.ArrayPorID[id].copy();
+        CicloArrayCopias();
         this.ArrayPorID[id].setPadre(null);
         OleadaNueva.setRoot(this.ArrayPorID[id]);
         this.CantidadDragones=0;
@@ -253,6 +255,13 @@ public class TraductorEliminarcion {
         OleadaNueva.setCantidadDragones(this.CantidadDragones);
         
         return OleadaNueva;
+    }
+    
+    private void CicloArrayCopias() {
+    	int largo=this.ArrayPorID.length;
+    	for (int temp = 0; temp < largo; temp++) {
+    		this.ArrayPorID[temp]=this.ArrayPorID[temp].copy();
+        }
     }
     
     private void DesempaquetarArbolID(Element Root,Dragon node) {

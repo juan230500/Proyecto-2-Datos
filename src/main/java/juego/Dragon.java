@@ -27,8 +27,28 @@ public class Dragon {
     private int PosX;
     private int PosY;
     private int id;
+    
+    public Dragon copy() {
+    	Dragon D=new Dragon();
+    	D.setNombre(this.nombre);
+    	D.setRecarga(this.getResistencia());
+    	D.setEdad(this.getEdad());
+    	D.setResistencia(this.getResistencia());
+    	D.setClase(this.getClase());
+    	D.setDragones_asignados(this.getDragones_asignados());
+    	D.setLabel(this.getLabel());
+    	return D;
+    }
+    
+    public void setHijos(LinkedList hijos) {
+		this.hijos = hijos;
+	}
 
-    public boolean getCruce() {
+	public void setLabel(JLabel label) {
+		Label = label;
+	}
+
+	public boolean getCruce() {
         return cruce;
     }
 
