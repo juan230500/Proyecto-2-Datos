@@ -62,6 +62,8 @@ public class Fondo extends JPanel implements KeyListener {
     private int alto = 768;
     private int CantidadOriginal;
     private int ronda;
+    private int anchoDragon;
+    private int tamanoLetra;
 
     /**
      * Getter
@@ -120,11 +122,16 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.CantidadOriginal=10;
+        this.CantidadOriginal=100;
         this.ronda=1;
         this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
         this.juego=true;
+        this.anchoDragon=12;
+        this.tamanoLetra=10;
+        CicloSetTamanoLetra();
         DrawArray();
+        //DrawABB();
+        //DrawAVL();
         addKeyListener(this);
         setFocusable(true);
 
@@ -319,6 +326,14 @@ public class Fondo extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+    
+    public void CicloSetTamanoLetra() {
+    	Dragon[] D= OleadaDibujar.getDragonesDibujar();
+    	int largo=D.length;
+    	for (int i=0;i<largo;i++) {
+    		D[i].getLabel().setFont(new Font("Calibri", Font.PLAIN, tamanoLetra));
+    	}
+    }
 
     /**
      * Metodo para dibujar en pantalla la oleada como un Array
@@ -333,10 +348,10 @@ public class Fondo extends JPanel implements KeyListener {
 
         while (pos<largo){
 
-            int xi=600+ margenlocal *120;
-            int yi=100+fila*50;
+            int xi=600+ margenlocal *100;
+            int yi=40+fila*55;
 
-            D[pos].getLabel().setBounds(xi,yi,100,25);
+            D[pos].getLabel().setBounds(xi,yi,100,anchoDragon);
 
             D[pos].setPosY(yi);
             D[pos].setPosX(xi);
@@ -348,7 +363,7 @@ public class Fondo extends JPanel implements KeyListener {
 
             pos++;
 
-            if (fila>9){
+            if (fila>11){
                 fila=0;
                 margenlocal++;
             }
@@ -366,13 +381,10 @@ public class Fondo extends JPanel implements KeyListener {
             return;
         }
 
-        int yi=275;
-        int xi=500;
+        int yi=alto/2;
+        int xi=200;
 
-        cabeza.getLabel().setBounds(xi,yi+20,100,25);
-
-        cabeza.getLabel().setFont(new Font("Calibri", Font.PLAIN, 12));
-
+        cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
 
         cabeza.setPosY(yi);
         cabeza.setPosX(xi);
@@ -392,12 +404,14 @@ public class Fondo extends JPanel implements KeyListener {
      * @param x
      * @param y
      */
+    
+    int altoseparacion=700;
 
     public void dibujarArbol(Dragon root,int nivel,int x,int y){
         if (root!=null){
-            dibujarArbol(root.getHijoDer(),1+nivel,x+200, y-(600)/(int)Math.pow(2,nivel));
+            dibujarArbol(root.getHijoDer(),1+nivel,x+100, y-(alto)/(int)Math.pow(2,nivel));
             dibujarHijos(root,nivel,x,y);
-            dibujarArbol(root.getHijoIz(),1+nivel,x+200, y+(600)/(int)Math.pow(2,nivel));
+            dibujarArbol(root.getHijoIz(),1+nivel,x+100, y+(alto)/(int)Math.pow(2,nivel));
         }
     }
 
@@ -410,29 +424,26 @@ public class Fondo extends JPanel implements KeyListener {
      */
 
     public void dibujarHijos(Dragon root,int nivel,int x,int y){
-        int xi=x+200;
+        int xi=x+100;
         int yi;
         if (root.getHijoDer() != null) {
-            yi=y-(600)/(int)Math.pow(2,nivel);
-            root.getHijoDer().getLabel().setBounds(xi,yi+20,100,25);
-            root.getHijoDer().getLabel().setFont(new Font("TimesRoman", Font.PLAIN, 12));
+            yi=y-(altoseparacion)/(int)Math.pow(2,nivel);
+            root.getHijoDer().getLabel().setBounds(xi,yi,100,anchoDragon);
 
             root.getHijoDer().setPosY(yi);
-
             root.getHijoDer().setPosX(xi);
+            
             root.getHijoDer().getLabel().setVisible(true);
             add(root.getHijoDer().getLabel());
         }
 
         if (root.getHijoIz() != null) {
-            yi=y+(600)/(int)Math.pow(2,nivel);
-            root.getHijoIz().getLabel().setBounds(xi, yi+20, 100, 25);
-
-            root.getHijoIz().getLabel().setFont(new Font("TimesRoman", Font.PLAIN, 12));
+            yi=y+(altoseparacion)/(int)Math.pow(2,nivel);
+            root.getHijoIz().getLabel().setBounds(xi, yi, 100, anchoDragon);
 
             root.getHijoIz().setPosY(yi);
-
             root.getHijoIz().setPosX(xi);
+            
             root.getHijoIz().getLabel().setVisible(true);
             add(root.getHijoIz().getLabel());
         }
@@ -451,12 +462,11 @@ public class Fondo extends JPanel implements KeyListener {
             return;
         }
 
-        int yi=275;
-        int xi=600;
+        int yi=alto/2-12;
+        int xi=100;
 
-        cabeza.key.getLabel().setBounds(xi,yi,100,50);
+        cabeza.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 
-        cabeza.key.getLabel().setFont(new Font("Calibri", Font.PLAIN, 12));
 
         cabeza.key.setPosY(yi);
 
@@ -477,9 +487,9 @@ public class Fondo extends JPanel implements KeyListener {
 
     public void dibujarArbol(Node root,int nivel,int x,int y){
         if (root!=null){
-            dibujarArbol(root.right,1+nivel,x+200, y-(600)/(int)Math.pow(2,nivel));
+            dibujarArbol(root.right,1+nivel,x+100, y-(altoseparacion)/(int)Math.pow(2,nivel));
             dibujarHijos(root,nivel,x,y);
-            dibujarArbol(root.left,1+nivel,x+200, y+(600)/(int)Math.pow(2,nivel));
+            dibujarArbol(root.left,1+nivel,x+100, y+(altoseparacion)/(int)Math.pow(2,nivel));
         }
     }
 
@@ -492,17 +502,16 @@ public class Fondo extends JPanel implements KeyListener {
      */
 
     public void dibujarHijos(Node node, int nivel, int x, int y){
-        int xi=x+200;
+        int xi=x+100;
         int yi;
 
 
         if (node.right != null) {
-            yi=y-(600)/(int)Math.pow(2,nivel);
+            yi=y-(altoseparacion)/(int)Math.pow(2,nivel);
 
 
-            node.right.key.getLabel().setBounds(xi,yi,100,25);
+            node.right.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 
-            node.right.key.getLabel().setFont(new Font("TimesRoman", Font.PLAIN, 12));
 
             node.right.key.setPosY(yi);
 
@@ -513,11 +522,10 @@ public class Fondo extends JPanel implements KeyListener {
 
 
         if (node.left != null) {
-            yi=y+(600)/(int)Math.pow(2,nivel);
+            yi=y+(altoseparacion)/(int)Math.pow(2,nivel);
 
-            node.left.key.getLabel().setBounds(xi,yi,100,25);
+            node.left.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 
-            node.right.key.getLabel().setFont(new Font("TimesRoman", Font.PLAIN, 12));
 
             node.left.key.setPosY(yi);
 
