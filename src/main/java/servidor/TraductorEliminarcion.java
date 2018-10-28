@@ -88,6 +88,7 @@ public class TraductorEliminarcion {
 	public Oleada GetOleada(String XML) throws JDOMException, IOException {
     	SAXBuilder saxBuilder = new SAXBuilder();
         Document document = saxBuilder.build(new StringReader(XML));
+        System.out.println(XML);
         
         Element Principal = document.getRootElement();
         int criterio=Integer.parseInt(Principal.getAttribute("criterio").getValue());
@@ -238,10 +239,6 @@ public class TraductorEliminarcion {
         OleadaNueva.setRoot(this.ArrayPorID[id]);
         this.CantidadDragones=0;
         
-        DesempaquetarArbolID(Root, OleadaNueva.getRoot());
-        
-        OleadaNueva.setCantidadDragones(this.CantidadDragones);
-        
         if (this.criterio<3) {
         	Element Array = Principal.getChild("Array");
         	OleadaNueva.setDragonesDibujar(DesempaquetarIDArray(Array));
@@ -250,6 +247,10 @@ public class TraductorEliminarcion {
         	Element AVL = Principal.getChild("AVL");
         	OleadaNueva.setRootAVL(DesempaquetarAVL(AVL));
         }
+        
+        DesempaquetarArbolID(Root, OleadaNueva.getRoot());
+        
+        OleadaNueva.setCantidadDragones(this.CantidadDragones);
         
         return OleadaNueva;
     }
@@ -293,7 +294,6 @@ public class TraductorEliminarcion {
             
             ArrayDragonesFinal[temp]=this.ArrayPorID[id];
         }
-        System.out.println(Arrays.toString(ArrayDragonesFinal));
         return ArrayDragonesFinal;
 	}
 
@@ -335,5 +335,10 @@ public class TraductorEliminarcion {
 	public int getCriterio() {
 		return criterio;
 	}
+
+	public Dragon getDragonEliminar() {
+		return DragonEliminar;
+	}
     
+	
 }

@@ -59,7 +59,7 @@ public class ResourceEliminacion {
     @Produces(MediaType.TEXT_XML)
     public String RequestEliminar(String request) throws JDOMException, IOException {
     	Oleada Oleadatmp=Trad.GetOleada(request);
-    	Oleadatmp.delete(Oleadatmp.getRoot());
+    	Oleadatmp.delete(Trad.getDragonEliminar());
     	Oleadatmp.Realinear(Trad.getCriterio());
         return Trad.IDToXMl(Oleadatmp);
     }

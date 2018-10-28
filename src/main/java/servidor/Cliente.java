@@ -42,11 +42,11 @@ public class Cliente {
 	 }
 	
 	public Oleada RequestAlineacion(Oleada Inicial,int criterio,Dragon DragonEliminar) throws JDOMException, IOException {
+		 if (Inicial.getCantidadDragones()==1) {
+			 return new Oleada();
+		 }
 		 String xml2=Trad2.ToXML(Inicial,criterio,DragonEliminar.getEdad());
-		 Inicial.display();
 		 String res3 = target.request().post(Entity.entity(xml2, MediaType.TEXT_XML), String.class);
-		 Inicial.display();
-		 System.out.println(res3);
 		 return Trad2.GetOleadaId(res3);
 	}
 }

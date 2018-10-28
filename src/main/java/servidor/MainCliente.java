@@ -1,9 +1,12 @@
 package servidor;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.jdom2.JDOMException;
 
+import adt.Node;
+import juego.Dragon;
 import juego.Oleada;
 
 public class MainCliente {
@@ -13,15 +16,50 @@ public class MainCliente {
 		
 		time_start = System.currentTimeMillis();
 		
-		Cliente C1=new Cliente(true);
+		/*Cliente C1=new Cliente(true);
 		
-		C1.RequestGen(100,2).display();
+		C1.RequestGen(100,2).display();*/
 		
-		/*Cliente C2=new Cliente(false);
 		
-		Oleada O=new Oleada(20,4);
 		
-		O=C2.RequestAlineacion(O, 4, O.getRoot());*/
+		Cliente C2=new Cliente(false);
+		
+		Oleada O=new Oleada(10,4);
+		
+		O.display();
+		
+		Dragon D[]=O.toArray();
+		
+		System.out.println(Arrays.toString(D));
+		
+		for (int i=0;i<D.length;i++) {
+			System.out.println(O.getCantidadDragones());
+			Oleada nueva=C2.RequestAlineacion(O, i%5, D[i]);
+			
+			Dragon[] ArrayD=nueva.getDragonesDibujar();
+			Node RootAVL=nueva.getRootAVL();
+			
+			if (nueva.getCantidadDragones()==0) {
+				O.setDragonesDibujar(ArrayD);
+				O.setRootAVL(nueva.getRootAVL());
+			}
+			else {
+				if (ArrayD.length!=0) {
+					O.setDragonesDibujar(ArrayD);
+				}
+				if (RootAVL!=null) {
+					O.setRootAVL(nueva.getRootAVL());
+				}
+			}
+			O.setCantidadDragones(nueva.getCantidadDragones());
+			
+			System.out.println(Arrays.toString(O.getDragonesDibujar()));
+			System.out.println(O.getRootAVL());
+			System.out.println(O.getCantidadDragones());
+			
+			
+		}
+		
 		
 		 /*for (int i=11;i>10;i--) {
 			 Oleada O=new Oleada(i);
