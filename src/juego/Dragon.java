@@ -1,7 +1,8 @@
 package juego;
 
 import adt.LinkedList;
-import javax.swing.JLabel;
+
+import javax.swing.*;
 import java.util.Random;
 
 
@@ -23,6 +24,8 @@ public class Dragon {
     private JLabel Label = new JLabel();
     private int PosX;
     private int PosY;
+    ImageIcon img = new ImageIcon("src/MultiMedia/dg.gif");
+
 
     public boolean getCruce() {
         return cruce;
@@ -59,6 +62,7 @@ public class Dragon {
         this.setRecarga();
         this.setResistencia();
         */
+        getLabel().setIcon(img);
     }
 
 
