@@ -1,4 +1,6 @@
-package GUI;
+package juego;
+
+import GUI.Fondo;
 
 import javax.swing.*;
 
