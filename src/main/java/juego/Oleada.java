@@ -70,6 +70,9 @@ public class Oleada {
             //Se elimina el dragón y se le asigna otro padre o otros hijos
             delete(Herido);
             this.CantidadDragones--;
+            if (this.CantidadDragones==0) {
+            	return 5;
+            }
             this.Formacion++;
             return Realinear(this.Formacion%5);
         }
@@ -233,7 +236,7 @@ public class Oleada {
             AddPorAltura(Y,ancho,root.getHijoIz(),ListaDragones);
             int altura=root.getPosY();
 
-            if (Y>=altura && Y<=altura+ancho){
+            if (Y>=altura-5 && Y<=altura+ancho){
                 ListaDragones.add(root);
             }
             AddPorAltura(Y,ancho,root.getHijoDer(),ListaDragones);

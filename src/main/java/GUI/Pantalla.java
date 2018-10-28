@@ -76,7 +76,7 @@ public class Pantalla extends JFrame {
                 fondo.setFocusable(false);
                 fondo.setJuego(false);
                 fondo.getH1().stop();
-                fondo.getH4().stop();
+                //fondo.getH4().stop();
             }
                 for (int i = 0; i< fondo.getOleadaDibujar().toArray().length;i++){
                     Dragon dg = (Dragon) fondo.getOleadaDibujar().toArray()[i];

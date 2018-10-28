@@ -13,15 +13,15 @@ public class MainCliente {
 		
 		time_start = System.currentTimeMillis();
 		
-		/*Cliente C1=new Cliente(true);
+		Cliente C1=new Cliente(true);
 		
-		C1.RequestGen(80,2).display();*/
+		C1.RequestGen(100,2).display();
 		
-		Cliente C2=new Cliente(false);
+		/*Cliente C2=new Cliente(false);
 		
 		Oleada O=new Oleada(20,4);
 		
-		O=C2.RequestAlineacion(O, 4, O.getRoot());
+		O=C2.RequestAlineacion(O, 4, O.getRoot());*/
 		
 		 /*for (int i=11;i>10;i--) {
 			 Oleada O=new Oleada(i);

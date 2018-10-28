@@ -1,5 +1,7 @@
 package servidor;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
@@ -136,7 +138,7 @@ public class TraductorInicio {
     	}
     }
     
-     void DesempaquetarAtributos(Element ElementoDragon, Dragon dragon) {
+     void DesempaquetarAtributos(Element ElementoDragon, final Dragon dragon) {
     	this.CantidadDragones++;
     	int edad=Integer.parseInt(ElementoDragon.getAttribute("edad").getValue());
     	dragon.setEdad(edad);
@@ -148,6 +150,15 @@ public class TraductorInicio {
     	dragon.setNombre(nombre);
     	String clase=ElementoDragon.getAttribute("clase").getValue();
     	dragon.setClase(clase);
+    	
+    	dragon.getLabel().setText(dragon.getNombre());
+        dragon.getLabel().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                dragon.setClick(true);
+            }
+        });
     }
 
 }

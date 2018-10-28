@@ -1,6 +1,7 @@
 package servidor;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -35,7 +36,9 @@ public class Cliente {
 	public Oleada RequestGen(int Cantidad,int Ronda) throws JDOMException, IOException {
 		 String xml=Trad1.CantidadToXML(Cantidad,Ronda);
 		 String res = target.request().post(Entity.entity(xml, MediaType.TEXT_XML), String.class);
-		 return Trad1.getOleadaFull(res);
+		 Oleada nueva=Trad1.getOleadaFull(res);
+		 nueva.setDragonesDibujar(nueva.toArray());
+		 return nueva;
 	 }
 	
 	public Oleada RequestAlineacion(Oleada Inicial,int criterio,Dragon DragonEliminar) throws JDOMException, IOException {

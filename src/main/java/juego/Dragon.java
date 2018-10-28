@@ -2,6 +2,9 @@ package juego;
 
 import adt.LinkedList;
 import javax.swing.JLabel;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 
@@ -51,15 +54,7 @@ public class Dragon {
      */
 
     public Dragon() {
-        /*
-        this.setClase();
-        this.setEdad();
-        this.setHijos();
-        this.setNombre();
-        this.setPadre();
-        this.setRecarga();
-        this.setResistencia();
-        */
+    	
     }
 
 
