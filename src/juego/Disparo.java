@@ -1,5 +1,7 @@
 package juego;
 
+import GUI.Fondo;
+
 import javax.swing.*;
 import java.util.*;
 
@@ -75,7 +77,7 @@ public class Disparo {
         PosX += 5;
         ;
     }
-    public void moverDisparo() {
+    public void moverDisparo(Fondo fondo1) {
         while (PosX <= 1366-400) {
             this.PosX += this.Velocidad;
             bola.setLocation(this.PosX, this.PosY);
@@ -87,6 +89,7 @@ public class Disparo {
             bola.setLocation(PosX,PosY);
         }
         bola.setVisible(false);
+        fondo1.setFuego(false);
     }
 
 }

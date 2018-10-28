@@ -1,26 +1,29 @@
 package juego;
 
-import javax.swing.*;
+import GUI.Fondo;
+
 
 public class Hilo_DS implements Runnable {
-    private JLabel dg;
-    private int op;
-    Disparo Disparo1 = null;
+    private Disparo Disparo1;
+    private Fondo fondo1;
 
-    public Hilo_DS(Disparo d){
+    public Hilo_DS(Disparo d, Fondo fondo){
         Thread hilo= new Thread(this);
         Disparo1 = d;
+        fondo1 = fondo;
         hilo.start();
     }
     @Override
     public void run() {
-        while(true) {
-            Disparo1.moverDisparo();
-            try {
-                Thread.sleep(7);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        while(Disparo1.getBola().getX()<970) {
+            System.out.println(Disparo1.getBola().getX());
+            Disparo1.moverDisparo(fondo1);
+        }
+        System.out.println("oye fuego");
+        try {
+            Thread.sleep(7);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

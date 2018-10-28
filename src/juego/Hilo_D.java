@@ -32,6 +32,7 @@ public class Hilo_D implements Runnable {
                 }
             }
             Disparo1.getBola().setVisible(false);
+            fondo.setFuego(false);
             int criterio=OleadaDibujar.HerirDragon(dg);
             if (dg.getResistencia()==0){
                 dLabel.setVisible(false);
@@ -52,7 +53,7 @@ public class Hilo_D implements Runnable {
             stop();
         }
         else{
-            Disparo1.moverDisparo();
+            Disparo1.moverDisparo(fondo);
         }
     }
     public void stop(){

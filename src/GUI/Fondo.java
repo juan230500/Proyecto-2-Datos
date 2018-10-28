@@ -31,6 +31,10 @@ public class Fondo extends JPanel implements KeyListener {
         return OleadaDibujar;
     }
 
+    public void setFuego(boolean valor){
+        this.fuego = valor;
+    }
+
     /**
      * Setter
      * @param juego
@@ -62,6 +66,7 @@ public class Fondo extends JPanel implements KeyListener {
     private int alto = 768;
     private int CantidadOriginal;
     private int ronda;
+    private boolean fuego = false;
 
     /**
      * Getter
@@ -265,15 +270,16 @@ public class Fondo extends JPanel implements KeyListener {
         //JLabel grifo = caballero.getLabel();
         if (caballero.isChoque()== false) {
             if (grifo.getX()+80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY()+50 + 5 < alto) {
-                if (e.getExtendedKeyCode() == KeyEvent.VK_SPACE){
+                if ((e.getExtendedKeyCode() == KeyEvent.VK_SPACE) && !fuego){
                     Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
                     Dragon toImpact = OleadaDibujar.MasCercanoPorAltura(d.getPosY());
+                    fuego = true;
                     if(toImpact== null){
-                        caballero.atacar();
+                        caballero.atacar(this);
                     }
                     else {
                         boolean isKill=false;
-                        caballero.atacar(toImpact, d,OleadaDibujar,this);
+                        caballero.atacar(toImpact, d,OleadaDibujar,this, fuego);
                     }
                     caballero.getDisparo().setBounds(100,300,10,10);
                     add(caballero.getDisparo());
