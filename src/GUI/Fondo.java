@@ -69,6 +69,7 @@ public class Fondo extends JPanel implements KeyListener {
     private int anchoDragon;
     private int tamanoLetra;
     private boolean fuego = false;
+    private Pantalla PantallaUso;
 
     /**
      * Getter
@@ -112,7 +113,8 @@ public class Fondo extends JPanel implements KeyListener {
      * Default constructor
      */
 
-    public Fondo() {
+    public Fondo(Pantalla LaPantalla) {
+        this.PantallaUso=LaPantalla;
         setLayout(null);
         setBounds(0, 0, largo, alto);
         setMaximumSize(new Dimension(800, 600));
@@ -127,7 +129,7 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.CantidadOriginal=100;
+        this.CantidadOriginal=10;
         this.ronda=1;
         this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda, this, this.caballero);
         this.juego=true;
@@ -146,8 +148,13 @@ public class Fondo extends JPanel implements KeyListener {
         //add(nubes);
     }
 
+    public Pantalla getPantallaUso() {
+        return PantallaUso;
+    }
+
     public void  reiniciar(){
         h1.stop();
+
         caballero.setDragonesQuePasaron(0);
         setBackground(new Color(150,220,255));
         this.margen =0;
@@ -158,7 +165,7 @@ public class Fondo extends JPanel implements KeyListener {
         DrawArray();
         addKeyListener(this);
         setFocusable(true);
-
+        this.PantallaUso.ActulizarArbolB(OleadaDibujar.toArray(),OleadaDibujar.getCantidadDragones());
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
         add(sidescroller);
@@ -388,7 +395,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2;
-        int xi=200;
+        int xi=400;
 
         cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
 
@@ -469,7 +476,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2-12;
-        int xi=100;
+        int xi=400;
 
         cabeza.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 

@@ -1,5 +1,7 @@
 package ArbolB;
 
+import juego.Dragon;
+
 import javax.swing.*;
 
 public class arbolB {

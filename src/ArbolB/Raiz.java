@@ -1,5 +1,7 @@
 package ArbolB;
 
+import juego.Dragon;
+
 import java.util.ArrayList;
 
 /**
@@ -17,6 +19,20 @@ public class Raiz
     public static int nivel ;
     public static int imprimir ;
     public static String arbol ;
+    public String oleada;
+    public void llenar(Dragon Dragones[]){
+        int numeroElemento=0;
+        oleada=Character.toString(Dragones[0].getNombre().charAt(0));
+        while(Dragones.length>numeroElemento){
+            String nombreSinLetras=Dragones[numeroElemento].getNombre().substring(1);
+            int numEntero = Integer.parseInt(nombreSinLetras);
+            //System.out.println(Dragones.length);
+            insertar(numEntero);
+            numeroElemento+=1;
+
+        }
+        //System.out.println("Termine de llenar");
+    }
     public int tamano(int oleada) {
         int resultado = 0;
         int numero=0;
@@ -309,7 +325,7 @@ public class Raiz
         if (encontrado==true) {
             Lista.ingresados.remove(j);
         } else {
-            System.out.println("El valor a eliminar no se encuentra en el arbol B");
+           // System.out.println("El valor a eliminar no se encuentra en el arbol B");
         }
         ArrayList<Integer> auxiliar = Lista.ingresados;
         Lista.ingresados = new ArrayList<Integer>();
@@ -326,11 +342,11 @@ public class Raiz
         for(int i = 0; i < Lista.ingresados.size() && !esta; i++){
             if(Lista.ingresados.get(i) == valor){
                 esta = true;
-                System.out.println("El elemento buscado si se encuentra en el arbol B");
+                //System.out.println("El elemento buscado si se encuentra en el arbol B");
                 return esta;
             }
         }
-        System.out.println("El elemento buscado no se encuentra en el arbol B");
+        //System.out.println("El elemento buscado no se encuentra en el arbol B");
         return false;
     }
     public String recorrer(Nodo nodo) {
@@ -354,7 +370,7 @@ public class Raiz
             arbol += " ]";
         }
         if (arbol.length() > (2*grado+3)*4) {
-            System.out.println (arbol);
+            //System.out.println (arbol);
             return arbol;
         }
         return arbol;

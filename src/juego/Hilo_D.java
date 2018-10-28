@@ -35,6 +35,8 @@ public class Hilo_D implements Runnable {
             fondo.setFuego(false);
             int criterio=OleadaDibujar.HerirDragon(dg);
             if (dg.getResistencia()==0){
+
+
                 dLabel.setVisible(false);
                 if (criterio<3) {
                 	this.fondo.DrawArray();
@@ -48,6 +50,11 @@ public class Hilo_D implements Runnable {
 
                 if (OleadaDibujar.getCantidadDragones()==0){
                     fondo.setJuego(false);
+
+                }
+                else {
+                    fondo.getPantallaUso().ActulizarArbolB(OleadaDibujar.toArray(),OleadaDibujar.getCantidadDragones());
+
                 }
             }
             stop();

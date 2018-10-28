@@ -79,7 +79,8 @@ public String decieQueInfoMuestro() {
 
        // dibujarArbolB();
     }
-    public void dibujarArbolB(String Oleada){
+    public void dibujarArbolB(String Oleada,Raiz raiz1){
+        ArbolB=raiz1;
         raiz =(ArbolB.dameInfo(0,Oleada));
         pag1=(ArbolB.dameInfo(1,Oleada)).replaceAll("\\s","");
         pag2=(ArbolB.dameInfo(2,Oleada)).replaceAll("\\s","");
@@ -96,7 +97,7 @@ public String decieQueInfoMuestro() {
 
     }
     public PanelArbolB(Raiz raiz1) {
-        ArbolB=raiz1;
+
 
     }
 }
