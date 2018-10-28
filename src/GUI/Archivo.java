@@ -8,14 +8,10 @@ import java.io.IOException;
 
 public class Archivo{
     private FileReader archivo;
-    public Archivo(String Direccion){
-        try {
-            archivo=new FileReader(Direccion);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public Archivo(){
     }
-    public void leer() throws IOException {
+    public void leer(String Direccion) throws IOException {
+        archivo=new FileReader(Direccion);
         BufferedReader bf=new BufferedReader(archivo);
         String temp="";
         String bfRead;
@@ -23,12 +19,15 @@ public class Archivo{
             temp=temp+bfRead;
 
         }
+        bf.close();
         System.out.println(temp);
     }
 
-    public static void main(String[] parametros) throws IOException {
-        Archivo myArchivo=new Archivo("/home/reds/Documentos/archivo.txt") ;
-        myArchivo.leer();
+    public static void main(String[] parametros) throws IOException, InterruptedException {
+        Archivo myArchivo=new Archivo() ;
+        myArchivo.leer("/home/reds/Documentos/archivo.txt");
+        Thread.sleep(10000);
+        myArchivo.leer("/home/reds/Documentos/archivo.txt");
 
     }
 }
