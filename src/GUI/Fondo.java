@@ -248,9 +248,11 @@ public class Fondo extends JPanel implements KeyListener {
         //JLabel grifo = caballero.getLabel();
         if (caballero.isChoque() == false) {
             if (grifo.getX() + 80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY() + 50 + 5 < alto) {
-                if (b == 0) {
+                if (b == 0&&!fuego) {
+
                     Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
                     Dragon toImpact = OleadaDibujar.MasCercanoPorAltura(d.getPosY());
+                    this.fuego=true;
                     if (toImpact == null) {
                         caballero.atacar(this);
                     } else {
