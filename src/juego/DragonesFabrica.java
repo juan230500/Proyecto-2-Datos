@@ -3,10 +3,12 @@ package juego;
 import adt.LinkedList;
 import adt.ABB;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Dragones {
+public class DragonesFabrica {
 
     private LinkedList lista_dragones = new LinkedList();
     private LinkedList dragonestmp = new LinkedList();
@@ -14,7 +16,7 @@ public class Dragones {
     private HashMap letras = new HashMap();
     private Dragon capi_aux;
 
-    public Dragones(int cantidad, int ronda){
+    public DragonesFabrica(int cantidad, int ronda, Oleada oleada){
         letras.put("voc","AEIOU");
         letras.put("con","BCDFGJKLMNPRSTVWYZ");
         letras.put("abc", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -29,10 +31,18 @@ public class Dragones {
             asignarResistencia(dragon);
             asignarEdad(dragon);
             asignarClase(c, cantidad, dragon);
-
+            dragon.getLabel().setText(dragon.getNombre());
+            dragon.getLabel().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    dragon.setClick(true);
+                }
+            });
             cantidad --;
             c++;
 
+            oleada.add(dragon);
             lista_dragones.insertLast(dragon);
         }
     }
@@ -55,15 +65,7 @@ public class Dragones {
     public  void asignarNombre(int ronda, int c, Dragon dragon){
         Random random = new Random();
         String gen = letras.get("abc").toString().substring(ronda-1, ronda);
-        String res = gen.concat(Integer.toString(c)+"_");
-        for (int i = 3; i > 0; i--){
-            int r1 = random.nextInt(17);
-            int r2 = random.nextInt(4);
-            String letra1 = letras.get("con").toString().substring(r1, r1 + 1);
-            String letra2 = letras.get("voc").toString().substring(r2, r2 + 1);
-            String letras = letra1.concat(letra2);
-            res = res.concat(letras);
-        }
+        String res = gen.concat(Integer.toString(c));
         dragon.setNombre(res);
     }
 

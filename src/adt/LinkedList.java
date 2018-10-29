@@ -90,8 +90,7 @@ public class LinkedList{
 
     public void insertLast(Object data){
         if (this.head==null) {
-            Node_Linked nuevo = new Node_Linked(data);
-            this.head = nuevo;
+            this.head = new Node_Linked(data);
 
         }
         else {

@@ -4,6 +4,9 @@ import adt.LinkedList;
 import javax.swing.JLabel;
 import java.util.Random;
 
+import javax.swing.*;
+import java.util.Random;
+
 
 /**
  *
@@ -23,16 +26,28 @@ public class Dragon {
     private JLabel Label = new JLabel();
     private int PosX;
     private int PosY;
-    private int id;
+    ImageIcon img = new ImageIcon("src/MultiMedia/dg.gif");
 
-    public int getId() {
-        return id;
+
+    public boolean getCruce() {
+        return cruce;
     }
 
-
-    public void setId(int id) {
-        this.id = id;
+    public void setCruce(boolean cruce) {
+        this.cruce = cruce;
     }
+
+    private boolean cruce=false;
+
+    public boolean getClick() {
+        return click;
+    }
+
+    public void setClick(boolean click) {
+        this.click = click;
+    }
+
+    private boolean click = false;
 
 
     /**
@@ -49,6 +64,7 @@ public class Dragon {
         this.setRecarga();
         this.setResistencia();
         */
+        getLabel().setIcon(img);
     }
 
 
@@ -119,14 +135,14 @@ public class Dragon {
     }
 
     public Dragon getHijoDer(){
-
+    	
         return hijoDer;
     }
 
     public void setHijoDer(Dragon hijoDer) {
-        if (hijoDer!=null) {
-            hijoDer.setPadre(this);
-        }
+    	if (hijoDer!=null) {
+    		hijoDer.setPadre(this);
+    	}
         this.hijoDer = hijoDer;
     }
 
@@ -135,9 +151,9 @@ public class Dragon {
     }
 
     public void setHijoIz(Dragon hijoIz) {
-        if (hijoIz!=null) {
-            hijoIz.setPadre(this);
-        }
+    	if (hijoIz!=null) {
+    		hijoIz.setPadre(this);
+    	}
         this.hijoIz = hijoIz;
     }
 
@@ -181,6 +197,14 @@ public class Dragon {
     }
 
     /**
+     * 
+     */
+    public boolean RecibirDano(){
+        this.resistencia--;
+        return this.resistencia==0;
+    }
+
+    /**
      *
      */
     public void lanzarFuego() {
@@ -197,12 +221,12 @@ public class Dragon {
     /**
      *
      */
-    public void clickear() {
-        // TODO implement here
+    public void getInfo() {
+        System.out.println(nombre +" " + Integer.toString(recarga) +" " + Integer.toString(edad) +" " + Integer.toString(resistencia) );
     }
 
-    public JLabel getLabel() {
-        return Label;
-    }
+	public JLabel getLabel() {
+		return Label;
+	}
 
 }

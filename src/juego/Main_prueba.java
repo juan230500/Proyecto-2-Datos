@@ -3,9 +3,10 @@ package juego;
 import adt.LinkedList;
 
 public class Main_prueba {
+    /*
     public static void main(String args[]) {
 
-        Dragones dragones = new Dragones(19, 2);
+        DragonesFabrica dragones = new DragonesFabrica(19, 2);
         LinkedList lista = dragones.getLista_dragones();
         Dragon dp = (Dragon) lista.recorrer(0);
         for (int i=1; i < lista.size(); i++) {
@@ -22,5 +23,5 @@ public class Main_prueba {
         }
         System.out.println("Yo " + dp.getNombre() + " no tengo tata guevón :'v");
         System.out.println("recarga; "+dp.getRecarga()+ " resistencia: "+dp.getResistencia()+ " edad: "+dp.getEdad()+" clase: "+dp.getClase());
-    }
+    }*/
 }

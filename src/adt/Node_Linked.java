@@ -14,10 +14,6 @@ public class Node_Linked {
         return this.data;
     }
 
-    public void setData(Object data){
-        this.data=data;
-    }
-
 
     public Node_Linked getNext(){
         return this.next;
