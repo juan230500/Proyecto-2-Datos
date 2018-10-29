@@ -11,7 +11,10 @@ import juego.DragonesFabrica;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Esta clase es la encargarda para guardas los  dragones y sus
+ * alineaciones durante la ejecucion del juego
+ */
 public class Oleada {
     private Dragon root;
     private int CantidadDragones;

@@ -9,7 +9,8 @@ import java.util.Random;
 
 
 /**
- *
+ * Esta clase sirve para tener toda la informacion de los dragones que se encuentran]
+ * a nivel grafica y sus relaciones con otros dragones
  */
 public class Dragon {
 
@@ -61,7 +62,7 @@ public class Dragon {
     }
 
     /**
-     * Default constructor
+     * Este es el constructor de la clase Dragon
      */
 
     public Dragon() {

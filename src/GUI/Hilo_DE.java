@@ -5,9 +5,8 @@ import GUI.Fondo;
 import javax.swing.*;
 
 /**
- * Clase: Hilo_DE
- * @author Andrey Sanchez
- * @version 26/10/2018
+ * Este clase sirve para tener un hilo aparte el movimiento de los ataque enemigos y generar una oleada nueva
+ * cuando se  elimina un dragon
  */
 
 public class Hilo_DE implements Runnable {

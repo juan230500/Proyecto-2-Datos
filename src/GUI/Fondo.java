@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 import java.util.Random;
 
 /**
- * Clase: Fondo
- * @author Andrey Sanchez
+ * Esta es la clase es la que se encarga de la logica de que todos los componentes del proyecto
+ * funcione conjutamente en la clase pantalla
  * @version 26.10.2018
  */
 
@@ -115,7 +115,11 @@ public class Fondo extends JPanel implements KeyListener {
     private Hilo_DE h4;
     private static PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
     private static final SerialPortEventListener listener = new SerialPortEventListener() {
+
         @Override
+        /**
+         * este metodo funciona para realizar la comunicacion serial del control con el java
+         */
         public void serialEvent(SerialPortEvent serialPortEvent) {
             try {
                 if (ino.isMessageAvailable()) {
@@ -148,7 +152,7 @@ public class Fondo extends JPanel implements KeyListener {
 
 
     /**
-     * Default constructor
+     * Default constructor que recibe la pantalla como argumento  para saber que pantalla lo esta usando
      */
 
     public Fondo(Pantalla LaPantalla) {
@@ -195,7 +199,9 @@ public class Fondo extends JPanel implements KeyListener {
     public Pantalla getPantallaUso() {
         return PantallaUso;
     }
-
+    /**
+     * este metodo funciona para  crear una nueva oleada incremetada en un 20 %
+     */
     public void  reiniciar(){
         h1.stop();
 
@@ -256,6 +262,9 @@ public class Fondo extends JPanel implements KeyListener {
             }
         }
     }
+    /**
+     * este metodo funciona para crear el disparo de todos lo enemigos
+     */
     public void disparos(){
         Dragon dra;
         Random random = new Random();
@@ -312,7 +321,7 @@ public class Fondo extends JPanel implements KeyListener {
     }
 
     /**
-     * Metodo para que los dragones o enemigos disparen
+     * Metodo para que los dragones o enemigos disparen osea para que se mueva
      */
 
 

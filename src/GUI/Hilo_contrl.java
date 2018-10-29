@@ -1,8 +1,13 @@
 package GUI;
+/**
+ * esta clase  se utliza para poder atacar con el control de un hilo aparte del hilo principal
+ */
 public class Hilo_contrl implements Runnable{
     private Fondo fondo1;
     private boolean game = true;
-
+    /**
+     * este es el constructor de la clase
+     */
     public Hilo_contrl(Fondo fondo){
         Thread hilo= new Thread(this);
         fondo1 = fondo;

@@ -2,6 +2,9 @@ package GUI;
 
 import javax.swing.*;
 
+/**
+ * esta clase  se utliza para pode crear el ataque   disparo de los enemigos un hilo aparte del hilo principal
+ */
 public class Hilo_Disparos implements Runnable {
     private boolean game= true;
     private Fondo fondo1;
@@ -12,7 +15,6 @@ public class Hilo_Disparos implements Runnable {
      */
 
     public Hilo_Disparos(Fondo fondo){
-        System.out.println("funca mierdaax2");
         fondo1 = fondo;
         Thread hilo= new Thread(this);
         hilo.start();
