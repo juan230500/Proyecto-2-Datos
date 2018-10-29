@@ -1,5 +1,7 @@
 package GUI;
 
+import juego.Dragon;
+
 import javax.swing.*;
 
 /**
@@ -9,27 +11,27 @@ import javax.swing.*;
  */
 
 public class Hilo_DR implements Runnable {
-    private JLabel dg;
+    private Dragon dg;
     private Fondo fondo1;
     private boolean game= true;
 
     /**
      * Default constructor
-     * @param dragon
      * @param f1
+     * @param dra
      */
 
-    public Hilo_DR(JLabel dragon, Fondo f1){
+    public Hilo_DR(Fondo f1, Dragon dra){
         Thread hilo= new Thread(this);
-        dg= dragon;
+        dg= dra;
         fondo1 = f1;
         hilo.start();
     }
     @Override
     public void run() {
-        while(dg.getX()>=0) {
-            fondo1.disparoDragon(dg);
-            System.out.println("Movimiento de Disparo");
+        while(dg.getLabel().getX()>=0) {
+            //fondo1.disparoDragon(dg);
+            System.out.println("Disparo");
             try {
                 Thread.sleep(7);
             } catch (InterruptedException e) {

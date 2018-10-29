@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.*;
+import java.util.Random;
 
 /**
  * Clase: Fondo
@@ -90,23 +91,13 @@ public class Fondo extends JPanel implements KeyListener {
      * @return h3
      */
 
-    public Hilo_DR getH3() {
+    public Hilo_Disparos getH3() {
 
         return h3;
     }
 
-    /**
-     * Getter
-     * @return h4
-     */
 
-    public Hilo_DE getH4() {
-
-        return h4;
-    }
-
-    private Hilo_DR h3;
-    private Hilo_DE h4;
+    private Hilo_Disparos h3;
 
     /**
      * Default constructor
@@ -142,8 +133,8 @@ public class Fondo extends JPanel implements KeyListener {
 
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
+        this.h3 = new Hilo_Disparos(this);
         add(sidescroller);
-        //add(nubes);
     }
 
     public void  reiniciar(){
@@ -161,19 +152,10 @@ public class Fondo extends JPanel implements KeyListener {
 
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
+        this.h3 = new Hilo_Disparos(this);
         add(sidescroller);
     }
-
-    /*public void crearLabel(){
-
-        etiqueta2.setText("Dragon2");
-        etiqueta2.setBounds(x2,450,60,60);
-        this.add(etiqueta2);
-        Hilo_DR hilo_dr = new Hilo_DR(etiqueta2, this);
-        h3 = hilo_dr;
-
-    }*/
-
+    
     /**
      * Metodo usado por el HiloOleada para mover la oleada en conjunto
      */
@@ -188,24 +170,99 @@ public class Fondo extends JPanel implements KeyListener {
         }
     }
 
+    public void disparos(){
+        Dragon dra;
+        Random random = new Random();
+        int r1 = random.nextInt(OleadaDibujar.getCantidadDragones());
+        dra = OleadaDibujar.toArray()[r1];
+        System.out.println(r1);
+
+
+        if (dra.getRecarga() <= 33) {
+            JLabel disp = new JLabel();
+
+            disp.setText("O");
+
+            disp.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp, this);
+        }
+        if ((dra.getRecarga() > 33) && (dra.getRecarga() < 66)) {
+            JLabel disp1 = new JLabel();
+            JLabel disp2 = new JLabel();
+
+            disp1.setText("O");
+            disp2.setText("O");
+
+            disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp1);
+            add(disp2);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp1, this);
+            Hilo_DE hilitodisp2 = new Hilo_DE(disp2, this);
+        }
+        if (dra.getRecarga() >= 66) {
+            JLabel disp1 = new JLabel();
+            JLabel disp2 = new JLabel();
+            JLabel disp3 = new JLabel();
+
+
+            disp1.setText("O");
+            disp2.setText("O");
+            disp3.setText("O");
+
+            disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
+            disp3.setBounds(dra.getLabel().getX() - 40, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp1);
+            add(disp2);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp1, this);
+            Hilo_DE hilitodisp2 = new Hilo_DE(disp2, this);
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Metodo para que los dragones o enemigos disparen
-     * @param dra
      */
 
-    public void disparoDragon(JLabel dra){
-        JLabel disp = new JLabel();
-        disp.setText("O");
-        disp.setBounds(dra.getX() - 10, dra.getY() + 25, 10, 10);
-            add(disp);
+
+    public void moverDisp(JLabel disp){
+        while(juego && disp.getX() > -10){
             if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
-                disp.setBounds(disp.getX() - 5, disp.getY(), 10, 10);
-            } else {
+                disp.setLocation(disp.getX() - 5, disp.getY());
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else{
                 caballero.recibir_daño();
-                disp.setBounds(1400, 1000, 10, 10);
+                System.out.println(caballero.getVida());
+                disp.setLocation(1400, 1000);
+                JLabel colision = new JLabel();
+                colision.setText("BOOM");
+                colision.setBounds(grifo.getX(), grifo.getY(), 50, 10);
+                this.add(colision);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                colision.setVisible(false);
             }
-            disp.setVisible(true);
+        }
+        disp.setVisible(false);
     }
 
 
@@ -540,6 +597,4 @@ public class Fondo extends JPanel implements KeyListener {
             add(node.left.key.getLabel());
         }
     }
-
-
 }
