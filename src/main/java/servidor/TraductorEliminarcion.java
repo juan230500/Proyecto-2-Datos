@@ -260,7 +260,7 @@ public class TraductorEliminarcion {
     private void CicloArrayCopias() {
     	int largo=this.ArrayPorID.length;
     	for (int temp = 0; temp < largo; temp++) {
-    		this.ArrayPorID[temp].getLabel().setVisible(false);
+    		this.ArrayPorID[temp].getLabel().setVisible(true);
     		this.ArrayPorID[temp]=this.ArrayPorID[temp].copy();
         }
     }
