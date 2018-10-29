@@ -38,7 +38,7 @@ public class Dragon {
     public Dragon copy() {
     	final Dragon D=new Dragon();
     	D.setNombre(this.nombre);
-    	D.setRecarga(this.getResistencia());
+    	D.setRecarga(this.getRecarga());
     	D.setEdad(this.getEdad());
     	D.setResistencia(this.getResistencia());
     	D.setClase(this.getClase());
