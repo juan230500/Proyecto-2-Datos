@@ -15,6 +15,7 @@ public class Disparo {
     private int PosX;
     private int PosY;
     private boolean disparar;
+    ImageIcon img = new ImageIcon("src/main/java//MultiMedia/shoot.gif");
 
     public void setDisparar(boolean disparar) {
         this.disparar = disparar;
@@ -42,7 +43,7 @@ public class Disparo {
         this.PosX = posX;
         this.PosY = posY;
         this.en_aire = false;
-
+        bola.setIcon(img);
     }
 
     /**

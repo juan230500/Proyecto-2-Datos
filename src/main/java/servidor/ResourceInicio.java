@@ -29,6 +29,7 @@ public class ResourceInicio {
 	public String RequestGenerarOleada(String request) throws JDOMException, IOException {
 		Trad1.getDatosOleada(request);
 		Oleada OleadaTmp=new Oleada(Trad1.getCantidadDragones(),Trad1.getRonda());
+		OleadaTmp.display();
 		String XML=Trad1.ToXMLFull(OleadaTmp);
 		return XML;
 	}

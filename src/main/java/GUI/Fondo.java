@@ -74,6 +74,7 @@ public class Fondo extends JPanel implements KeyListener {
     private int anchoDragon;
     private int tamanoLetra;
     private boolean fuego = false;
+    private Pantalla PantallaUso;
     private Cliente Cliente1=new Cliente(true);
 
     /**
@@ -118,13 +119,14 @@ public class Fondo extends JPanel implements KeyListener {
      * Default constructor
      */
 
-    public Fondo() {
+    public Fondo(Pantalla LaPantalla) {
+        this.PantallaUso=LaPantalla;
         setLayout(null);
         setBounds(0, 0, largo, alto);
         setMaximumSize(new Dimension(800, 600));
         setBackground(new Color(150,220,255));
 
-        ImageIcon imagen = new ImageIcon("src/MultiMedia/MontanasFondo.gif");
+        ImageIcon imagen = new ImageIcon("src/main/java//MultiMedia/MontanasFondo.gif");
         //ImageIcon imagen2 = new ImageIcon("C:/Users/andre/Desktop/nubes1.gif");
 
         //JLabel nubes = new JLabel(imagen2);
@@ -160,27 +162,24 @@ public class Fondo extends JPanel implements KeyListener {
         //add(nubes);
     }
 
+    public Pantalla getPantallaUso() {
+        return PantallaUso;
+    }
+
     public void  reiniciar(){
         h1.stop();
+
         caballero.setDragonesQuePasaron(0);
         setBackground(new Color(150,220,255));
         this.margen =0;
         this.CantidadOriginal*=1.2;
         this.ronda++;
-        try {
-			this.OleadaDibujar=Cliente1.RequestGen(this.CantidadOriginal,this.ronda);
-		} catch (JDOMException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda, this, this.caballero);
         this.juego=true;
         DrawArray();
         addKeyListener(this);
         setFocusable(true);
-
+        this.PantallaUso.ActulizarArbolB(OleadaDibujar.toArray(),OleadaDibujar.getCantidadDragones());
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
         add(sidescroller);

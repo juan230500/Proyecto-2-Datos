@@ -1,6 +1,8 @@
 package juego;
 
 import adt.LinkedList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import java.awt.event.MouseAdapter;
@@ -27,6 +29,7 @@ public class Dragon {
     private int PosX;
     private int PosY;
     private int id;
+    ImageIcon img = new ImageIcon("src/main/java//MultiMedia/dg.gif");
     
     public Dragon copy() {
     	final Dragon D=new Dragon();
@@ -46,10 +49,10 @@ public class Dragon {
         });
     	return D;
     }
-    
+
     public void setHijos(LinkedList hijos) {
 		this.hijos = hijos;
-	}
+		}
 
 	public void setLabel(JLabel label) {
 		Label = label;
@@ -81,7 +84,8 @@ public class Dragon {
      */
 
     public Dragon() {
-    	
+
+        getLabel().setIcon(img);
     }
 
 
@@ -205,7 +209,7 @@ public class Dragon {
      */
     public boolean RecibirDano(){
         this.resistencia--;
-        return this.resistencia<1;
+        return this.resistencia==0;
     }
 
     /**

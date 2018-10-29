@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import org.jdom2.JDOMException;
+
+import GUI.Fondo;
 
 public class Oleada {
     private Dragon root;
@@ -23,6 +27,8 @@ public class Oleada {
     private Dragon[] DragonesDibujar;
     private Node rootAVL;
     private boolean EdadRepetida;
+	private Fondo fondo1;
+	private Caballero caballero;
 
 
     /**
@@ -30,6 +36,23 @@ public class Oleada {
      * La oleada solo guarda la referencia a su dragon Head (sin padre) el resto se acceden desde sus padres
      * @param Cantidad numero de dragones que se espera en la oleada inicial
      */
+    public Oleada(int Cantidad,int ronda, Fondo fondo, Caballero jugador) {
+        this.CantidadDragones=0;
+        //Bloque para generar los dragones automaticamente con un padre asignado a solo 2 de ellos
+        this.Formacion=-1;
+        this.edadt=0;
+        this.fondo1 = fondo;
+        this.caballero = jugador;
+        new DragonesFabrica(Cantidad, ronda, this);
+
+        
+        this.DragonesDibujar = toArray();
+        
+        AVLTree tree=new AVLTree();
+        InsertarEnAVl(tree);
+        rootAVL=tree.getRoot();
+    }
+    
     public Oleada(int Cantidad,int ronda) {
         this.CantidadDragones=0;
         //Bloque para generar los dragones automaticamente con un padre asignado a solo 2 de ellos
@@ -37,6 +60,9 @@ public class Oleada {
         this.edadt=0;
         new DragonesFabrica(Cantidad, ronda, this);
         this.DragonesDibujar = toArray();
+        AVLTree tree=new AVLTree();
+        InsertarEnAVl(tree);
+        rootAVL=tree.getRoot();
     }
     
     public Oleada() {
@@ -448,13 +474,35 @@ public class Oleada {
         return root;
     }
 
+    public void ataqueDragones(){
+        for(int i = 0; i < CantidadDragones; i++){
+            JLabel dragon = this.toArray()[i].getLabel();
+            MoverDisparo(dragon, caballero, fondo1);
+        }
+    }
 
-	public void setCantidadDragones(int cantidadDragones) {
-		CantidadDragones = cantidadDragones;
-	}
+    public void MoverDisparo (JLabel dra, Caballero caballero, Fondo fondo) {
+        JLabel grifo = caballero.getLabel();
+        JLabel disp = new JLabel();
+        disp.setText("O");
+        System.out.println("disparo");
+        disp.setBounds(dra.getX() - 10, dra.getY() + 25, 10, 10);
+        fondo.add(disp);
+        if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
+            disp.setBounds(disp.getX() - 5, disp.getY(), 10, 10);
+        } else {
+            caballero.recibir_daño();
+            disp.setBounds(1400, 1000, 10, 10);
+        }
+        disp.setVisible(true);
+    }
 
 	public void setRoot(Dragon root) {
 		this.root = root;
+	}
+
+	public void setCantidadDragones(int cantidadDragones) {
+		CantidadDragones = cantidadDragones;
 	}
 
 	public void setDragonesDibujar(Dragon[] dragonesDibujar) {
@@ -464,9 +512,7 @@ public class Oleada {
 	public void setRootAVL(Node rootAVL) {
 		this.rootAVL = rootAVL;
 	}
-	
-	
-	
-	
+    
+    
 }
 

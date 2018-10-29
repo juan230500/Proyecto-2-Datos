@@ -35,6 +35,7 @@ public class Cliente {
 
 	public Oleada RequestGen(int Cantidad,int Ronda) throws JDOMException, IOException {
 		 String xml=Trad1.CantidadToXML(Cantidad,Ronda);
+		 
 		 String res = target.request().post(Entity.entity(xml, MediaType.TEXT_XML), String.class);
 		 Oleada nueva=Trad1.getOleadaFull(res);
 		 nueva.setDragonesDibujar(nueva.toArray());

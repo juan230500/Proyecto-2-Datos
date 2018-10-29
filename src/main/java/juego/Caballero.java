@@ -19,6 +19,7 @@ public class Caballero {
     private boolean choque = false;
     private JLabel disparo = null;
     private int resistencia = 5;
+    ImageIcon img = new ImageIcon("src/main/java/MultiMedia/Grifo.gif");
 
     public int getVida() {
         return vida;
@@ -42,6 +43,7 @@ public class Caballero {
         add(grifo);
         */
         grifo.setBounds(20,100, 80,50);
+        grifo.setIcon(img);
     }
 
     public boolean isChoque() {
