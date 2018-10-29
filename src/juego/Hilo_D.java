@@ -3,7 +3,12 @@ package juego;
 import javax.swing.*;
 
 import GUI.Fondo;
-
+/**
+ * La clase Hilo_D sirve para mover el disparo en la pantalla  aparte del hilo principal
+ *
+ * @version 1.0
+ * @since    28 de octubre 2018
+ */
 public class Hilo_D implements Runnable {
     private  Dragon dg;
     private JLabel dLabel;
