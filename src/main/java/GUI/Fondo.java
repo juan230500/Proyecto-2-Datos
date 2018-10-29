@@ -3,11 +3,16 @@ package GUI;
 
 import adt.Node;
 import juego.*;
+import servidor.Cliente;
 
 import javax.swing.*;
+
+import org.jdom2.JDOMException;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.lang.*;
 
 /**
@@ -69,6 +74,7 @@ public class Fondo extends JPanel implements KeyListener {
     private int anchoDragon;
     private int tamanoLetra;
     private boolean fuego = false;
+    private Cliente Cliente1=new Cliente(true);
 
     /**
      * Getter
@@ -129,7 +135,15 @@ public class Fondo extends JPanel implements KeyListener {
         this.margen =0;
         this.CantidadOriginal=12;
         this.ronda=2;
-        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
+        try {
+			this.OleadaDibujar=Cliente1.RequestGen(this.CantidadOriginal,this.ronda);
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         this.juego=true;
         this.anchoDragon=12;
         this.tamanoLetra=10;
@@ -153,7 +167,15 @@ public class Fondo extends JPanel implements KeyListener {
         this.margen =0;
         this.CantidadOriginal*=1.2;
         this.ronda++;
-        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda);
+        try {
+			this.OleadaDibujar=Cliente1.RequestGen(this.CantidadOriginal,this.ronda);
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         this.juego=true;
         DrawArray();
         addKeyListener(this);
