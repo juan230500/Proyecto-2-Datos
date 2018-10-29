@@ -1,13 +1,10 @@
 package GUI;
 
 import ArbolB.Raiz;
-import adt.BTree;
 import juego.Dragon;
-import juego.Oleada;
 
 import java.awt.*;
 import javax.swing.*;
-import java.util.*;
 
 /**
  * Clase: Pantalla
@@ -252,24 +249,6 @@ public class Pantalla extends JFrame {
      * 
      */
     private String Imagen;
-
-    /**
-     * 
-     */
-    private BTree ArbolB_edad;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
