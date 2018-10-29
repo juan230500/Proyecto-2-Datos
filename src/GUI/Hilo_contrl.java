@@ -8,6 +8,7 @@ public class Hilo_contrl implements Runnable{
         fondo1 = fondo;
         //hilo.start();
     }
+
     @Override
     public void run() {
         while(game){

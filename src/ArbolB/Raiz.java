@@ -3,14 +3,12 @@ package ArbolB;
 import juego.Dragon;
 
 import java.util.ArrayList;
-
 /**
- * Write a description of class Raiz here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * La clase  Raiz sirve para crear un arbol B
+ * Esta clase fue sacada del repositorio https://github.com/maestro252/Arbol-B
+ * @version 1.0
+ * @since    3 Dec 2013
  */
-
 public class Raiz
 {
     public static int grado;
@@ -33,6 +31,12 @@ public class Raiz
         }
         //System.out.println("Termine de llenar");
     }
+    /**
+     * Este metodo se utliza para calcular un grado adecuado al arbol para que
+     * no tenga mas de cuatro paginas  ademas de la raiz el arbol
+     * @param oleada  el Tamano de la oleada que va a entrar en el arbolB
+     * @return int el valor del grado correcto del arbol
+     */
     public int tamano(int oleada) {
         int resultado = 0;
         int numero=0;
@@ -48,6 +52,12 @@ public class Raiz
         //System.out.println("este es el grado"+ resultado/5);
         return resultado/5;
     }
+    /**
+     * Este metodo se utliza para  serializar el texto quitandole_todo lo que no es necesario
+     * @param Texto1 este  es el texto  que envia recorrido
+     * @param oleada este es el Caracter identificador de la oleada
+     * @return String el valor que retorna es el texto serializado
+     */
     public String serializarTexto(String Texto1,String oleada){
         String hijo="";
         //System.out.println("debugiando por aqui "+Texto1);
@@ -84,6 +94,13 @@ public class Raiz
         hijo=(hijo.replace(",",","+"\n"+oleada));
         return hijo+"@";
     }
+    /**
+     * Este metodo se utliza para   seccionar las paginas por el simbolo @
+     * y lograr saber cual es cual
+     * @param Texto este  es el texto  que envia recorrido
+     * @param elemento este es el Caracter identificador de la oleada
+     * @return String el valor que retorna es el valor de una pagina es especifico o la raiz
+     */
     public String giveArrayHijos(String Texto,int elemento){
         int numerodeValor=0;
         int numeroArrobaEncontrado=0;
@@ -102,6 +119,11 @@ public class Raiz
         contenidoPagina=contenidoPagina.replace("@","");
         return contenidoPagina;
     }
+    /**
+     * Este metodo se utiliza para recorrer el arbol B
+     * y sacar toda la informacion  meterlo en un String
+     * @return String El retorna el valor del string que contiene toda la informacion del arbol.
+     */
     public String Recorrido(){
         String raiz = "[ ";
         for(int i = 0; i < this.primerNodo.valores.length && this.primerNodo.valores[i] != 0; i++){
@@ -112,6 +134,12 @@ public class Raiz
         //System.out.println("este es el recorrido"+raiz);
         return raiz;
     }
+    /**
+     * Este metodo se utiliza para tener la infromacion deseada del arbol
+     * sin nada extra como algun caracter extra o algo por el estilo
+     * ademas de eso se puede escoger que deseo que me devuelva sea la raiz o una de las paginas
+     * @return String El retorna el valor  del elemento  a escoger sea la raiz o  una pagina.
+     */
     public String  dameInfo(int opcion,String oleada){
         String Texto1=this.serializarTexto(this.Recorrido(),oleada);
         String Info=this.giveArrayHijos(Texto1,opcion);
@@ -124,6 +152,10 @@ public class Raiz
             return  Info;
         }
     }
+    /**
+     * Este metodo es el constructor para crear objetos de la clase raiz
+     * @param grado este parametro es la cantidad de elemento que ingresaran al arbol
+     */
     public Raiz(int grado) {
         nivel = 1;
         imprimir = 1;
@@ -134,6 +166,10 @@ public class Raiz
         Lista llevarIngresos = new Lista();
         esRaiz = true;
     }
+    /**
+     * Este metodo se utiliza para insertar algo en el arbol b
+     * @param valor este dato es el que va a ser ingresado en el arbol b
+     */
     public void insertar (int valor) {
         if (primerNodo.tengoHijos==false) {
             int j = 0;
@@ -155,6 +191,11 @@ public class Raiz
 
         }
     }
+    /**
+     * Este metodo se utiliza para insertar algo en el arbol b
+     * @param arr este dato es los elementos del arbol
+     * @param longitud es el tamano del arbol
+     */
     public void ordenar(int arr[], int longitud){
         longitud = 0;
         for(int i = 0; i < arr.length; i++){
@@ -175,6 +216,11 @@ public class Raiz
             }
         }
     }
+    /**
+     * Este metodo se utiliza para insertar algo en el arbol b
+     * @param nodo este dato es  un nodo es especifico parfa setearle sus referencias
+     *
+     */
     public void setTengoHijos (Nodo nodo) {
         if (nodo == primerNodo) {
             if (primerNodo.nodo[0]!= null) {
@@ -188,6 +234,11 @@ public class Raiz
             }
         }
     }
+    /**
+     * Este metodo se utiliza para insertar algo en el arbol b
+     * @param conHijos  este es para generar la referecia  de hijos a los nodos del arbol
+     *
+     */
     public void ingresarEnHijos(Nodo conHijos, int valor) {
         boolean entro = false;
         if(conHijos != null && !conHijos.tengoHijos){
@@ -202,6 +253,12 @@ public class Raiz
             }
         }
     }
+    /**
+     * Este metodo se utiliza para  averiguar el valoir que contiene un nodo con el
+     * valor ingresado
+     * @param nodoA este es un nodo que ingresara  para verificarlo
+     * @param valor este es el valor que se comparara  con lo que contiene el nodo
+     */
     public void ubicarValorEnArreglo(Nodo nodoA, int valor){
         int cont = 0;
         while(cont <= 2*grado){
@@ -217,6 +274,10 @@ public class Raiz
             cont++;
         }
     }
+    /**
+     * Este metodo se utiliza  Para ordenar un nodo en el arbol deseado
+     * @param aOrdenar
+     */
     public void ordenarNodos(Nodo aOrdenar){
         int i,j;
         i = 0;

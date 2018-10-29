@@ -9,8 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * Clase: Caballero
- * @author Andrey Sanchez
+ * clase  es la que se encarga de
+ * manejar de  los datos como los metodos relacionados  al presonaje principal
  * @version 20.10.2018
  */
 
@@ -25,7 +25,7 @@ public class Caballero {
 
 
     /**
-     * Default constructor
+     * es el constructor de la clase  caballero
      */
 
     public Caballero() {
