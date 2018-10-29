@@ -24,8 +24,11 @@ public class Dragon {
     private LinkedList hijos = new LinkedList();
     private LinkedList dragones_asignados = new LinkedList();
     private JLabel Label = new JLabel();
+    private int PosXinicial;
+    private int PosYinicial;
     private int PosX;
     private int PosY;
+    private int nivel;
     ImageIcon img = new ImageIcon("src/MultiMedia/dg.gif");
 
 
@@ -49,6 +52,13 @@ public class Dragon {
 
     private boolean click = false;
 
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
 
     /**
      * Default constructor
@@ -157,20 +167,36 @@ public class Dragon {
         this.hijoIz = hijoIz;
     }
 
+    public int getPosXinicial() {
+        return PosXinicial;
+    }
+
+    public void setPosXinicial(int posXinicial) {
+        PosXinicial = posXinicial;
+    }
+
+    public int getPosYinicial() {
+        return PosYinicial;
+    }
+
+    public void setPosYinicial(int posYinicial) {
+        PosYinicial = posYinicial;
+    }
+
     public int getPosX() {
         return PosX;
     }
 
-    public void setPosX(int posX) {
-        PosX = posX;
+    public void setPosX(int posXfinal) {
+        PosX = posXfinal;
     }
 
     public int getPosY() {
         return PosY;
     }
 
-    public void setPosY(int posY) {
-        PosY = posY;
+    public void setPosY(int posYfinal) {
+        PosY = posYfinal;
     }
 
     public LinkedList getDragones_asignados(){
@@ -190,14 +216,6 @@ public class Dragon {
     /**
      * Baja la resistencia y devuelve un booleano acerca de si se debe eliminar o no
      * @return true si murió, false sino
-     */
-    public boolean RecibirDano(){
-        this.resistencia--;
-        return this.resistencia==0;
-    }
-
-    /**
-     * 
      */
     public boolean RecibirDano(){
         this.resistencia--;

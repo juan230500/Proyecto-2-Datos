@@ -1,9 +1,9 @@
 package GUI;
 
 public class Hilo_A implements Runnable {
-    animacion_prueba ani1;
+    Fondo ani1;
 
-    public  Hilo_A(animacion_prueba a){
+    public  Hilo_A(Fondo a){
         Thread hilo = new Thread(this);
         ani1 = a;
         hilo.start();

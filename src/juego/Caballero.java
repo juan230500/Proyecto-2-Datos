@@ -25,7 +25,7 @@ public class Caballero {
         return vida;
     }
 
-    private int vida= 3;
+    private int vida= 5;
 
     public void setVida(int vida) {
         this.vida = vida;
