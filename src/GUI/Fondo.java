@@ -2,6 +2,11 @@ package GUI;
 
 
 import adt.Node;
+import com.panamahitek.ArduinoException;
+import com.panamahitek.PanamaHitek_Arduino;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener;
+import jssc.SerialPortException;
 import juego.*;
 
 import javax.swing.*;
@@ -9,6 +14,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase: Fondo
@@ -70,6 +77,7 @@ public class Fondo extends JPanel implements KeyListener {
     private int tamanoLetra;
     private boolean fuego = false;
     private Pantalla PantallaUso;
+    private static int b;
 
     /**
      * Getter
@@ -108,12 +116,49 @@ public class Fondo extends JPanel implements KeyListener {
 
     private Hilo_DR h3;
     private Hilo_DE h4;
+    private static PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
+    private static final SerialPortEventListener listener = new SerialPortEventListener() {
+        @Override
+        public void serialEvent(SerialPortEvent serialPortEvent) {
+            try {
+                if (ino.isMessageAvailable()) {
+                    //Se imprime el mensaje recibido en la consola
+                    String info=ino.printMessage();
+                    String x = info.substring(2,6);
+                    x=x.replace("|","");
+                    String Y = info.substring(11,15);
+                    Y=Y.replace("|","");
+                    String boton=info.substring(24);
+                    boton=boton.replace(":","");
+                    boton=boton.replace("r","");
+                    boton=boton.replace("o","");
+                    boton=boton.replace("d","");
+                    boton=boton.replaceAll("\\s","");
+                    //System.out.println(boton);
+                    Y=Y.replaceAll("\\s","");
+                    x=x.replaceAll("\\s","");
+                    b = Integer.parseInt(boton);
+                    //contrx = Integer.parseInt(x);
+                    //contry = Integer.parseInt(Y);
+                    System.out.println(b);
+
+                }
+            } catch (SerialPortException | ArduinoException ex) {
+                Logger.getLogger(Fondo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    };
 
     /**
      * Default constructor
      */
 
     public Fondo(Pantalla LaPantalla) {
+        try {
+            ino.arduinoRX("/dev/ttyUSB0", 9600, listener);
+        } catch (ArduinoException | SerialPortException ex) {
+            Logger.getLogger(Fondo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.PantallaUso=LaPantalla;
         setLayout(null);
         setBounds(0, 0, largo, alto);
@@ -139,6 +184,7 @@ public class Fondo extends JPanel implements KeyListener {
         DrawArray();
         //DrawABB();
         //DrawAVL();
+        Hilo_contrl h5 = new Hilo_contrl(this);
         addKeyListener(this);
         setFocusable(true);
 
@@ -194,12 +240,36 @@ public class Fondo extends JPanel implements KeyListener {
 
         }
     }
+    public void movercontrol() {
+        if (!juego) {
+            reiniciar();
+            return;
+        }
+        //JLabel grifo = caballero.getLabel();
+        if (caballero.isChoque() == false) {
+            if (grifo.getX() + 80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY() + 50 + 5 < alto) {
+                if (b == 0) {
+                    Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
+                    Dragon toImpact = OleadaDibujar.MasCercanoPorAltura(d.getPosY());
+                    if (toImpact == null) {
+                        caballero.atacar(this);
+                    } else {
+                        boolean isKill = false;
+                        caballero.atacar(toImpact, d,OleadaDibujar,this, fuego);
+                    }
+                    caballero.getDisparo().setBounds(100, 300, 10, 10);
+                    add(caballero.getDisparo());
+                }
+            }
+        }
+    }
 
 
-    /**
-     * Metodo para que los dragones o enemigos disparen
-     * @param dra
-     */
+
+                /**
+                 * Metodo para que los dragones o enemigos disparen
+                 * @param dra
+                 */
 
     public void disparoDragon(JLabel dra){
         JLabel disp = new JLabel();
