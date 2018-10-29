@@ -1,5 +1,7 @@
 package GUI;
 
+import GUI.Fondo;
+
 import javax.swing.*;
 
 /**
@@ -28,7 +30,7 @@ public class Hilo_DE implements Runnable {
     @Override
     public void run() {
         while(game){
-            //fondo1.moverDisp(disparo);
+            fondo1.moverDisp(disparo);
             try {
                 Thread.sleep(7);
             } catch (InterruptedException e) {

@@ -2,6 +2,11 @@ package GUI;
 
 
 import adt.Node;
+import com.panamahitek.ArduinoException;
+import com.panamahitek.PanamaHitek_Arduino;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener;
+import jssc.SerialPortException;
 import juego.*;
 
 import javax.swing.*;
@@ -9,6 +14,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Random;
 
 /**
  * Clase: Fondo
@@ -69,6 +77,8 @@ public class Fondo extends JPanel implements KeyListener {
     private int anchoDragon;
     private int tamanoLetra;
     private boolean fuego = false;
+    private Pantalla PantallaUso;
+    private static int b;
 
     /**
      * Getter
@@ -84,35 +94,69 @@ public class Fondo extends JPanel implements KeyListener {
 
     private HiloOleada h1;
 
+    Hilo_contrl h5;
+
 
     /**
      * Getter
      * @return h3
      */
 
-    public Hilo_DR getH3() {
+    public Hilo_Disparos getH3() {
 
         return h3;
     }
 
-    /**
-     * Getter
-     * @return h4
-     */
 
-    public Hilo_DE getH4() {
+    private Hilo_Disparos h3;
 
-        return h4;
-    }
 
-    private Hilo_DR h3;
     private Hilo_DE h4;
+    private static PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
+    private static final SerialPortEventListener listener = new SerialPortEventListener() {
+        @Override
+        public void serialEvent(SerialPortEvent serialPortEvent) {
+            try {
+                if (ino.isMessageAvailable()) {
+                    //Se imprime el mensaje recibido en la consola
+                    String info=ino.printMessage();
+                    String x = info.substring(2,6);
+                    x=x.replace("|","");
+                    String Y = info.substring(11,15);
+                    Y=Y.replace("|","");
+                    String boton=info.substring(24);
+                    boton=boton.replace(":","");
+                    boton=boton.replace("r","");
+                    boton=boton.replace("o","");
+                    boton=boton.replace("d","");
+                    boton=boton.replaceAll("\\s","");
+                    //System.out.println(boton);
+                    Y=Y.replaceAll("\\s","");
+                    x=x.replaceAll("\\s","");
+                    b = Integer.parseInt(boton);
+                    //contrx = Integer.parseInt(x);
+                    //contry = Integer.parseInt(Y);
+                    System.out.println(b);
+
+                }
+            } catch (SerialPortException | ArduinoException ex) {
+                Logger.getLogger(Fondo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    };
+
 
     /**
      * Default constructor
      */
 
-    public Fondo() {
+    public Fondo(Pantalla LaPantalla) {
+        try {
+            ino.arduinoRX("COM10", 9600, listener);
+        } catch (ArduinoException | SerialPortException ex) {
+            Logger.getLogger(Fondo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.PantallaUso=LaPantalla;
         setLayout(null);
         setBounds(0, 0, largo, alto);
         setMaximumSize(new Dimension(800, 600));
@@ -127,7 +171,7 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.CantidadOriginal=100;
+        this.CantidadOriginal=10;
         this.ronda=1;
         this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda, this, this.caballero);
         this.juego=true;
@@ -137,17 +181,23 @@ public class Fondo extends JPanel implements KeyListener {
         DrawArray();
         //DrawABB();
         //DrawAVL();
+        h5 = new Hilo_contrl(this);
         addKeyListener(this);
         setFocusable(true);
 
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
+        this.h3 = new Hilo_Disparos(this);
         add(sidescroller);
-        //add(nubes);
+    }
+
+    public Pantalla getPantallaUso() {
+        return PantallaUso;
     }
 
     public void  reiniciar(){
         h1.stop();
+
         caballero.setDragonesQuePasaron(0);
         setBackground(new Color(150,220,255));
         this.margen =0;
@@ -158,22 +208,13 @@ public class Fondo extends JPanel implements KeyListener {
         DrawArray();
         addKeyListener(this);
         setFocusable(true);
-
+        this.PantallaUso.ActulizarArbolB(OleadaDibujar.toArray(),OleadaDibujar.getCantidadDragones());
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
+        this.h3 = new Hilo_Disparos(this);
         add(sidescroller);
     }
-
-    /*public void crearLabel(){
-
-        etiqueta2.setText("Dragon2");
-        etiqueta2.setBounds(x2,450,60,60);
-        this.add(etiqueta2);
-        Hilo_DR hilo_dr = new Hilo_DR(etiqueta2, this);
-        h3 = hilo_dr;
-
-    }*/
-
+    
     /**
      * Metodo usado por el HiloOleada para mover la oleada en conjunto
      */
@@ -187,25 +228,124 @@ public class Fondo extends JPanel implements KeyListener {
 
         }
     }
+    public void movercontrol() {
+        if (!juego) {
+            reiniciar();
+            return;
+        }
+        //JLabel grifo = caballero.getLabel();
+        if (caballero.isChoque() == false) {
+            if (grifo.getX() + 80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY() + 50 + 5 < alto) {
+                if (b == 0&&!fuego) {
 
+                    Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
+                    Dragon toImpact = OleadaDibujar.MasCercanoPorAltura(d.getPosY());
+                    this.fuego=true;
+                    if (toImpact == null) {
+                        caballero.atacar(this);
+                    } else {
+                        boolean isKill = false;
+                        caballero.atacar(toImpact, d,OleadaDibujar,this, fuego);
+                    }
+                    caballero.getDisparo().setBounds(100, 300, 10, 10);
+                    add(caballero.getDisparo());
+                }
+            }
+        }
+    }
+    public void disparos(){
+        Dragon dra;
+        Random random = new Random();
+        int r1 = random.nextInt(OleadaDibujar.getCantidadDragones());
+        dra = OleadaDibujar.toArray()[r1];
+        System.out.println(r1);
+
+
+        if (dra.getRecarga() <= 33) {
+            JLabel disp = new JLabel();
+
+            disp.setText("O");
+
+            disp.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp, this);
+        }
+        if ((dra.getRecarga() > 33) && (dra.getRecarga() < 66)) {
+            JLabel disp1 = new JLabel();
+            JLabel disp2 = new JLabel();
+
+            disp1.setText("O");
+            disp2.setText("O");
+
+            disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp1);
+            add(disp2);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp1, this);
+            Hilo_DE hilitodisp2 = new Hilo_DE(disp2, this);
+        }
+        if (dra.getRecarga() >= 66) {
+            JLabel disp1 = new JLabel();
+            JLabel disp2 = new JLabel();
+            JLabel disp3 = new JLabel();
+
+
+            disp1.setText("O");
+            disp2.setText("O");
+            disp3.setText("O");
+
+            disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
+            disp3.setBounds(dra.getLabel().getX() - 40, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp1);
+            add(disp2);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp1, this);
+            Hilo_DE hilitodisp2 = new Hilo_DE(disp2, this);
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Metodo para que los dragones o enemigos disparen
-     * @param dra
      */
 
-    public void disparoDragon(JLabel dra){
-        JLabel disp = new JLabel();
-        disp.setText("O");
-        disp.setBounds(dra.getX() - 10, dra.getY() + 25, 10, 10);
-            add(disp);
+
+    public void moverDisp(JLabel disp){
+        while(juego && disp.getX() > -10){
             if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
-                disp.setBounds(disp.getX() - 5, disp.getY(), 10, 10);
-            } else {
+                disp.setLocation(disp.getX() - 5, disp.getY());
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else{
                 caballero.recibir_daño();
-                disp.setBounds(1400, 1000, 10, 10);
+                System.out.println(caballero.getVida());
+                disp.setLocation(1400, 1000);
+                JLabel colision = new JLabel();
+                colision.setText("BOOM");
+                colision.setBounds(grifo.getX(), grifo.getY(), 50, 10);
+                this.add(colision);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                colision.setVisible(false);
             }
-            disp.setVisible(true);
+        }
+        disp.setVisible(false);
     }
 
 
@@ -388,7 +528,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2;
-        int xi=200;
+        int xi=400;
 
         cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
 
@@ -469,7 +609,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2-12;
-        int xi=100;
+        int xi=400;
 
         cabeza.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 
@@ -540,6 +680,4 @@ public class Fondo extends JPanel implements KeyListener {
             add(node.left.key.getLabel());
         }
     }
-
-
 }
