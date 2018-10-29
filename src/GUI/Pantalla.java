@@ -173,7 +173,28 @@ public class Pantalla extends JFrame {
      */
 
     public void comenzar_juego(){
-
+        int n = fondo.getOleadaDibujar().getFormacion()%5;
+        i_layP.setInfoVisible(false);
+        if (n== 0){
+            i_layP.setInfo("Ordenado por SelectionSort");
+        }
+        if (n==2){
+            i_layP.setInfo("Ordenado por QuickSort");
+        }
+        if (n==3){
+            i_layP.setInfo("Ordenado por familias en ABB");
+        }
+        if (n==4){
+            i_layP.setInfo("Ordenado en AVL");
+        }
+        if (n==1){
+            i_layP.setInfo("Ordenado por InsertionSort");
+        }
+        if (n==-1){
+            i_layP.setInfo("Desordenado");
+        }
+        i_layP.setLayout(null);
+        i_layP.setInfoVisible(true);
             if(fondo.getCaballero().getDragonesQuePasaron()>=3 || fondo.getCaballero().getVida() == 0){
                 hPrin.stop();
                 JLabel end = new JLabel("PERDISTEEEEEE");
