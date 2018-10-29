@@ -28,7 +28,7 @@ public class TraductorEliminarcion {
 	int criterio;
 	int EdadEliminar;
 	Dragon DragonEliminar;
-	//private static final Logger slf4jLogger = LoggerFactory.getLogger(TraductorEliminarcion.class);
+	private static final Logger slf4jLogger = LoggerFactory.getLogger(TraductorEliminarcion.class);
 	
 	/**
      * Método que convierte la oleada del cliente en una string
@@ -38,7 +38,7 @@ public class TraductorEliminarcion {
      */
     public String ToXML(Oleada O,int criterio,int EdadEliminar) {
         
-        //slf4jLogger.info("Traduciendo...");
+        slf4jLogger.info("Traduciendo...");
     	Element Request = new Element("info");
     	Request.setAttribute(new Attribute("criterio",""+criterio));
     	Request.setAttribute(new Attribute("edadEliminar",""+EdadEliminar));

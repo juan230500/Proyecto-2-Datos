@@ -2,7 +2,11 @@ package juego;
 
 import javax.swing.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import GUI.Fondo;
+import servidor.TraductorEliminarcion;
 /**
  * La clase Hilo_D sirve para mover el disparo en la pantalla  aparte del hilo principal
  *
@@ -15,6 +19,7 @@ public class Hilo_D implements Runnable {
     Disparo Disparo1 = null;
     private  Oleada OleadaDibujar;
     private Fondo fondo;
+    private static final Logger slf4jLogger = LoggerFactory.getLogger(TraductorEliminarcion.class);
 
     public Hilo_D(Disparo d, Dragon dragon,Oleada OleadaDibujar,Fondo fondo){
         Thread hilo= new Thread(this);
@@ -45,6 +50,8 @@ public class Hilo_D implements Runnable {
             //RECOPILAR X Y ANTERIORES
             int criterio=OleadaDibujar.HerirDragon(dg);
             if (dg.getResistencia()==0){
+            	slf4jLogger.info("Se mata un dragon");
+            	
                 dLabel.setVisible(false);
                 if (criterio<3) {
                 	this.fondo.DrawArray();

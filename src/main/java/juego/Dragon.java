@@ -33,7 +33,7 @@ public class Dragon {
     private int PosY;
     private int nivel;
     private int id;
-    ImageIcon img = new ImageIcon("src/MultiMedia/dg.gif");
+    ImageIcon img = new ImageIcon("src/main/java/MultiMedia/dg.gif");
     
     public Dragon copy() {
     	final Dragon D=new Dragon();
@@ -43,6 +43,7 @@ public class Dragon {
     	D.setResistencia(this.getResistencia());
     	D.setClase(this.getClase());
     	D.setDragones_asignados(this.getDragones_asignados());
+    	D.setLabel(this.getLabel());
     	D.getLabel().setText(D.getNombre());
         D.getLabel().addMouseListener(new MouseAdapter() {
             @Override
@@ -53,9 +54,16 @@ public class Dragon {
         });
     	return D;
     }
+    
 
 
-    public boolean getCruce() {
+    public void setLabel(JLabel label) {
+		Label = label;
+	}
+
+
+
+	public boolean getCruce() {
         return cruce;
     }
 

@@ -515,10 +515,9 @@ public class Fondo extends JPanel implements KeyListener {
 
             int xi=600+ margenlocal *100;
             int yi=40+fila*55;
-            if (bandera_inicio){
-                D[pos].getLabel().setBounds(xi,yi,100,anchoDragon);
+            
+            D[pos].getLabel().setBounds(xi,yi,100,anchoDragon);
 
-            }
 
 
             D[pos].setPosY(yi);
