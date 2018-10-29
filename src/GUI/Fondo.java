@@ -28,6 +28,7 @@ public class Fondo extends JPanel implements KeyListener {
     private boolean juego = true;
     private int margen;
     private Oleada OleadaDibujar;
+    private boolean bandera_inicio = true;
 
     /**
      * Getter
@@ -171,7 +172,7 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.CantidadOriginal=10;
+        this.CantidadOriginal=6;
         this.ronda=1;
         this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda, this, this.caballero);
         this.juego=true;
@@ -197,6 +198,8 @@ public class Fondo extends JPanel implements KeyListener {
 
     public void  reiniciar(){
         h1.stop();
+
+        bandera_inicio = true;
 
         caballero.setDragonesQuePasaron(0);
         setBackground(new Color(150,220,255));
@@ -490,8 +493,11 @@ public class Fondo extends JPanel implements KeyListener {
 
             int xi=600+ margenlocal *100;
             int yi=40+fila*55;
+            if (bandera_inicio){
+                D[pos].getLabel().setBounds(xi,yi,100,anchoDragon);
 
-            D[pos].getLabel().setBounds(xi,yi,100,anchoDragon);
+            }
+
 
             D[pos].setPosY(yi);
             D[pos].setPosX(xi);
@@ -508,6 +514,7 @@ public class Fondo extends JPanel implements KeyListener {
                 margenlocal++;
             }
         }
+        bandera_inicio = false;
         //this.margen++;
     }
 
@@ -522,9 +529,10 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2;
-        int xi=400;
+        int xi=600;
 
-        cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
+        //cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
+        //animar();
 
         cabeza.setPosY(yi);
         cabeza.setPosX(xi);
@@ -534,6 +542,132 @@ public class Fondo extends JPanel implements KeyListener {
         add(cabeza.getLabel());
 
         dibujarArbol(cabeza,2,xi,yi);
+
+    }
+
+    public JLabel[] mostrarColores() {
+        int criterio = this.OleadaDibujar.getFormacion() % 5;
+        JLabel[] array3 = new JLabel[OleadaDibujar.getCantidadDragones()];
+        if (criterio == 0 || criterio == 2 || criterio == 4) {
+            for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++) {
+                //array1[i].setIcon(imagen);
+                Dragon dtmp = (Dragon) OleadaDibujar.toArray()[i];
+                array3[i] = new JLabel();
+                array3[i].setBounds(dtmp.getLabel().getX(), dtmp.getLabel().getY() - 50, 100, 50);
+                //array3[i].setText("RCR: " + dtmp.getRecarga());
+                //array3[i].setForeground(coloresEtiquetasVrcr(dtmp.getRecarga()));
+                array3[i].setText("Edad: " + dtmp.getEdad());
+                array3[i].setForeground(coloresEtiquetasEdad(dtmp.getEdad()));
+                add(array3[i]);
+            }
+        } else if (criterio == 1) {
+            for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++) {
+                //array1[i].setIcon(imagen);
+                Dragon dtmp = (Dragon) OleadaDibujar.toArray()[i];
+                array3[i] = new JLabel();
+                array3[i].setBounds(dtmp.getLabel().getX(), dtmp.getLabel().getY() - 50, 50, 50);
+                array3[i].setText("RCR: " + dtmp.getRecarga());
+                array3[i].setForeground(coloresEtiquetasVrcr(dtmp.getRecarga()));
+                add(array3[i]);
+                //array3[i].setText("Edad: "+dtmp.getEdad());
+                //array3[i].setForeground(coloresEtiquetasEdad(dtmp.getEdad()));
+            }
+        } else if (criterio == 3) {
+            AsignarNivel();
+            for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++) {
+                //array1[i].setIcon(imagen);
+                Dragon dtmp = (Dragon) OleadaDibujar.toArray()[i];
+                array3[i] = new JLabel();
+                array3[i].setBounds(dtmp.getLabel().getX(), dtmp.getLabel().getY() - 15, 50, 50);
+                array3[i].setText("Gen: " + dtmp.getNivel());
+                array3[i].setForeground(coloresEtiquetasGen(dtmp.getNivel()));
+                add(array3[i]);
+            }
+        } return array3;
+    }
+
+    public void AsignarNivel(){
+        AsignarNivelrec(OleadaDibujar.getRoot(),0);
+    }
+
+    public void AsignarNivelrec(Dragon root,int nivel){
+        if (root!=null){
+            AsignarNivelrec(root.getHijoIz(),nivel+1);
+            root.setNivel(nivel);
+            AsignarNivelrec(root.getHijoDer(),nivel+1);
+        }
+    }
+
+    public void quitarColores(JLabel[] array3){
+        for (int i = 0; i < array3.length; i++) {
+            array3[i].setVisible(false);
+        }
+    }
+
+    public Color coloresEtiquetasEdad(int edad){
+        int r = (edad * 255)/1000;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+    public Color coloresEtiquetasVrcr(int vrcr){
+        int r = (vrcr * 255)/100;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+    public Color coloresEtiquetasGen(int gen){
+        int r = (gen * 255)/8;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+    public void animar(){
+        JLabel[] array3 = mostrarColores();
+        h1.pausa = true;
+        Dragon[] dragones = OleadaDibujar.toArray();
+        float m;
+        float b;
+
+        for (int i = 0; i<OleadaDibujar.getCantidadDragones(); i++) {
+            Dragon dtmp = (Dragon) dragones[i];
+
+            float x1 = dtmp.getPosXinicial();
+            float y1 = dtmp.getPosYinicial();
+            float x2 = dtmp.getPosX();
+            float y2 = dtmp.getPosY();
+
+            m = (y2 - y1) / (x2 - x1);
+            b = y1 - (m * x1);
+            //System.out.println(y2-y1);
+
+            float movx = (x2 - x1) / 40;
+
+            float xi = x1;
+            float yi;
+
+            while ((xi < x2)) {
+                //int movx = (i1 - i2)/20;
+                //int movy = (j1 - j2)/20;
+                xi += movx;
+                yi = m * xi + b;
+
+                dtmp.getLabel().setLocation((int) xi, (int) yi);
+                array3[i].setLocation((int)xi, (int)yi-50);
+                try {
+                  Thread.sleep(5);
+           } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        quitarColores(array3);
+        h1.pausa = false;
 
     }
 
@@ -603,7 +737,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2-12;
-        int xi=400;
+        int xi=600;
 
         cabeza.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 

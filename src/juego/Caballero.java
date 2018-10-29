@@ -24,6 +24,12 @@ public class Caballero {
     ImageIcon img = new ImageIcon("src/MultiMedia/Grifo.gif");
 
 
+    private int vida= 5;
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
     /**
      * es el constructor de la clase  caballero
      */

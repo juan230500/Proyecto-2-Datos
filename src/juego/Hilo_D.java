@@ -38,7 +38,11 @@ public class Hilo_D implements Runnable {
             }
             Disparo1.getBola().setVisible(false);
             fondo.setFuego(false);
+            setXYiniciales();
 
+            display();
+            System.out.println("#####");
+            //RECOPILAR X Y ANTERIORES
             int criterio=OleadaDibujar.HerirDragon(dg);
             if (dg.getResistencia()==0){
                 dLabel.setVisible(false);
@@ -51,10 +55,12 @@ public class Hilo_D implements Runnable {
                 else {
                 	this.fondo.DrawABB();
                 }
+                display();
+                fondo.animar();
+
 
                 if (OleadaDibujar.getCantidadDragones()==0){
                     fondo.setJuego(false);
-
                 }
                 else {
                     fondo.getPantallaUso().ActulizarArbolB(OleadaDibujar.toArray(),OleadaDibujar.getCantidadDragones());
@@ -67,6 +73,22 @@ public class Hilo_D implements Runnable {
             Disparo1.moverDisparo(fondo);
         }
     }
+
+    public void setXYiniciales(){
+        Dragon[] dragones = this.OleadaDibujar.toArray();
+        for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++){
+            dragones[i].setPosXinicial(dragones[i].getPosX());
+            dragones[i].setPosYinicial(dragones[i].getPosY());
+        }
+    }
+
+    public void display(){
+        Dragon[] dragones = this.OleadaDibujar.toArray();
+        for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++){
+            System.out.println(dragones[i].getPosX()+" , "+dragones[i].getPosY() );
+        }
+    }
+
     public void stop(){
         return;
     }

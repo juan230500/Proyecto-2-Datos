@@ -1,13 +1,15 @@
 package juego;
 
 import adt.LinkedList;
+import javax.swing.JLabel;
+import java.util.Random;
 
 import javax.swing.*;
 import java.util.Random;
 
 
 /**
- * 
+ *
  */
 public class Dragon {
 
@@ -22,8 +24,11 @@ public class Dragon {
     private LinkedList hijos = new LinkedList();
     private LinkedList dragones_asignados = new LinkedList();
     private JLabel Label = new JLabel();
+    private int PosXinicial;
+    private int PosYinicial;
     private int PosX;
     private int PosY;
+    private int nivel;
     ImageIcon img = new ImageIcon("src/MultiMedia/dg.gif");
 
 
@@ -47,6 +52,13 @@ public class Dragon {
 
     private boolean click = false;
 
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
 
     /**
      * Default constructor
@@ -155,25 +167,46 @@ public class Dragon {
         this.hijoIz = hijoIz;
     }
 
+    public int getPosXinicial() {
+        return PosXinicial;
+    }
+
+    public void setPosXinicial(int posXinicial) {
+        PosXinicial = posXinicial;
+    }
+
+    public int getPosYinicial() {
+        return PosYinicial;
+    }
+
+    public void setPosYinicial(int posYinicial) {
+        PosYinicial = posYinicial;
+    }
+
     public int getPosX() {
         return PosX;
     }
 
-    public void setPosX(int posX) {
-        PosX = posX;
+    public void setPosX(int posXfinal) {
+        PosX = posXfinal;
     }
 
     public int getPosY() {
         return PosY;
     }
 
-    public void setPosY(int posY) {
-        PosY = posY;
+    public void setPosY(int posYfinal) {
+        PosY = posYfinal;
     }
 
     public LinkedList getDragones_asignados(){
         return dragones_asignados;
     }
+
+    public void AddDragones_asignados(Dragon asignar){
+        this.dragones_asignados.insertFirst(asignar);
+    }
+
 
     public void setDragones_asignados(Dragon asignar){
         this.dragones_asignados.insertFirst(asignar);
@@ -190,21 +223,21 @@ public class Dragon {
     }
 
     /**
-     * 
+     *
      */
     public void lanzarFuego() {
         // TODO implement here
     }
 
     /**
-     * 
+     *
      */
     public void avanzar() {
         // TODO implement here
     }
 
     /**
-     * 
+     *
      */
     public void getInfo() {
         System.out.println(nombre +" " + Integer.toString(recarga) +" " + Integer.toString(edad) +" " + Integer.toString(resistencia) );
