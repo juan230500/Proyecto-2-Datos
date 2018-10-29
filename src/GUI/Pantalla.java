@@ -7,9 +7,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Clase: Pantalla
- * @author Andrey Sanchez
- * @version 26/10/2018
+ * esta clase es la pantalla de juego a nivel grafico
  */
 
 public class Pantalla extends JFrame {

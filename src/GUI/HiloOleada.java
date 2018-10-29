@@ -5,9 +5,7 @@ import juego.Dragon;
 import javax.swing.*;
 
 /**
- * Clase: HiloOleada
- * @author Andrey Sanchez
- * @version 26/10/2108
+ * Esta clase se encarga de mover la oleada y verificar los choque de los dragones con el jugador
  */
 
 public class HiloOleada implements Runnable {

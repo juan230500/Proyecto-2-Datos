@@ -9,9 +9,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
- *  Clase: InfoDragon
- * @author Andrey Sanchez
- * @version 26/10/2018
+ *  ESta clase se encarga de manejar la informacion de  de el dragon a nivel grafico
  */
 
 public class InfoDragon extends JPanel {

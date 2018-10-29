@@ -3,7 +3,9 @@ package GUI;
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
-
+/**
+ *  ESta clase se encarga de manejar la informacion del arbol B  a nivel grafico
+ */
 public class InfoTree extends JPanel {
 
     public InfoTree() {

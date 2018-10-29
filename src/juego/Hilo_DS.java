@@ -1,7 +1,9 @@
 package juego;
 
 import GUI.Fondo;
-
+/**
+ *  ESta clase se encarga de manejar el incono del disparo enmeigo y correrlo en otro hilo aparte
+ */
 
 public class Hilo_DS implements Runnable {
     private Disparo Disparo1;

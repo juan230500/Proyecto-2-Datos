@@ -2,12 +2,11 @@ package GUI;
 
 import javax.swing.*;
 import juego.Disparo;
-
 /**
- * Clase: Hilo_F
- * @author Andrey Sanchez
- * @version 26/10/2018
+ * esta clase verifica las condiciones de
+ * todo el como las de perdida y las de poder jugar y asi
  */
+
 
 public class Hilo_F implements Runnable {
     Pantalla SideScroller = null;

@@ -4,7 +4,9 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-
+/**
+ *  ESta clase se encarga de manejar la informacion del layout de la pantalla de juego
+ */
 public class InfoLayout extends JPanel {
     JLabel info = new JLabel();
 
