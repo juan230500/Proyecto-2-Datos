@@ -1,13 +1,7 @@
 package GUI;
-/**
- * La clase Hilo_control sirve para tener un hilo ejecutando la validacion de
- * que si disparo o no y si es verdadero lo muestra en pantalla
- *
- * @version 1.0
- * @since    28 de octubre 2018
- */
-public class Hilo_contrl extends Thread{
+public class Hilo_contrl implements Runnable{
     private Fondo fondo1;
+    private boolean game = true;
 
     public Hilo_contrl(Fondo fondo){
         Thread hilo= new Thread(this);
@@ -17,7 +11,7 @@ public class Hilo_contrl extends Thread{
 
     @Override
     public void run() {
-        while(true){
+        while(game){
             fondo1.movercontrol();
             //fondo1.moverDisp(disparo);
             try {
@@ -26,5 +20,9 @@ public class Hilo_contrl extends Thread{
                 e.printStackTrace();
             }
         }
+    }
+
+    public void stop(){
+        game = false;
     }
 }
