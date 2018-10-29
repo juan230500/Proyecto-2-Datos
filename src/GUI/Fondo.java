@@ -279,7 +279,7 @@ public class Fondo extends JPanel implements KeyListener {
             JLabel disp2 = new JLabel(img);
 
             disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
-            disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 40, dra.getLabel().getY() + 5, 10, 10);
 
             add(disp1);
             add(disp2);
@@ -295,8 +295,8 @@ public class Fondo extends JPanel implements KeyListener {
 
 
             disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
-            disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
-            disp3.setBounds(dra.getLabel().getX() - 40, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 40, dra.getLabel().getY() + 5, 10, 10);
+            disp3.setBounds(dra.getLabel().getX() - 70, dra.getLabel().getY() + 5, 10, 10);
 
             add(disp1);
             add(disp2);

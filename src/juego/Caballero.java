@@ -19,7 +19,6 @@ public class Caballero {
     private boolean choque = false;
     private JLabel disparo = null;
     private int resistencia = 5;
-    private int vida= 3;
     private int dragonesQuePasaron = 0;
     ImageIcon img = new ImageIcon("src/MultiMedia/Grifo.gif");
 
