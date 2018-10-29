@@ -1,5 +1,6 @@
 package GUI;
 
+import adt.LinkedList;
 import juego.Dragon;
 
 import javax.swing.*;
@@ -18,6 +19,18 @@ public class InfoDragon extends JPanel {
         this.nombre.setVisible(false);
         JLabel n = new JLabel("Nombre:"+ nombre);
         this.nombre = n;
+    }
+    public void setInfanteria(LinkedList lista) {
+        this.infanteria.setVisible(false);
+        String temp = " ";
+        for (int i=0;i<lista.getSize();i++){
+            Dragon dg =(Dragon) lista.recorrer(i);
+            temp += dg.getNombre();
+            temp += " ";
+        }
+        System.out.println(temp);
+        JLabel n = new JLabel("Infanteria:"+ temp);
+        this.infanteria = n;
     }
 
     /**
@@ -110,6 +123,7 @@ public class InfoDragon extends JPanel {
     JLabel hijoI=new JLabel("Hijo Izquierdo:");
     JLabel hijoD=new JLabel("Hijo Derecho:");
     JLabel clase=new JLabel("Clase:");
+    JLabel infanteria= new JLabel("Infanteria:");
 
     /**
      * Default constructor
@@ -157,10 +171,14 @@ public class InfoDragon extends JPanel {
         this.hijoD.setForeground(Color.white);
         this.hijoD.setVisible(true);
         add(hijoD);
-        this.clase.setBounds(20, 230, 100, 20);
+        this.clase.setBounds(130, 50, 100, 20);
         this.clase.setForeground(Color.white);
         this.clase.setVisible(true);
         add(clase);
+        this.infanteria.setBounds(20, 230,400,20);
+        this.infanteria.setForeground(Color.white);
+        this.infanteria.setVisible(true);
+        add(infanteria);
     }
 
 
