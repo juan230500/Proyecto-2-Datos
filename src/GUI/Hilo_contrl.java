@@ -6,7 +6,7 @@ public class Hilo_contrl implements Runnable{
     public Hilo_contrl(Fondo fondo){
         Thread hilo= new Thread(this);
         fondo1 = fondo;
-        hilo.start();
+        //hilo.start();
     }
     @Override
     public void run() {

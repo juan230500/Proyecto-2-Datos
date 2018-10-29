@@ -259,12 +259,11 @@ public class Fondo extends JPanel implements KeyListener {
         int r1 = random.nextInt(OleadaDibujar.getCantidadDragones());
         dra = OleadaDibujar.toArray()[r1];
         System.out.println(r1);
+        ImageIcon img = new ImageIcon("src/MultiMedia/shoot.gif");
 
 
         if (dra.getRecarga() <= 33) {
-            JLabel disp = new JLabel();
-
-            disp.setText("O");
+            JLabel disp = new JLabel(img);
 
             disp.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
 
@@ -273,11 +272,8 @@ public class Fondo extends JPanel implements KeyListener {
             Hilo_DE hilitodisp1 = new Hilo_DE(disp, this);
         }
         if ((dra.getRecarga() > 33) && (dra.getRecarga() < 66)) {
-            JLabel disp1 = new JLabel();
-            JLabel disp2 = new JLabel();
-
-            disp1.setText("O");
-            disp2.setText("O");
+            JLabel disp1 = new JLabel(img);
+            JLabel disp2 = new JLabel(img);
 
             disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
             disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
@@ -289,14 +285,11 @@ public class Fondo extends JPanel implements KeyListener {
             Hilo_DE hilitodisp2 = new Hilo_DE(disp2, this);
         }
         if (dra.getRecarga() >= 66) {
-            JLabel disp1 = new JLabel();
-            JLabel disp2 = new JLabel();
-            JLabel disp3 = new JLabel();
+            JLabel disp1 = new JLabel(img);
+            JLabel disp2 = new JLabel(img);
+            JLabel disp3 = new JLabel(img);
 
 
-            disp1.setText("O");
-            disp2.setText("O");
-            disp3.setText("O");
 
             disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
             disp2.setBounds(dra.getLabel().getX() - 25, dra.getLabel().getY() + 5, 10, 10);
@@ -334,8 +327,9 @@ public class Fondo extends JPanel implements KeyListener {
                 System.out.println(caballero.getVida());
                 disp.setLocation(1400, 1000);
                 JLabel colision = new JLabel();
-                colision.setText("BOOM");
-                colision.setBounds(grifo.getX(), grifo.getY(), 50, 10);
+                ImageIcon img = new ImageIcon("src/MultiMedia/Boom.gif");
+                colision.setIcon(img);
+                colision.setBounds(grifo.getX()+50, grifo.getY()+5, 50, 21);
                 this.add(colision);
                 try {
                     Thread.sleep(200);
