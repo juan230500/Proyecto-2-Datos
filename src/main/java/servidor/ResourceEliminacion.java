@@ -55,6 +55,14 @@ public class ResourceEliminacion {
     	return fin;
     }
     
+    /**
+     * recibe peticiones de elimnar un dragon, convierte el arbol que recibe en uno temporal
+     * para elimniar el nodo correctamente y tambien crea la alineacion deseada
+     * @param request xml con la oleada a actulizar, el dragon a eliminar y el criterio
+     * @return un xml con la oleada actualizada y la alineacion a dibujar
+     * @throws JDOMException
+     * @throws IOException
+     */
     @POST
     @Produces(MediaType.TEXT_XML)
     public String RequestEliminar(String request) throws JDOMException, IOException {

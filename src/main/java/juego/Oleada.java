@@ -282,7 +282,12 @@ public class Oleada {
         this.CantidadDragones++;
         root = addRecursive(root, value);
     }
-
+    /**
+     * filtra los draones que esten en un rango de altura y devuelve el menor en X
+     * para saber con cual va a impactar una bala lanzada a Y altura
+     * @param Y altura a buscar dragones
+     * @return el mas cercano de esos
+     */
     public Dragon MasCercanoPorAltura(int Y){
         int AnchoDefault=25;
         List<Dragon> ListaDragones= FiltrarPorAltura(Y,AnchoDefault);
@@ -317,7 +322,13 @@ public class Oleada {
             AddPorAltura(Y,ancho,root.getHijoDer(),ListaDragones);
         }
     }
-
+    /**
+     * Hace los tres casos de delete de una rarbol binario de busqueda
+     * para mantenar las relaciones de padre, aprovecha que todos saben su padre
+     * para no buscar el nodo a quitar la referencia y hace algunos ajustes al tradicional ya
+     * que los dragones se comportan como nodos y el manejo de la informacion es mas delicado
+     * @param Herido dragon que murio
+     */
     public void delete(Dragon Herido){
         Dragon padre=Herido.getPadre();
         boolean isHijoIz=true;
@@ -423,13 +434,6 @@ public class Oleada {
         return ArrayDragones;
     }
 
-    public void makeArray(Dragon node, int i, Dragon [] BSTarray ) {
-        if (node != null) {
-            BSTarray[i] = root;
-            makeArray(node.getHijoIz(), 2*i+1, BSTarray);
-            makeArray(node.getHijoDer(), 2*i+2, BSTarray);
-        }
-    }
 
     private static int extractValues(Dragon n, Dragon[] results, int index) {
         if (n.getHijoIz() != null) {

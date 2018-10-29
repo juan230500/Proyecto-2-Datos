@@ -23,7 +23,14 @@ public class ResourceInicio {
 		String XML=Trad1.ToXMLFull(OleadaTmp);
 		return XML;
 	}
-	
+	/**
+	 * Recibe un xml conn el tamano de la oleada y la ronda actual, genera una oleada temporal con 
+	 * fabricadragones y la traduce a xml para que el cliente la desempaquete en su nueva oleada inicial
+	 * @param request
+	 * @return
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	@POST
 	@Produces(MediaType.TEXT_XML)
 	public String RequestGenerarOleada(String request) throws JDOMException, IOException {
