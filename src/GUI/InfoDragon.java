@@ -17,8 +17,7 @@ import java.awt.*;
 public class InfoDragon extends JPanel {
     public void setNombre(String nombre) {
         this.nombre.setVisible(false);
-        JLabel n = new JLabel("Nombre:"+ nombre);
-        this.nombre = n;
+        this.nombre.setText("Nombre:"+ nombre);
     }
     public void setInfanteria(LinkedList lista) {
         this.infanteria.setVisible(false);
@@ -29,8 +28,7 @@ public class InfoDragon extends JPanel {
             temp += " ";
         }
         System.out.println(temp);
-        JLabel n = new JLabel("Infanteria:"+ temp);
-        this.infanteria = n;
+        this.infanteria.setText("Infanteria:"+ temp);
     }
 
     /**
@@ -40,8 +38,7 @@ public class InfoDragon extends JPanel {
 
     public void setClase(String clas) {
         this.clase.setVisible(false);
-        JLabel n = new JLabel("Clase:"+ clas);
-        this.clase = n;
+        this.clase.setText("Clase:"+ clas);
     }
 
     /**
@@ -52,8 +49,7 @@ public class InfoDragon extends JPanel {
     public void setPadre(Dragon padre) {
         String p = padre.getNombre();
         this.padre.setVisible(false);
-        JLabel n = new JLabel("Padre:"+ p);
-        this.padre = n;
+        this.padre.setText("Padre:"+ p);
     }
 
     /**
@@ -64,8 +60,7 @@ public class InfoDragon extends JPanel {
     public void setHijoI(Dragon hijoi) {
         String hi = hijoi.getNombre();
         this.hijoI.setVisible(false);
-        JLabel n = new JLabel("Hijo Izquierdo:"+ hi);
-        this.hijoI = n;
+        this.hijoI.setText("Hijo Izquierdo:"+ hi);
     }
 
     /**
@@ -76,8 +71,7 @@ public class InfoDragon extends JPanel {
     public void setHijoD(Dragon hijod) {
         String hd = hijod.getNombre();
         this.hijoD.setVisible(false);
-        JLabel n = new JLabel("Hijo Derecho:"+ hd);
-        this.hijoD = n;
+        this.hijoD.setText("Hijo Derecho:"+ hd);
     }
 
     /**
@@ -88,8 +82,7 @@ public class InfoDragon extends JPanel {
     public void setEdad(int edad) {
         this.edad.setVisible(false);
         String st = Integer.toString(edad);
-        JLabel n = new JLabel("Edad:"+st);
-        this.edad = n;
+        this.edad.setText("Edad:"+st);
     }
 
     /**
@@ -100,8 +93,7 @@ public class InfoDragon extends JPanel {
     public void setResistencia(int resistencia) {
         this.resistencia.setVisible(false);
         String st = Integer.toString(resistencia);
-        JLabel n = new JLabel("Resistencia:"+st);
-        this.resistencia = n;
+        this.resistencia.setText("Resistencia:"+st);
     }
 
     /**
@@ -112,8 +104,7 @@ public class InfoDragon extends JPanel {
     public void setRecarga(int recarga) {
         this.recarga.setVisible(false);
         String st = Integer.toString(recarga);
-        JLabel n = new JLabel("Recarga:"+st);
-        this.recarga = n;
+        this.recarga.setText("Recarga:"+st);
     }
     JLabel nombre=new JLabel("Nombre:");
     JLabel edad=new JLabel("Edad:");
