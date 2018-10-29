@@ -6,8 +6,8 @@ import javax.swing.*;
 import java.util.*;
 
 /**
- * Clase: Disparo
- * @author Andrey Sanchez
+ * Clase: Disparo se utliza para manejar informacion revelante durante el disparo
+ *
  * @version 20.10.2018
  */
 public class Disparo {
@@ -15,7 +15,7 @@ public class Disparo {
     private int PosX;
     private int PosY;
     private boolean disparar;
-    ImageIcon img = new ImageIcon("src/main/java//MultiMedia/shoot.gif");
+    ImageIcon img = new ImageIcon("src/main/java/MultiMedia/shoot.gif");
 
     public void setDisparar(boolean disparar) {
         this.disparar = disparar;
@@ -73,11 +73,17 @@ public class Disparo {
         return false;
     }
 */
+    /**
+     * este metodo se utliza para mover la label del disparo
+     */
     public void moverDisparo(JLabel enem) {
         bola.setLocation(PosX, PosY);
         PosX += 5;
         ;
     }
+    /**
+     * este metodo se utliza para mover la label del disparo
+     */
     public void moverDisparo(Fondo fondo1) {
         while (PosX <= 1366-400) {
             this.PosX += this.Velocidad;

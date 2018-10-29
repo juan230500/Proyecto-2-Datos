@@ -2,6 +2,11 @@ package GUI;
 
 
 import adt.Node;
+import com.panamahitek.ArduinoException;
+import com.panamahitek.PanamaHitek_Arduino;
+import jssc.SerialPortEvent;
+import jssc.SerialPortEventListener;
+import jssc.SerialPortException;
 import juego.*;
 import servidor.Cliente;
 
@@ -14,6 +19,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.lang.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.Random;
 
 /**
  * Clase: Fondo
@@ -25,6 +33,7 @@ public class Fondo extends JPanel implements KeyListener {
     private boolean juego = true;
     private int margen;
     private Oleada OleadaDibujar;
+    private boolean bandera_inicio = true;
 
     /**
      * Getter
@@ -75,7 +84,8 @@ public class Fondo extends JPanel implements KeyListener {
     private int tamanoLetra;
     private boolean fuego = false;
     private Pantalla PantallaUso;
-    private Cliente Cliente1=new Cliente(true);
+    private static int b;
+    private Cliente Jose=new Cliente(true);
 
     /**
      * Getter
@@ -91,42 +101,75 @@ public class Fondo extends JPanel implements KeyListener {
 
     private HiloOleada h1;
 
+    Hilo_contrl h5;
+
 
     /**
      * Getter
      * @return h3
      */
 
-    public Hilo_DR getH3() {
+    public Hilo_Disparos getH3() {
 
         return h3;
     }
 
-    /**
-     * Getter
-     * @return h4
-     */
 
-    public Hilo_DE getH4() {
+    private Hilo_Disparos h3;
 
-        return h4;
-    }
 
-    private Hilo_DR h3;
     private Hilo_DE h4;
+    private static PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
+    private static final SerialPortEventListener listener = new SerialPortEventListener() {
+        @Override
+        public void serialEvent(SerialPortEvent serialPortEvent) {
+            try {
+                if (ino.isMessageAvailable()) {
+                    //Se imprime el mensaje recibido en la consola
+                    String info=ino.printMessage();
+                    String x = info.substring(2,6);
+                    x=x.replace("|","");
+                    String Y = info.substring(11,15);
+                    Y=Y.replace("|","");
+                    String boton=info.substring(24);
+                    boton=boton.replace(":","");
+                    boton=boton.replace("r","");
+                    boton=boton.replace("o","");
+                    boton=boton.replace("d","");
+                    boton=boton.replaceAll("\\s","");
+                    //System.out.println(boton);
+                    Y=Y.replaceAll("\\s","");
+                    x=x.replaceAll("\\s","");
+                    b = Integer.parseInt(boton);
+                    //contrx = Integer.parseInt(x);
+                    //contry = Integer.parseInt(Y);
+                    System.out.println(b);
+
+                }
+            } catch (SerialPortException | ArduinoException ex) {
+                Logger.getLogger(Fondo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    };
+
 
     /**
      * Default constructor
      */
 
     public Fondo(Pantalla LaPantalla) {
+        try {
+            ino.arduinoRX("COM10", 9600, listener);
+        } catch (ArduinoException | SerialPortException ex) {
+            Logger.getLogger(Fondo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.PantallaUso=LaPantalla;
         setLayout(null);
         setBounds(0, 0, largo, alto);
         setMaximumSize(new Dimension(800, 600));
         setBackground(new Color(150,220,255));
 
-        ImageIcon imagen = new ImageIcon("src/main/java//MultiMedia/MontanasFondo.gif");
+        ImageIcon imagen = new ImageIcon("src/MultiMedia/MontanasFondo.gif");
         //ImageIcon imagen2 = new ImageIcon("C:/Users/andre/Desktop/nubes1.gif");
 
         //JLabel nubes = new JLabel(imagen2);
@@ -135,10 +178,10 @@ public class Fondo extends JPanel implements KeyListener {
         sidescroller.setBounds(10,270,1300,alto);
         add(grifo);
         this.margen =0;
-        this.CantidadOriginal=12;
-        this.ronda=2;
+        this.CantidadOriginal=100;
+        this.ronda=1;
         try {
-			this.OleadaDibujar=Cliente1.RequestGen(this.CantidadOriginal,this.ronda);
+			this.OleadaDibujar=Jose.RequestGen(CantidadOriginal, ronda);
 		} catch (JDOMException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -153,13 +196,14 @@ public class Fondo extends JPanel implements KeyListener {
         DrawArray();
         //DrawABB();
         //DrawAVL();
+        h5 = new Hilo_contrl(this);
         addKeyListener(this);
         setFocusable(true);
 
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
+        this.h3 = new Hilo_Disparos(this);
         add(sidescroller);
-        //add(nubes);
     }
 
     public Pantalla getPantallaUso() {
@@ -169,12 +213,22 @@ public class Fondo extends JPanel implements KeyListener {
     public void  reiniciar(){
         h1.stop();
 
+        bandera_inicio = true;
+
         caballero.setDragonesQuePasaron(0);
         setBackground(new Color(150,220,255));
         this.margen =0;
         this.CantidadOriginal*=1.2;
         this.ronda++;
-        this.OleadaDibujar=new Oleada(this.CantidadOriginal,this.ronda, this, this.caballero);
+        try {
+			this.OleadaDibujar=Jose.RequestGen(CantidadOriginal, ronda);
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         this.juego=true;
         DrawArray();
         addKeyListener(this);
@@ -182,19 +236,10 @@ public class Fondo extends JPanel implements KeyListener {
         this.PantallaUso.ActulizarArbolB(OleadaDibujar.toArray(),OleadaDibujar.getCantidadDragones());
         HiloOleada hilito1=new HiloOleada(this);  //Hilo que crea el movimiento de la oleada
         this.h1 = hilito1;
+        this.h3 = new Hilo_Disparos(this);
         add(sidescroller);
     }
-
-    /*public void crearLabel(){
-
-        etiqueta2.setText("Dragon2");
-        etiqueta2.setBounds(x2,450,60,60);
-        this.add(etiqueta2);
-        Hilo_DR hilo_dr = new Hilo_DR(etiqueta2, this);
-        h3 = hilo_dr;
-
-    }*/
-
+    
     /**
      * Metodo usado por el HiloOleada para mover la oleada en conjunto
      */
@@ -208,25 +253,118 @@ public class Fondo extends JPanel implements KeyListener {
 
         }
     }
+    public void movercontrol() {
+        if (!juego) {
+            reiniciar();
+            return;
+        }
+        //JLabel grifo = caballero.getLabel();
+        if (caballero.isChoque() == false) {
+            if (grifo.getX() + 80 + 5 < largo && grifo.getX() - 5 > -5 && grifo.getY() - 5 > -5 && grifo.getY() + 50 + 5 < alto) {
+                if (b == 0&&!fuego) {
 
+                    Disparo d = new Disparo(this.grifo.getX() + this.grifo.getWidth(), this.grifo.getY() + (this.grifo.getHeight() / 2));
+                    Dragon toImpact = OleadaDibujar.MasCercanoPorAltura(d.getPosY());
+                    this.fuego=true;
+                    if (toImpact == null) {
+                        caballero.atacar(this);
+                    } else {
+                        boolean isKill = false;
+                        caballero.atacar(toImpact, d,OleadaDibujar,this, fuego);
+                    }
+                    caballero.getDisparo().setBounds(100, 300, 10, 10);
+                    add(caballero.getDisparo());
+                }
+            }
+        }
+    }
+    public void disparos(){
+        Dragon dra;
+        Random random = new Random();
+        int r1 = random.nextInt(OleadaDibujar.getCantidadDragones());
+        dra = OleadaDibujar.toArray()[r1];
+        System.out.println(r1);
+        ImageIcon img = new ImageIcon("src/main/java/MultiMedia/shoot.gif");
+
+
+        if (dra.getRecarga() <= 33) {
+            JLabel disp = new JLabel(img);
+
+            disp.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp, this);
+        }
+        if ((dra.getRecarga() > 33) && (dra.getRecarga() < 66)) {
+            JLabel disp1 = new JLabel(img);
+            JLabel disp2 = new JLabel(img);
+
+            disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 40, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp1);
+            add(disp2);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp1, this);
+            Hilo_DE hilitodisp2 = new Hilo_DE(disp2, this);
+        }
+        if (dra.getRecarga() >= 66) {
+            JLabel disp1 = new JLabel(img);
+            JLabel disp2 = new JLabel(img);
+            JLabel disp3 = new JLabel(img);
+
+
+
+            disp1.setBounds(dra.getLabel().getX() - 10, dra.getLabel().getY() + 5, 10, 10);
+            disp2.setBounds(dra.getLabel().getX() - 40, dra.getLabel().getY() + 5, 10, 10);
+            disp3.setBounds(dra.getLabel().getX() - 70, dra.getLabel().getY() + 5, 10, 10);
+
+            add(disp1);
+            add(disp2);
+
+            Hilo_DE hilitodisp1 = new Hilo_DE(disp1, this);
+            Hilo_DE hilitodisp2 = new Hilo_DE(disp2, this);
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Metodo para que los dragones o enemigos disparen
-     * @param dra
      */
 
-    public void disparoDragon(JLabel dra){
-        JLabel disp = new JLabel();
-        disp.setText("O");
-        disp.setBounds(dra.getX() - 10, dra.getY() + 25, 10, 10);
-            add(disp);
+
+    public void moverDisp(JLabel disp){
+        while(juego && disp.getX() > -10){
             if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
-                disp.setBounds(disp.getX() - 5, disp.getY(), 10, 10);
-            } else {
+                disp.setLocation(disp.getX() - 5, disp.getY());
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else{
                 caballero.recibir_daño();
-                disp.setBounds(1400, 1000, 10, 10);
+                System.out.println(caballero.getVida());
+                disp.setLocation(1400, 1000);
+                JLabel colision = new JLabel();
+                ImageIcon img = new ImageIcon("src/MultiMedia/Boom.gif");
+                colision.setIcon(img);
+                colision.setBounds(grifo.getX()+50, grifo.getY()+5, 50, 21);
+                this.add(colision);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                colision.setVisible(false);
             }
-            disp.setVisible(true);
+        }
+        disp.setVisible(false);
     }
 
 
@@ -377,8 +515,11 @@ public class Fondo extends JPanel implements KeyListener {
 
             int xi=600+ margenlocal *100;
             int yi=40+fila*55;
+            if (bandera_inicio){
+                D[pos].getLabel().setBounds(xi,yi,100,anchoDragon);
 
-            D[pos].getLabel().setBounds(xi,yi,100,anchoDragon);
+            }
+
 
             D[pos].setPosY(yi);
             D[pos].setPosX(xi);
@@ -395,6 +536,7 @@ public class Fondo extends JPanel implements KeyListener {
                 margenlocal++;
             }
         }
+        bandera_inicio = false;
         //this.margen++;
     }
 
@@ -409,9 +551,10 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2;
-        int xi=400;
+        int xi=600;
 
-        cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
+        //cabeza.getLabel().setBounds(xi,yi+20,100,anchoDragon);
+        //animar();
 
         cabeza.setPosY(yi);
         cabeza.setPosX(xi);
@@ -421,6 +564,132 @@ public class Fondo extends JPanel implements KeyListener {
         add(cabeza.getLabel());
 
         dibujarArbol(cabeza,2,xi,yi);
+
+    }
+
+    public JLabel[] mostrarColores() {
+        int criterio = this.OleadaDibujar.getFormacion() % 5;
+        JLabel[] array3 = new JLabel[OleadaDibujar.getCantidadDragones()];
+        if (criterio == 0 || criterio == 2 || criterio == 4) {
+            for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++) {
+                //array1[i].setIcon(imagen);
+                Dragon dtmp = (Dragon) OleadaDibujar.toArray()[i];
+                array3[i] = new JLabel();
+                array3[i].setBounds(dtmp.getLabel().getX(), dtmp.getLabel().getY() - 50, 100, 50);
+                //array3[i].setText("RCR: " + dtmp.getRecarga());
+                //array3[i].setForeground(coloresEtiquetasVrcr(dtmp.getRecarga()));
+                array3[i].setText("Edad: " + dtmp.getEdad());
+                array3[i].setForeground(coloresEtiquetasEdad(dtmp.getEdad()));
+                add(array3[i]);
+            }
+        } else if (criterio == 1) {
+            for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++) {
+                //array1[i].setIcon(imagen);
+                Dragon dtmp = (Dragon) OleadaDibujar.toArray()[i];
+                array3[i] = new JLabel();
+                array3[i].setBounds(dtmp.getLabel().getX(), dtmp.getLabel().getY() - 50, 50, 50);
+                array3[i].setText("RCR: " + dtmp.getRecarga());
+                array3[i].setForeground(coloresEtiquetasVrcr(dtmp.getRecarga()));
+                add(array3[i]);
+                //array3[i].setText("Edad: "+dtmp.getEdad());
+                //array3[i].setForeground(coloresEtiquetasEdad(dtmp.getEdad()));
+            }
+        } else if (criterio == 3) {
+            AsignarNivel();
+            for (int i = 0; i < OleadaDibujar.getCantidadDragones(); i++) {
+                //array1[i].setIcon(imagen);
+                Dragon dtmp = (Dragon) OleadaDibujar.toArray()[i];
+                array3[i] = new JLabel();
+                array3[i].setBounds(dtmp.getLabel().getX(), dtmp.getLabel().getY() - 15, 50, 50);
+                array3[i].setText("Gen: " + dtmp.getNivel());
+                array3[i].setForeground(coloresEtiquetasGen(dtmp.getNivel()));
+                add(array3[i]);
+            }
+        } return array3;
+    }
+
+    public void AsignarNivel(){
+        AsignarNivelrec(OleadaDibujar.getRoot(),0);
+    }
+
+    public void AsignarNivelrec(Dragon root,int nivel){
+        if (root!=null){
+            AsignarNivelrec(root.getHijoIz(),nivel+1);
+            root.setNivel(nivel);
+            AsignarNivelrec(root.getHijoDer(),nivel+1);
+        }
+    }
+
+    public void quitarColores(JLabel[] array3){
+        for (int i = 0; i < array3.length; i++) {
+            array3[i].setVisible(false);
+        }
+    }
+
+    public Color coloresEtiquetasEdad(int edad){
+        int r = (edad * 255)/1000;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+    public Color coloresEtiquetasVrcr(int vrcr){
+        int r = (vrcr * 255)/100;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+    public Color coloresEtiquetasGen(int gen){
+        int r = (gen * 255)/8;
+        Color color = new Color(0+r,255-r,10);
+        return color;
+    }
+
+    public void animar(){
+        JLabel[] array3 = mostrarColores();
+        h1.pausa = true;
+        Dragon[] dragones = OleadaDibujar.toArray();
+        float m;
+        float b;
+
+        for (int i = 0; i<OleadaDibujar.getCantidadDragones(); i++) {
+            Dragon dtmp = (Dragon) dragones[i];
+
+            float x1 = dtmp.getPosXinicial();
+            float y1 = dtmp.getPosYinicial();
+            float x2 = dtmp.getPosX();
+            float y2 = dtmp.getPosY();
+
+            m = (y2 - y1) / (x2 - x1);
+            b = y1 - (m * x1);
+            //System.out.println(y2-y1);
+
+            float movx = (x2 - x1) / 40;
+
+            float xi = x1;
+            float yi;
+
+            while ((xi < x2)) {
+                //int movx = (i1 - i2)/20;
+                //int movy = (j1 - j2)/20;
+                xi += movx;
+                yi = m * xi + b;
+
+                dtmp.getLabel().setLocation((int) xi, (int) yi);
+                array3[i].setLocation((int)xi, (int)yi-50);
+                try {
+                  Thread.sleep(5);
+           } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        quitarColores(array3);
+        h1.pausa = false;
 
     }
 
@@ -490,7 +759,7 @@ public class Fondo extends JPanel implements KeyListener {
         }
 
         int yi=alto/2-12;
-        int xi=400;
+        int xi=600;
 
         cabeza.key.getLabel().setBounds(xi,yi,100,anchoDragon);
 
@@ -561,6 +830,4 @@ public class Fondo extends JPanel implements KeyListener {
             add(node.left.key.getLabel());
         }
     }
-
-
 }

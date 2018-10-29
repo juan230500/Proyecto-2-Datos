@@ -1,13 +1,10 @@
 package GUI;
 
 import ArbolB.Raiz;
-import adt.BTree;
 import juego.Dragon;
-import juego.Oleada;
 
 import java.awt.*;
 import javax.swing.*;
-import java.util.*;
 
 /**
  * Clase: Pantalla
@@ -173,7 +170,28 @@ public class Pantalla extends JFrame {
      */
 
     public void comenzar_juego(){
-
+        int n = fondo.getOleadaDibujar().getFormacion()%5;
+        i_layP.setInfoVisible(false);
+        if (n== 0){
+            i_layP.setInfo("Ordenado por SelectionSort");
+        }
+        if (n==2){
+            i_layP.setInfo("Ordenado por QuickSort");
+        }
+        if (n==3){
+            i_layP.setInfo("Ordenado por familias en ABB");
+        }
+        if (n==4){
+            i_layP.setInfo("Ordenado en AVL");
+        }
+        if (n==1){
+            i_layP.setInfo("Ordenado por InsertionSort");
+        }
+        if (n==-1){
+            i_layP.setInfo("Desordenado");
+        }
+        i_layP.setLayout(null);
+        i_layP.setInfoVisible(true);
             if(fondo.getCaballero().getDragonesQuePasaron()>=3 || fondo.getCaballero().getVida() == 0){
                 hPrin.stop();
                 JLabel end = new JLabel("PERDISTEEEEEE");
@@ -185,6 +203,7 @@ public class Pantalla extends JFrame {
                 fondo.setFocusable(false);
                 fondo.setJuego(false);
                 fondo.getH1().stop();
+                fondo.h5.stop();
                 //fondo.getH4().stop();
             }
                 for (int i = 0; i< fondo.getOleadaDibujar().toArray().length;i++){
@@ -251,24 +270,6 @@ public class Pantalla extends JFrame {
      * 
      */
     private String Imagen;
-
-    /**
-     * 
-     */
-    private BTree ArbolB_edad;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
