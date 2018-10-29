@@ -24,8 +24,7 @@ public class InfoDragon extends JPanel {
         this.infanteria.setVisible(false);
         String temp = " ";
         for (int i=0;i<lista.getSize();i++){
-            Dragon dg =(Dragon) lista.recorrer(i);
-            temp += dg.getNombre();
+            temp += lista.recorrer(i);
             temp += " ";
         }
         System.out.println(temp);
