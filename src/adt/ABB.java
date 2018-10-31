@@ -2,15 +2,39 @@ package adt;
 
 public class ABB {
 
-    private class nodoArbol {
+    public class nodoArbol {
         private ABB hd;
         private ABB hi;
-        private int dato;
+        public int dato;
 
         private void nodoArbol(){
             hd = null;
             hi = null;
             dato = 0;
+        }
+
+        public ABB getHd() {
+            return hd;
+        }
+
+        public void setHd(ABB hd) {
+            this.hd = hd;
+        }
+
+        public ABB getHi() {
+            return hi;
+        }
+
+        public void setHi(ABB hi) {
+            this.hi = hi;
+        }
+
+        public int getDato() {
+            return dato;
+        }
+
+        public void setDato(int dato) {
+            this.dato = dato;
         }
     }
 
