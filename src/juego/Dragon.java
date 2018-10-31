@@ -78,6 +78,10 @@ public class Dragon {
         getLabel().setIcon(img);
     }
 
+    public Dragon(int edad){
+        this.edad=edad;
+    }
+
 
     public String getNombre() {
         return nombre;
