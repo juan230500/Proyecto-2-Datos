@@ -19,12 +19,8 @@ public class Oleada {
     private Dragon root;
     private int CantidadDragones;
     private int Formacion;
-    private int edadt;
     private Dragon[] DragonesDibujar;
     private Node rootAVL;
-    private boolean EdadRepetida;
-    private Fondo fondo1;
-    private Caballero caballero;
 
 
     /**
@@ -33,13 +29,10 @@ public class Oleada {
      *
      * @param Cantidad numero de dragones que se espera en la oleada inicial
      */
-    public Oleada(int Cantidad, int ronda, Fondo fondo, Caballero jugador) {
+    public Oleada(int Cantidad, int ronda) {
         this.CantidadDragones = 0;
         //Bloque para generar los dragones automaticamente con un padre asignado a solo 2 de ellos
         this.Formacion = -1;
-        this.edadt = 0;
-        this.fondo1 = fondo;
-        this.caballero = jugador;
         new DragonesFabrica(Cantidad, ronda, this);
         //ataqueDragones();
 
@@ -49,21 +42,6 @@ public class Oleada {
         AVLTree tree = new AVLTree();
         InsertarEnAVl(tree);
         rootAVL = tree.getRoot();
-    }
-
-    /**
-     * Método que toma la cabeza de la oleada y se asegura de crear el resto de dragones con un padre
-     * y que los padres tengan menos de un hijo
-     *
-     * @param Cantidad
-     */
-    private void genDragones(int Cantidad) {
-        while (Cantidad > 0) {
-            this.EdadRepetida = false;
-            add(new Dragon());
-            if (!EdadRepetida)
-                Cantidad--;
-        }
     }
 
     public int getFormacion() {
@@ -165,40 +143,6 @@ public class Oleada {
         }
     }
 
-    /**
-     * Imprime todos los dragones actuales y sus caracteristicas importantes
-     */
-    public void display() {
-        display(this.root, 0);
-        System.out.println();
-    }
-
-    public void display(Dragon node, int nivel) {
-        if (node != null) {
-            display(node.getHijoIz(), nivel + 1);
-            if (node.getPadre() == null) {
-                System.out.println(node
-                        + " Edad: " + node.getEdad()
-                        + " Recarga " + node.getRecarga()
-                        + " Resistencia " + node.getResistencia()
-                        + " Hijo de " + node.getPadre()
-                        + " Y: " + node.getPosY()
-                        + " Nivel: " + node.getPosX());
-            } else {
-                System.out.println(node
-                        + " Edad: " + node.getEdad()
-                        + " Recarga " + node.getRecarga()
-                        + " Resistencia " + node.getResistencia()
-                        + " Hijo de " + node.getPadre().getEdad()
-                        + " Y: " + node.getPosY()
-                        + " Nivel: " + node.getPosX());
-            }
-
-            display(node.getHijoDer(), nivel + 1);
-        }
-    }
-
-
     Dragon addRecursive(Dragon current, Dragon value) {
         if (current == null) {
             return value;
@@ -209,7 +153,6 @@ public class Oleada {
             current.setHijoDer(addRecursive(current.getHijoDer(), value));
         } else {
             this.CantidadDragones--;
-            this.EdadRepetida = true;
             return current;
         }
         return current;
@@ -237,13 +180,13 @@ public class Oleada {
         return MasCercano;
     }
 
-    private List<Dragon> FiltrarPorAltura(int Y, int ancho) {
+    public List<Dragon> FiltrarPorAltura(int Y, int ancho) {
         List<Dragon> ListaDragones = new ArrayList<>();
         AddPorAltura(Y, ancho, this.root, ListaDragones);
         return ListaDragones;
     }
 
-    private void AddPorAltura(int Y, int ancho, Dragon root, List<Dragon> ListaDragones) {
+    public void AddPorAltura(int Y, int ancho, Dragon root, List<Dragon> ListaDragones) {
         if (root != null) {
             AddPorAltura(Y, ancho, root.getHijoIz(), ListaDragones);
             int altura = root.getPosY();
@@ -320,20 +263,6 @@ public class Oleada {
     }
 
 
-    public void traverseInOrder() {
-        traverseInOrder(this.root, 0);
-        System.out.println();
-    }
-
-    public void traverseInOrder(Dragon node, int nivel) {
-        if (node != null) {
-            traverseInOrder(node.getHijoIz(), nivel + 1);
-            System.out.print(" " + node.getEdad() + "(" + nivel + ")");
-            traverseInOrder(node.getHijoDer(), nivel + 1);
-        }
-    }
-
-
     /**
      * Pasa los dragones acutales de la oleada a un Array
      * para realizar los ordenamientos selection,quicksort...
@@ -347,14 +276,6 @@ public class Oleada {
         }
         extractValues(this.root, ArrayDragones, 0);
         return ArrayDragones;
-    }
-
-    public void makeArray(Dragon node, int i, Dragon[] BSTarray) {
-        if (node != null) {
-            BSTarray[i] = root;
-            makeArray(node.getHijoIz(), 2 * i + 1, BSTarray);
-            makeArray(node.getHijoDer(), 2 * i + 2, BSTarray);
-        }
     }
 
     private static int extractValues(Dragon n, Dragon[] results, int index) {
@@ -401,34 +322,20 @@ public class Oleada {
         return root;
     }
 
-//    public void ataqueDragones() {
-//        for (int i = 0; i < CantidadDragones; i++) {
-//            JLabel dragon = this.toArray()[i].getLabel();
-//            JLabel grifo = caballero.getLabel();
-//            JLabel disp = new JLabel();
-//            disp.setText("O");
-//            disp.setBounds(dragon.getX() - 10, dragon.getY() + 25, 10, 10);
-//            fondo1.add(disp);
-//            //Hilo_DE hilito4 = new Hilo_DE(disp, this);
-//            try {
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
+    public void setRoot(Dragon root) {
+        this.root = root;
+    }
 
-//    public void MoverDisparo (JLabel dra, JLabel disp, Caballero caballero, JLabel grifo, Fondo fondo) {
-////        JLabel grifo = caballero.getLabel();
-////        JLabel disp = new JLabel();
-////        disp.setText("O");
-////        System.out.println("disparo");
-//        if ((disp.getX() > grifo.getX() + grifo.getWidth()) || (disp.getY() > grifo.getY() + grifo.getHeight()) || (disp.getX() < grifo.getX()) || (disp.getY() < grifo.getY())) {
-//            disp.setLocation(disp.getX() - 5, disp.getY());
-//        } else {
-//            caballero.recibir_daño();
-//            disp.setVisible(false);
-//        }
-//        disp.setVisible(true);
+    public void setFormacion(int formacion) {
+        Formacion = formacion;
+    }
 
+    public void setDragonesDibujar(Dragon[] dragonesDibujar) {
+        DragonesDibujar = dragonesDibujar;
+    }
+
+    public void setRootAVL(Node rootAVL) {
+        this.rootAVL = rootAVL;
+    }
 }
 
