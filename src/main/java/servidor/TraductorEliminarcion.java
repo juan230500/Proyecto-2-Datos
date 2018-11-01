@@ -85,9 +85,18 @@ public class TraductorEliminarcion {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	public Oleada GetOleada(String XML) throws JDOMException, IOException {
+	public Oleada GetOleada(String XML) {
     	SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new StringReader(XML));
+        Document document = null;
+		try {
+			document = saxBuilder.build(new StringReader(XML));
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         System.out.println(XML);
         
         Element Principal = document.getRootElement();
@@ -225,9 +234,18 @@ public class TraductorEliminarcion {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-    public Oleada GetOleadaId(String XML) throws JDOMException, IOException {
+    public Oleada GetOleadaId(String XML) {
     	SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new StringReader(XML));
+        Document document=null;
+		try {
+			document = saxBuilder.build(new StringReader(XML));
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         Element Principal = document.getRootElement();
         
@@ -293,7 +311,7 @@ public class TraductorEliminarcion {
     	}
     }
     
-    private Dragon[] DesempaquetarIDArray(Element Root) throws JDOMException, IOException {
+    private Dragon[] DesempaquetarIDArray(Element Root) {
         List<Element> IdList = Root.getChildren();
         Dragon[] ArrayDragonesFinal=new Dragon[IdList.size()];
         
@@ -307,7 +325,7 @@ public class TraductorEliminarcion {
         return ArrayDragonesFinal;
 	}
 
-    private Node DesempaquetarAVL(Element Root) throws JDOMException, IOException {
+    private Node DesempaquetarAVL(Element Root) {
         AVLTree tree=new AVLTree();
         int id=Integer.parseInt(Root.getText());
         tree.setRoot(new Node(this.ArrayPorID[id]));

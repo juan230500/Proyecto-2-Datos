@@ -42,9 +42,18 @@ public class TraductorInicio {
         return new XMLOutputter().outputString(doc);
 	}
 	
-	public void getDatosOleada(String XML) throws JDOMException, IOException {
+	public void getDatosOleada(String XML) {
 		SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new StringReader(XML));
+        Document document=null;
+		try {
+			document = saxBuilder.build(new StringReader(XML));
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         Element Root = document.getRootElement();
         this.CantidadDragones=Integer.parseInt(Root.getText());
         this.Ronda=Integer.parseInt(Root.getAttributeValue("ronda"));
@@ -94,9 +103,18 @@ public class TraductorInicio {
 		}
 	}
 	
-	public Oleada getOleadaFull(String XML) throws JDOMException, IOException {
+	public Oleada getOleadaFull(String XML) {
 		SAXBuilder saxBuilder = new SAXBuilder();
-        Document document = saxBuilder.build(new StringReader(XML));
+        Document document = null;
+		try {
+			document = saxBuilder.build(new StringReader(XML));
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         Element Root = document.getRootElement();
         
         Oleada OleadaNueva=new Oleada(1,1);
