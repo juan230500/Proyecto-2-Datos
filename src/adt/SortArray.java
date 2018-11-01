@@ -61,7 +61,8 @@ public class SortArray {
 
 
     public void quickSort() {
-        quickSort(0,arr.length-1 );
+        if (arr.length>0)
+            quickSort(0,arr.length-1 );
     }
 
     //http://www.java2novice.com/java-sorting-algorithms/quick-sort/

@@ -82,6 +82,11 @@ public class Dragon {
         this.edad=edad;
     }
 
+    public Dragon(int edad, int recarga){
+        this.edad=edad;
+        this.recarga=recarga;
+    }
+
 
     public String getNombre() {
         return nombre;
