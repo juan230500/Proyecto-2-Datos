@@ -11,8 +11,6 @@ import java.util.Random;
  * ESta calse se encarga de asignar las caracteristicas a los dragones de la oleada
  */
 public class DragonesFabrica {
-
-    private LinkedList lista_dragones = new LinkedList();
     private LinkedList dragonestmp = new LinkedList();
     private ABB arbol_edades = new ABB();
     private HashMap letras = new HashMap();
@@ -33,7 +31,6 @@ public class DragonesFabrica {
             Dragon dragon = new Dragon();
 
             asignarNombre(ronda, c, dragon);
-            asignarPadres(c,dragon);
             asignarRecarga(dragon);
             asignarResistencia(dragon);
             asignarEdad(dragon);
@@ -50,29 +47,9 @@ public class DragonesFabrica {
             c++;
 
             oleada.add(dragon);
-            lista_dragones.insertLast(dragon);
         }
     }
-    /**
-     * este metodo funciona para realizar las relacion de padre entre los draqones
-     * @param c  srive patra verificar si ya tiene un padre
-     * @param dragon es el obejto dragon al cual se le va asignar el padre
-     *
-     */
-    private void asignarPadres(int c, Dragon dragon){
-        if (c == 1){
-            dragon.setPadre(null);
-        }else{
-            Random random = new Random();
-            Dragon aleatorio = (Dragon) lista_dragones.recorrer(random.nextInt(lista_dragones.getSize()));
-            if (aleatorio.getHijos().getSize() < 2) {
-                dragon.setPadre(aleatorio);
-                aleatorio.setHijo(dragon);
-            } else{
-                asignarPadres(c,dragon);
-            }
-        }
-    }
+
     /**
      * este metodo funciona para realizar  las asiganciones de nombre a los dragones
      * @param ronda  sirve para ver en cual ronda se van a generar los nombres
@@ -89,7 +66,7 @@ public class DragonesFabrica {
      * este metodo funciona para realizar las asignaciones de recarga a los dragones
      * @param dragon es el obejto dragon al cual se le va asignar el  valor
      */
-    private void asignarRecarga(Dragon dragon){
+    public void asignarRecarga(Dragon dragon){
         Random random = new Random();
         dragon.setRecarga(random.nextInt(100) + 1);
     }
@@ -97,7 +74,7 @@ public class DragonesFabrica {
      * este metodo funciona para realizar las asignaciones de resitencia a los dragones
      * @param dragon es el obejto dragon al cual se le va asignar el  valor
      */
-    private void asignarResistencia(Dragon dragon) {
+    public void asignarResistencia(Dragon dragon) {
         Random random = new Random();
         dragon.setResistencia(random.nextInt(3) + 1);
     }
@@ -105,7 +82,7 @@ public class DragonesFabrica {
      * este metodo funciona para realizar las asignaciones de edad a los dragones
      * @param dragon es el obejto dragon al cual se le va asignar el  valor
      */
-    private void asignarEdad(Dragon dragon){
+    public void asignarEdad(Dragon dragon){
         Random random = new Random();
         int edad = (random.nextInt(1000) + 1);
         while (arbol_edades.buscar(edad) != null){
@@ -118,7 +95,7 @@ public class DragonesFabrica {
      * este metodo funciona para realizar las asignaciones de clase a los dragones
      * @param dragon es el obejto dragon al cual se le va asignar el  valor
      */
-    private void asignarClase(int c, int cantidad, Dragon dragon){
+    public void asignarClase(int c, int cantidad, Dragon dragon){
         if ((cantidad == 1) && (dragonestmp.size() != 0)){
             for (int i = 0; i < dragonestmp.getSize(); i++) {
                 Dragon tmp = (Dragon) dragonestmp.recorrer(i);
@@ -153,7 +130,4 @@ public class DragonesFabrica {
         }
     }
 
-    public LinkedList getLista_dragones() {
-        return lista_dragones;
-    }
 }
