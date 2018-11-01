@@ -6,6 +6,41 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ABBTest {
+    @Test
+    void getHd() {
+        ABB tree=new ABB();
+        tree.insertar(1);
+        tree.insertar(2);
+        tree.insertar(0);
+        tree.insertar(7);
+        tree.insertar(4);
+        tree.insertar(5);
+        assertEquals(2,tree.raiz.getHd().raiz.getDato());
+    }
+
+    @Test
+    void getHi() {
+        ABB tree=new ABB();
+        tree.insertar(1);
+        tree.insertar(2);
+        tree.insertar(0);
+        tree.insertar(7);
+        tree.insertar(4);
+        tree.insertar(5);
+        assertEquals(0,tree.raiz.getHi().raiz.getDato());
+    }
+
+    @Test
+    void getDato() {
+        ABB tree=new ABB();
+        tree.insertar(1);
+        tree.insertar(2);
+        tree.insertar(0);
+        tree.insertar(7);
+        tree.insertar(4);
+        tree.insertar(5);
+        assertEquals(1,tree.raiz.getDato());
+    }
 
 
     @Test

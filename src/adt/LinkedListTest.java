@@ -82,4 +82,16 @@ class LinkedListTest {
 
         assertEquals(2,L.getHead().getNext().getNext().getData());
     }
+
+    @Test
+    void recorrer(){
+        LinkedList L=new LinkedList();
+        L.insertFirst(1);
+        L.insertFirst(2);
+        L.insertFirst(4);
+        L.insertFirst(5);
+        L.insertFirst(0);
+
+        assertEquals(2,L.recorrer(3));
+    }
 }

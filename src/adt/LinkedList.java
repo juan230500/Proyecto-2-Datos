@@ -19,10 +19,6 @@ public class LinkedList{
         this.size=0;
     }
 
-    public boolean isEmpty(){
-        return this.head==null;
-    }
-
     public int size(){
         return this.size;
     }
