@@ -159,7 +159,7 @@ public class Fondo extends JPanel implements KeyListener {
 
     public Fondo(Pantalla LaPantalla) {
         try {
-            ino.arduinoRX("COM10", 9600, listener);
+            ino.arduinoRX("/dev/ttyUSB0", 9600, listener);
         } catch (ArduinoException | SerialPortException ex) {
             Logger.getLogger(Fondo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -169,7 +169,7 @@ public class Fondo extends JPanel implements KeyListener {
         setMaximumSize(new Dimension(800, 600));
         setBackground(new Color(150,220,255));
 
-        ImageIcon imagen = new ImageIcon("src/MultiMedia/MontanasFondo.gif");
+        ImageIcon imagen = new ImageIcon("src/main/java/MultiMedia/MontanasFondo.gif");
         //ImageIcon imagen2 = new ImageIcon("C:/Users/andre/Desktop/nubes1.gif");
 
         //JLabel nubes = new JLabel(imagen2);
@@ -352,7 +352,7 @@ public class Fondo extends JPanel implements KeyListener {
                 System.out.println(caballero.getVida());
                 disp.setLocation(1400, 1000);
                 JLabel colision = new JLabel();
-                ImageIcon img = new ImageIcon("src/MultiMedia/Boom.gif");
+                ImageIcon img = new ImageIcon("src/main/java/MultiMedia/Boom.gif");
                 colision.setIcon(img);
                 colision.setBounds(grifo.getX()+50, grifo.getY()+5, 50, 21);
                 this.add(colision);
