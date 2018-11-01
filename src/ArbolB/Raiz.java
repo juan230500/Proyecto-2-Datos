@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * @version 1.0
  * @since    3 Dec 2013
  */
+
 public class Raiz
 {
     public static int grado;
@@ -374,42 +375,7 @@ public class Raiz
             }
         }
     }
-    public void eliminar(int valor) { //elimina de la lista el valor y vuelve a crear el arbol
-        boolean encontrado = false;
-        int j = 0;
-        for (int i=0; i<Lista.ingresados.size() && !encontrado; i++) {
-            if (Lista.ingresados.get(i) == valor) {
-                encontrado = true;
-                j = i;
-            }
-        }
-        if (encontrado==true) {
-            Lista.ingresados.remove(j);
-        } else {
-           // System.out.println("El valor a eliminar no se encuentra en el arbol B");
-        }
-        ArrayList<Integer> auxiliar = Lista.ingresados;
-        Lista.ingresados = new ArrayList<Integer>();
-        primerNodo = new Nodo();
-        primerNodo.tengoHijos = false;
-        for(int k = 0; k < auxiliar.size(); k++){
-            Integer y = auxiliar.get(k);
-            int o = y.intValue();
-            insertar(o);
-        }
-    }
-    public boolean buscar(int valor){
-        boolean esta = false;
-        for(int i = 0; i < Lista.ingresados.size() && !esta; i++){
-            if(Lista.ingresados.get(i) == valor){
-                esta = true;
-                //System.out.println("El elemento buscado si se encuentra en el arbol B");
-                return esta;
-            }
-        }
-        //System.out.println("El elemento buscado no se encuentra en el arbol B");
-        return false;
-    }
+
     public String recorrer(Nodo nodo) {
         arbol += "\n";
         for (int i =0; i<2*grado+1; i++) {
@@ -442,13 +408,6 @@ public class Raiz
         imprimir = 1;
         return arbol;
     }
-    public boolean esNumero(String s){
-        try{
-            Integer.parseInt(s);
-            return true;
-        }catch(NumberFormatException e){
-            return false;
-        }
-    }
+
 
 }
