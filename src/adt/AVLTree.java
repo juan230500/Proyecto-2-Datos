@@ -13,7 +13,7 @@ public class AVLTree
      * @param N nodo a consultar altura
      * @return la altura comoun entero
      */
-    private int height(Node N)
+    public int height(Node N)
     {
         if (N == null)
             return 0;
@@ -26,7 +26,7 @@ public class AVLTree
      * @param b segundo numero
      * @return el mayor de ambos
      */
-    private int max(int a, int b)
+    public int max(int a, int b)
     {
         return (a > b) ? a : b;
     }
@@ -37,7 +37,7 @@ public class AVLTree
      * @param y el nodo donde comienza la rotación
      * @return Lanueva raíz despues de rotar
      */
-    private Node rightRotate(Node y)
+    public Node rightRotate(Node y)
     {
         Node x = y.left;
         Node T2 = x.right;
@@ -60,7 +60,7 @@ public class AVLTree
      * @param x el nodo donde comienza la rotación
      * @return Lanueva raíz despues de rotar
      */
-    private Node leftRotate(Node x)
+    public Node leftRotate(Node x)
     {
         Node y = x.right;
         Node T2 = y.left;
@@ -82,7 +82,7 @@ public class AVLTree
      * @param N nodo a consultar
      * @return el balance como la diferencia de las alturas izquierda y derecha
      */
-    private int getBalance(Node N)
+    public int getBalance(Node N)
     {
         if (N == null)
             return 0;
@@ -184,5 +184,9 @@ public class AVLTree
 
     public Node getRoot() {
         return root;
+    }
+
+    public void setRoot(Node root) {
+        this.root = root;
     }
 }
